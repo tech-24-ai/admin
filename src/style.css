@@ -1,0 +1,13 @@
+.react-select__menu {
+    background-color: #ffffff !important;
+    z-index         : 1000 !important;
+    height          : 500px;
+}
+
+input[type="color"] {
+    height: 30px;
+}
+
+.rct-node-icon {
+    color: #2555a1;
+}
