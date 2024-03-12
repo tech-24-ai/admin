@@ -1201,4 +1201,53 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
   });
 }
 
+if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
+  let views = [];
+  if (PermissionHelper.checkMainPermission(["view_tags"])) {
+    views.push({
+      path: "/tags",
+      name: "Tags",
+      rtlName: "",
+      mini: "",
+      rtlMini: "",
+      layout: "/admin",
+    });
+  }
+
+  views.push({
+    path: "/technology",
+    name: "Technology",
+    rtlName: "",
+    mini: "",
+    rtlMini: "",
+    layout: "/admin",
+  });
+
+  views.push({
+    path: "/report_abuse/type",
+    name: "Report Abuse Type",
+    rtlName: "",
+    mini: "",
+    rtlMini: "",
+    layout: "/admin",
+  });
+
+  views.push({
+    path: "/community",
+    name: "Community",
+    rtlName: "",
+    mini: "",
+    rtlMini: "",
+    layout: "/admin",
+  });
+
+  dashRoutes.push({
+    collapse: true,
+    name: "Community",
+    rtlName: "",
+    icon: AppsIcon,
+    state: "CommunityModuleCollapse",
+    views: views,
+  });
+} 
 export default dashRoutes;

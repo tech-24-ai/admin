@@ -319,7 +319,21 @@ import AnomalyForm from "pages/SettingModule/Anomaly/Form.js";
 import NubelaLogList from "pages/SettingModule/Nubela/Logs.js";
 import SignalHireLogList from "pages/SettingModule/SignalHire/Logs.js";
 
+// Community Tags Lists
+import TagsList from "pages/CommunityModule/Tags/List.js";
+import TagsForm from "pages/CommunityModule/Tags/Form.js";
+
+import CommunityList from "pages/CommunityModule/Community/List.js";
+import CommunityForm from "pages/CommunityModule/Community/Form.js";
+
+import VisitorTechnologyList from "pages/CommunityModule/Technology/List.js";
+import VisitorTechnologyForm from "pages/CommunityModule/Technology/Form.js";
+
+import ReportAbuseTypesList from "pages/CommunityModule/ReportAbuseTypes/List.js";
+import ReportAbuseTypesForm from "pages/CommunityModule/ReportAbuseTypes/Form.js";
+
 import { PermissionHelper, UserHelper } from "_helpers";
+import { ImageOutlined } from "@material-ui/icons";
 
 var dashRoutes = [];
 
@@ -2200,6 +2214,62 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
       }
     );
   }
+
+  if (PermissionHelper.checkMainPermission(["view_tags"])) {  
+    dashRoutes.push({
+      path: "/tags",
+      component: TagsList,
+      layout: "/admin",
+    });
+
+    if (
+      PermissionHelper.checkPermission("add_tags") ||
+      PermissionHelper.checkPermission("edit_tags")
+    ) {
+      dashRoutes.push({
+        path: "/tags-form/:id",
+        component: TagsForm,
+        layout: "/admin",
+      });
+    } 
+  } 
+
+  dashRoutes.push({
+    path: "/technology",
+    component: VisitorTechnologyList,
+    layout: "/admin",
+  });
+  
+  dashRoutes.push({
+    path: "/technology-form/:id",
+    component: VisitorTechnologyForm,
+    layout: "/admin",
+  });
+  
+  dashRoutes.push({
+    path: "/report_abuse/type",
+    component: ReportAbuseTypesList,
+    layout: "/admin",
+  });
+
+  dashRoutes.push({
+    path: "/report-abuse-type-form/:id",
+    component: ReportAbuseTypesForm,
+    layout: "/admin",
+  });
+  
+  dashRoutes.push({
+    path: "/community",
+    component: CommunityList,
+    layout: "/admin",
+  });
+
+  dashRoutes.push({
+    path: "/community-form/:id",
+    component: CommunityForm,
+    layout: "/admin",
+  });
+
 }
 
 export default dashRoutes;
