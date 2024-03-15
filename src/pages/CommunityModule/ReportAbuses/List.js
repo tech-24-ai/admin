@@ -5,21 +5,19 @@ import { connect } from 'react-redux';
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import MaterialDataTable from "material-table/Table.js";
-import { crudActions, confirmActions } from '../../../_actions';
+import { crudActions, confirmActions, modalActions } from '../../../_actions';
 import { TableAction } from '../../../material-table/TableAction';
 import { PermissionHelper } from '_helpers';
+import Link from "@material-ui/core/Link";
 import { fileService } from "_services";
-import { STATUS } from "_constants/form.constants";
 
-const title = 'Report Abuse Types'
-class ReportAbuseTypesList extends React.PureComponent {
+const title = 'Report Abuses'
+class ReportAbusesList extends React.PureComponent {
     constructor(props) {
         super(props)
         this.deleteCrud = this.deleteCrud.bind(this);
-        this.addCrud = this.addCrud.bind(this);
-        this.editCrud = this.editCrud.bind(this);
         this.deleteAll = this.deleteAll.bind(this);
-        // this.export = this.export.bind(this);
+        this.reportAbuseDetails = this.reportAbuseDetails.bind(this);
     }
 
     componentDidUpdate() {
@@ -35,42 +33,68 @@ class ReportAbuseTypesList extends React.PureComponent {
         }
     }
 
+    toggleModal(log) {
+        this.props.openModal({
+            open: true,
+             component: log,
+        });
+    }
+
     deleteData = (id) => {
-        this.props.deleteCrud('form', 'report_abuse/type', id);
+        this.props.deleteCrud('form', 'report_abuse', id);
     }
 
     deleteCrud(data) {
-        this.props.showConfirm('Confirm', `Are you sure want to delete ${data.name} ?`, data)
+        this.props.showConfirm('Confirm', `Are you sure want to delete?`, data)
     }
 
     deleteAll(data) {
         this.props.showConfirm('Confirm', `Are you sure want to delete ${data.length} row ?`, data)
     }
 
-    editCrud(data) {
-        this.props.history.push(`/admin/report-abuse-type-form/${data.id}`)
-    }
-
-    addCrud() {
-        this.props.history.push(`/admin/report-abuse-type-form/new`)
+    reportAbuseDetails(data) {
+        this.props.history.push(`/admin/report-abuse-view/${data.id}`)
     }
 
     render() {
         const columns = [            
             {
-                title: "Name",
-                field: "name"
-            },
+                title: "Report Abuse Type",
+                field: "abuseType.name"
+            },        
             {
-                title: "Status",
-                field: "status",
-                lookupConstant: STATUS,
+                title: "Reason",
+                field: "reason",
+                render: (item) =>
+                item.reason && (
+                    <div>
+                        {item.reason?.substring(0, 30)}{" "}
+                        {item.reason.length > 30 &&
+                            <span>
+                                <Link
+                                onClick={() => this.toggleModal(item.reason)}
+                                href="javascript:"
+                                >
+                                ... More
+                                </Link>
+                            </span>
+                        }
+                    </div>
+                ),
+            },         
+            {
+                title: "Community",
+                field: "community.name"
+            },        
+            {
+                title: "Report By",
+                field: "visitor.name"
             },
             {
                 title: "Date",
                 field: "updated_at"
             },
-            TableAction(PermissionHelper.checkPermission('delete_report_abuse_types') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_tags') ? this.editCrud : null)
+            TableAction(PermissionHelper.checkPermission('delete_report_abuses') ? this.deleteCrud : null, null, null, null, this.reportAbuseDetails)
         ]
 
         return (
@@ -79,9 +103,9 @@ class ReportAbuseTypesList extends React.PureComponent {
                     <MaterialDataTable
                         title={title}
                         columns={columns}
-                        addData={PermissionHelper.checkPermission('add_report_abuse_types') ? this.addCrud : false}
-                        deleteAll={PermissionHelper.checkPermission('delete_report_abuse_types') ? this.deleteAll : false}
-                        url='report_abuse/type'
+                        addData={false}
+                        deleteAll={PermissionHelper.checkPermission('delete_report_abuses') ? this.deleteAll : false}
+                        url='report_abuse'
                         selection={true}
                         refresh={true}
                         serverSide={true}
@@ -105,6 +129,7 @@ const actionCreators = {
     deleteCrud: crudActions._delete,
     showConfirm: confirmActions.show,
     clearConfirm: confirmActions.clear,
+    openModal: modalActions.open,
 }
 
-export default connect(mapStateToProps, actionCreators)(ReportAbuseTypesList);
+export default connect(mapStateToProps, actionCreators)(ReportAbusesList);

@@ -71,7 +71,7 @@ class VisitorTechnologyList extends React.PureComponent {
                 title: "Date",
                 field: "updated_at"
             },
-            TableAction(PermissionHelper.checkPermission('delete_tags') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_tags') ? this.editCrud : null)
+            TableAction(PermissionHelper.checkPermission('delete_visitor_technology') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_tags') ? this.editCrud : null)
         ]
 
 
@@ -83,8 +83,8 @@ class VisitorTechnologyList extends React.PureComponent {
                         title={title}
 
                         columns={columns}
-                        addData={PermissionHelper.checkPermission('add_tags') ? this.addCrud : false}
-                        deleteAll={PermissionHelper.checkPermission('delete_tags') ? this.deleteAll : false}
+                        addData={PermissionHelper.checkPermission('add_visitor_technology') ? this.addCrud : false}
+                        deleteAll={PermissionHelper.checkPermission('delete_visitor_technology') ? this.deleteAll : false}
                         url='technology'
                         selection={true}
                         refresh={true}

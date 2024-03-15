@@ -14,13 +14,10 @@ const title = 'Community'
 class CommunityList extends React.PureComponent {
     constructor(props) {
         super(props)
-        this.deleteCrud = this.deleteCrud.bind(this);
         this.addCrud = this.addCrud.bind(this);
         this.editCrud = this.editCrud.bind(this);
-        this.deleteAll = this.deleteAll.bind(this);
-        // this.export = this.export.bind(this);
+        this.viewCommunityPost = this.viewCommunityPost.bind(this);
     }
-
 
     componentDidUpdate() {
         if (this.props.confirm.confirm) {
@@ -35,18 +32,6 @@ class CommunityList extends React.PureComponent {
         }
     }
 
-    deleteData = (id) => {
-        this.props.deleteCrud('form', 'community', id);
-    }
-
-    deleteCrud(data) {
-        this.props.showConfirm('Confirm', `Are you sure want to delete ${data.name} ?`, data)
-    }
-
-    deleteAll(data) {
-        this.props.showConfirm('Confirm', `Are you sure want to delete ${data.length} row ?`, data)
-    }
-
     editCrud(data) {
         this.props.history.push(`/admin/community-form/${data.id}`)
     }
@@ -55,11 +40,15 @@ class CommunityList extends React.PureComponent {
         this.props.history.push(`/admin/community-form/new`)
     }
 
+    viewCommunityPost(data) {
+        this.props.history.push(`/admin/community-posts-lists/${data.id}`)
+    }
+
     render() {
         const columns = [            
             {
                 title: "Name",
-                field: "name"
+                field: "name",
             },
             {
                 title: "Total Post",
@@ -73,7 +62,7 @@ class CommunityList extends React.PureComponent {
                 title: "Date",
                 field: "updated_at"
             },
-            TableAction(PermissionHelper.checkPermission('delete_tags') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_tags') ? this.editCrud : null)
+            TableAction(null, PermissionHelper.checkPermission('edit_community') ? this.editCrud : null, null, null, PermissionHelper.checkPermission('view_community_post') ? this.viewCommunityPost : null)
         ]
 
         return (
@@ -81,12 +70,11 @@ class CommunityList extends React.PureComponent {
                 <GridItem xs={12}>
                     <MaterialDataTable
                         title={title}
-
                         columns={columns}
-                        addData={PermissionHelper.checkPermission('add_tags') ? this.addCrud : false}
-                        deleteAll={PermissionHelper.checkPermission('delete_tags') ? this.deleteAll : false}
+                        addData={PermissionHelper.checkPermission('add_community') ? this.addCrud : false}
+                        deleteAll={false}
                         url='community'
-                        selection={true}
+                        selection={false}
                         refresh={true}
                         serverSide={true}
                         search={true}
@@ -106,7 +94,6 @@ const mapStateToProps = (state) => {
 }
 
 const actionCreators = {
-    deleteCrud: crudActions._delete,
     showConfirm: confirmActions.show,
     clearConfirm: confirmActions.clear,
 }

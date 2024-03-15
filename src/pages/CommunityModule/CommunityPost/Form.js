@@ -15,7 +15,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import MyForm from "components/Form";
-import { STATUS } from "../../../_constants/form.constants";
+import { COMMUNITY_POST_STATUS, COMMUNITY_POST_DISCUSSION_STATUS } from "_constants/form.constants";
 // style for this view
 import styles from "assets/jss/material-dashboard-pro-react/views/validationFormsStyle.js";
 
@@ -27,11 +27,14 @@ import SimpleReactValidator from 'simple-react-validator';
 const initialState = {
     id: 'new',
     form: {
-        name: '',
-        status: ''
+        title: '',
+        description: '',
+        status: '',
+        is_discussion_open: ''
     },
 }
-class VisitorTechnologyForm extends React.PureComponent {
+
+class CommunityPostForm extends React.PureComponent {
 
     constructor(props) {
         super(props)
@@ -42,7 +45,6 @@ class VisitorTechnologyForm extends React.PureComponent {
 
         this.validator = new SimpleReactValidator({ autoForceUpdate: this });
     }
-
 
     handleInputChange(event) {
         const newState = Object.assign({}, this.state);
@@ -55,22 +57,41 @@ class VisitorTechnologyForm extends React.PureComponent {
         const { form } = this.state
         const formFields = [
             {
-                name: 'name',
-                label: 'Name',
-                type: 'textbox',
-                value: form.name || '',
-                icon: 'assignment',
-                error: this.validator.message('name', form.name, 'required|min:3')
+                name: "title",
+                label: "Post Title",
+                type: "textbox",
+                value: form.title || "",
+                icon: "assignment",
+                disabled: true,
+                readonly: true,
+            },
+            {
+                name: "description",
+                label: "Post Description",
+                type: "textbox",
+                value: form.description || "",
+                icon: "assignment",
+                disabled: true,
+                readonly: true,
             },
             {
                 name: "status",
                 label: "Status",
                 type: "select",
-                options: STATUS,
+                options: COMMUNITY_POST_STATUS,
                 value: form.status || "",
                 icon: "assignment",
                 error: this.validator.message("status", form.status, ""),
-              },
+            },
+            {
+                name: "is_discussion_open",
+                label: "Discussion Open",
+                type: "select",
+                options: COMMUNITY_POST_DISCUSSION_STATUS,
+                value: form.is_discussion_open || "",
+                icon: "assignment",
+                error: this.validator.message("is_discussion_open", form.is_discussion_open, ""),
+            },
         ]
 
         return formFields
@@ -102,15 +123,11 @@ class VisitorTechnologyForm extends React.PureComponent {
         e.preventDefault();
         if (this.validator.allValid()) {
             let data = {
-                name: this.state.form.name,
-                status: this.state.form.status
+                status: this.state.form.status,
+                is_discussion_open: this.state.form.is_discussion_open,
             }
             const { id } = this.props.match.params
-            if (id && id === 'new') {
-                this.props.create('formData', 'technology', data)
-            } else {
-                this.props.update('formData', 'technology', id, data)
-            }
+            this.props.update('formData', 'community/posts/status_update', id, data)
             this.resetForm();
             this.goBack();
         } else {
@@ -118,11 +135,10 @@ class VisitorTechnologyForm extends React.PureComponent {
         }
     }
 
-
     bindData = () => {
         const { id } = this.props.match.params
         if (id && id !== 'new') {
-            crudService._get('technology', id).then((response) => {
+            crudService._get('community/posts', id).then((response) => {
                 if (response.status === 200) {
                     this.setState({
                         form: response.data,
@@ -136,17 +152,11 @@ class VisitorTechnologyForm extends React.PureComponent {
         this.bindData();
     }
 
-
     render() {
         const { classes } = this.props;
         const { id } = this.props.match.params
-        let title = 'Add New Technology'
-        let btnText = 'Create'
-        if (id && id !== 'new') {
-            title = 'Edit Technology Details'
-            btnText = 'Update'
-        }
-
+        let title = 'Update Post Status'
+        let btnText = 'Update'
 
         return (
             <GridContainer justify="center">
@@ -172,10 +182,9 @@ class VisitorTechnologyForm extends React.PureComponent {
             </GridContainer>
         );
     }
-
 }
 
-VisitorTechnologyForm.propTypes = {
+CommunityPostForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
@@ -194,4 +203,4 @@ const actionCreators = {
     update: crudActions._update,
 };
 
-export default withStyles(styles)(connect(mapStateToProps, actionCreators)(VisitorTechnologyForm));
+export default withStyles(styles)(connect(mapStateToProps, actionCreators)(CommunityPostForm));
