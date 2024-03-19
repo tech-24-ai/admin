@@ -33,11 +33,11 @@ class CommunityList extends React.PureComponent {
     }
 
     editCrud(data) {
-        this.props.history.push(`/admin/community-form/${data.id}`)
+        this.props.history.push(`/admin/communities-form/${data.id}`)
     }
 
     addCrud() {
-        this.props.history.push(`/admin/community-form/new`)
+        this.props.history.push(`/admin/communities-form/new`)
     }
 
     viewCommunityPost(data) {

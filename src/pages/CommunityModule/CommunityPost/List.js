@@ -103,6 +103,10 @@ class CommunityPostList extends React.PureComponent {
                 field: "__meta__.total_helpful"
             },
             {
+                title: "Total Views",
+                field: "views_counter"
+            },
+            {
                 title: "Status",
                 field: "status",
                 lookupConstant: COMMUNITY_POST_STATUS,

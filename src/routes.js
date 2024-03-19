@@ -2275,14 +2275,14 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
 
   if (PermissionHelper.checkMainPermission(["view_community"])) { 
     dashRoutes.push({
-      path: "/community",
+      path: "/communities",
       component: CommunityList,
       layout: "/admin",
     });
 
     if (PermissionHelper.checkPermission("add_community") || PermissionHelper.checkPermission("edit_community")) {  
       dashRoutes.push({
-        path: "/community-form/:id",
+        path: "/communities-form/:id",
         component: CommunityForm,
         layout: "/admin",
       });

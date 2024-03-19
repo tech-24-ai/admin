@@ -1238,7 +1238,7 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
 
   if (PermissionHelper.checkMainPermission(["view_community"])) { 
     views.push({
-      path: "/community",
+      path: "/communities",
       name: "Community",
       rtlName: "",
       mini: "",
