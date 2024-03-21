@@ -1250,7 +1250,7 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
   if (PermissionHelper.checkMainPermission(["view_community_post"])) { 
     views.push({
       path: "/community-posts",
-      name: "Communit Posts",
+      name: "Community Queries",
       rtlName: "",
       mini: "",
       rtlMini: "",
