@@ -12,7 +12,7 @@ import Link from "@material-ui/core/Link";
 import { fileService } from "_services";
 import { COMMUNITY_POST_STATUS, COMMUNITY_POST_DISCUSSION_STATUS } from "_constants/form.constants";
 
-const title = 'Community Posts'
+const title = 'Community Queries'
 class CommunityPostList extends React.PureComponent {
     constructor(props) {
         super(props)
@@ -92,15 +92,18 @@ class CommunityPostList extends React.PureComponent {
             },
             {
                 title: "Visitor Name",
-                field: "visitor.name"
+                field: "visitor.name",
+                sorting: false
             },
             {
-                title: "Total Replies",
-                field: "__meta__.total_reply"
+                title: "Total Answers",
+                field: "__meta__.total_reply",
+                sorting: false
             },
             {
                 title: "Total Helpful",
-                field: "__meta__.total_helpful"
+                field: "__meta__.total_helpful",
+                sorting: false
             },
             {
                 title: "Total Views",

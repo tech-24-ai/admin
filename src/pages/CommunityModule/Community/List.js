@@ -51,12 +51,14 @@ class CommunityList extends React.PureComponent {
                 field: "name",
             },
             {
-                title: "Total Post",
-                field: "__meta__.total_posts"
+                title: "Total Queries",
+                field: "__meta__.total_posts",
+                sorting: false
             },
             {
-                title: "Total Post Reply",
-                field: "__meta__.total_post_reply"
+                title: "Total Answers",
+                field: "__meta__.total_post_reply",
+                sorting: false
             },
             {
                 title: "Date",
