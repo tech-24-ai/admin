@@ -376,3 +376,14 @@ export const CRON_TYPE = [
     name: "SERVICE PROVIDER LINKEDIN LOGO",
   },
 ];
+
+export const COMMUNITY_POST_STATUS = [
+  { id: "0", name: "Pending" },
+  { id: "1", name: "Approved" },
+  { id: "2", name: "Rejected" },
+];
+
+export const COMMUNITY_POST_DISCUSSION_STATUS = [
+  { id: "0", name: "No" },
+  { id: "1", name: "Yes" },
+];
