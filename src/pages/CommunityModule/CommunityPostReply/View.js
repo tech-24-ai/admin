@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 // material ui icons
-import MailOutline from "@material-ui/icons/Contacts";
+import ForumIcon from '@material-ui/icons/Forum';
 
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -88,9 +88,9 @@ const Index = (props) => {
                 <Card>
                     <CardHeader color="primary" icon>
                         <CardIcon color="primary">
-                            <MailOutline />
+                            <ForumIcon />
                         </CardIcon>
-                        <h4 className={classes.cardIconTitle}>Community Post Reply Details</h4>
+                        <h4 className={classes.cardIconTitle}>Community Query Answer Details</h4>
                     </CardHeader>
                     <CardBody>
                         <TableContainer component={Paper}>
@@ -105,7 +105,7 @@ const Index = (props) => {
                                         <TableCell align="left">{state.communityPost?.community?.name}</TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell  style={{width: '20%'}} component="th" scope="row">Post Title</TableCell>
+                                        <TableCell  style={{width: '20%'}} component="th" scope="row">Query Title</TableCell>
                                         <TableCell align="left">{state.communityPost.title}</TableCell>
                                     </TableRow>
                                     {state.parentData?.description && 
@@ -121,7 +121,7 @@ const Index = (props) => {
                                         </TableRow>
                                     }    
                                     <TableRow>
-                                        <TableCell  style={{width: '20%'}} component="th" scope="row">Reply</TableCell>
+                                        <TableCell  style={{width: '20%'}} component="th" scope="row">Answer</TableCell>
                                         <TableCell align="left">{state.description}</TableCell>
                                     </TableRow>
                                     <TableRow>

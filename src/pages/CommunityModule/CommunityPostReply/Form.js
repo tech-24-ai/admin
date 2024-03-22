@@ -55,18 +55,18 @@ class CommunityPostReplyForm extends React.PureComponent {
     getFormFields = () => {
         const { form } = this.state;
         const formFields = [
-            {
-                name: "title",
-                label: "Post Title",
-                type: "textbox",
-                value: form.communityPost.title || "",
-                icon: "assignment",
-                disabled: true,
-                readonly: true,
-            },
+            // {
+            //     name: "title",
+            //     label: "Query Title",
+            //     type: "textbox",
+            //     value: form.communityPost.title || "",
+            //     icon: "assignment",
+            //     disabled: true,
+            //     readonly: true,
+            // },
             {
                 name: "description",
-                label: "Post Description",
+                label: "Answer",
                 type: "textbox",
                 value: form.description || "",
                 icon: "assignment",
@@ -144,7 +144,7 @@ class CommunityPostReplyForm extends React.PureComponent {
     render() {
         const { classes } = this.props;
         const { id } = this.props.match.params
-        let title = 'Update Post Status'
+        let title = 'Update Answer Status'
         let btnText = 'Update'
 
         return (

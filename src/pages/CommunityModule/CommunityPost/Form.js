@@ -58,7 +58,7 @@ class CommunityPostForm extends React.PureComponent {
         const formFields = [
             {
                 name: "title",
-                label: "Post Title",
+                label: "Query Title",
                 type: "textbox",
                 value: form.title || "",
                 icon: "assignment",
@@ -67,7 +67,7 @@ class CommunityPostForm extends React.PureComponent {
             },
             {
                 name: "description",
-                label: "Post Description",
+                label: "Query Description",
                 type: "textbox",
                 value: form.description || "",
                 icon: "assignment",
@@ -155,7 +155,7 @@ class CommunityPostForm extends React.PureComponent {
     render() {
         const { classes } = this.props;
         const { id } = this.props.match.params
-        let title = 'Update Post Status'
+        let title = 'Update Query Status'
         let btnText = 'Update'
 
         return (

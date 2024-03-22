@@ -338,6 +338,7 @@ import CommunityPostForm from "pages/CommunityModule/CommunityPost/Form.js";
 import CommunityPostReplyList from "pages/CommunityModule/CommunityPostReply/List.js";
 import CommunityPostReplyForm from "pages/CommunityModule/CommunityPostReply/Form.js";
 import CommunityPostReplyView from "pages/CommunityModule/CommunityPostReply/View.js";
+import CommunityPostReplyCommentsList from "pages/CommunityModule/CommunityPostReply/Comments.js";
 
 import ReportAbusesList from "pages/CommunityModule/ReportAbuses/List.js";
 import ReportAbuseView from "pages/CommunityModule/ReportAbuses/View.js";
@@ -2324,6 +2325,12 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
       layout: "/admin",
     });
 
+    dashRoutes.push({
+      path: "/community-posts-reply-comments/:id",
+      component: CommunityPostReplyCommentsList,
+      layout: "/admin",
+    });
+    
     if (PermissionHelper.checkPermission("edit_community_post_reply")) {  
       dashRoutes.push({
         path: "/community-posts-reply-form/:id",

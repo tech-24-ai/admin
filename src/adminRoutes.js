@@ -1214,27 +1214,27 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
     });
   }
 
-  if (PermissionHelper.checkMainPermission(["view_visitor_technology"])) {  
-    views.push({
-      path: "/technology",
-      name: "Technology",
-      rtlName: "",
-      mini: "",
-      rtlMini: "",
-      layout: "/admin",
-    });
-  }
+  // if (PermissionHelper.checkMainPermission(["view_visitor_technology"])) {  
+  //   views.push({
+  //     path: "/technology",
+  //     name: "Technology",
+  //     rtlName: "",
+  //     mini: "",
+  //     rtlMini: "",
+  //     layout: "/admin",
+  //   });
+  // }
 
-  if (PermissionHelper.checkMainPermission(["view_report_abuse_types"])) {
-    views.push({
-      path: "/report_abuse/type",
-      name: "Report Abuse Type",
-      rtlName: "",
-      mini: "",
-      rtlMini: "",
-      layout: "/admin",
-    });
-  }
+  // if (PermissionHelper.checkMainPermission(["view_report_abuse_types"])) {
+  //   views.push({
+  //     path: "/report_abuse/type",
+  //     name: "Report Abuse Type",
+  //     rtlName: "",
+  //     mini: "",
+  //     rtlMini: "",
+  //     layout: "/admin",
+  //   });
+  // }
 
   if (PermissionHelper.checkMainPermission(["view_community"])) { 
     views.push({
@@ -1250,7 +1250,7 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
   if (PermissionHelper.checkMainPermission(["view_community_post"])) { 
     views.push({
       path: "/community-posts",
-      name: "Communit Posts",
+      name: "Community Queries",
       rtlName: "",
       mini: "",
       rtlMini: "",
@@ -1258,16 +1258,16 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
     });
   }
 
-  if (PermissionHelper.checkMainPermission(["view_report_abuses"])) {
-    views.push({
-      path: "/report-abuses",
-      name: "Report Abuses",
-      rtlName: "",
-      mini: "",
-      rtlMini: "",
-      layout: "/admin",
-    });
-  }
+  // if (PermissionHelper.checkMainPermission(["view_report_abuses"])) {
+  //   views.push({
+  //     path: "/report-abuses",
+  //     name: "Report Abuses",
+  //     rtlName: "",
+  //     mini: "",
+  //     rtlMini: "",
+  //     layout: "/admin",
+  //   });
+  // }
 
   dashRoutes.push({
     collapse: true,
