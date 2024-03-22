@@ -319,7 +319,32 @@ import AnomalyForm from "pages/SettingModule/Anomaly/Form.js";
 import NubelaLogList from "pages/SettingModule/Nubela/Logs.js";
 import SignalHireLogList from "pages/SettingModule/SignalHire/Logs.js";
 
+// Community Tags Lists
+import TagsList from "pages/CommunityModule/Tags/List.js";
+import TagsForm from "pages/CommunityModule/Tags/Form.js";
+
+import CommunityList from "pages/CommunityModule/Community/List.js";
+import CommunityForm from "pages/CommunityModule/Community/Form.js";
+
+import VisitorTechnologyList from "pages/CommunityModule/Technology/List.js";
+import VisitorTechnologyForm from "pages/CommunityModule/Technology/Form.js";
+
+import ReportAbuseTypesList from "pages/CommunityModule/ReportAbuseTypes/List.js";
+import ReportAbuseTypesForm from "pages/CommunityModule/ReportAbuseTypes/Form.js";
+
+import CommunityPostList from "pages/CommunityModule/CommunityPost/List.js";
+import CommunityPostForm from "pages/CommunityModule/CommunityPost/Form.js";
+
+import CommunityPostReplyList from "pages/CommunityModule/CommunityPostReply/List.js";
+import CommunityPostReplyForm from "pages/CommunityModule/CommunityPostReply/Form.js";
+import CommunityPostReplyView from "pages/CommunityModule/CommunityPostReply/View.js";
+import CommunityPostReplyCommentsList from "pages/CommunityModule/CommunityPostReply/Comments.js";
+
+import ReportAbusesList from "pages/CommunityModule/ReportAbuses/List.js";
+import ReportAbuseView from "pages/CommunityModule/ReportAbuses/View.js";
+
 import { PermissionHelper, UserHelper } from "_helpers";
+import { ImageOutlined } from "@material-ui/icons";
 
 var dashRoutes = [];
 
@@ -2199,6 +2224,134 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
         layout: "/admin",
       }
     );
+  }
+
+  if (PermissionHelper.checkMainPermission(["view_tags"])) {  
+    dashRoutes.push({
+      path: "/tags",
+      component: TagsList,
+      layout: "/admin",
+    });
+
+    if (PermissionHelper.checkPermission("add_tags") || PermissionHelper.checkPermission("edit_tags")) {
+      dashRoutes.push({
+        path: "/tags-form/:id",
+        component: TagsForm,
+        layout: "/admin",
+      });
+    } 
+  } 
+
+  if (PermissionHelper.checkMainPermission(["view_visitor_technology"])) {    
+    dashRoutes.push({
+      path: "/technology",
+      component: VisitorTechnologyList,
+      layout: "/admin",
+    });
+    
+    if (PermissionHelper.checkPermission("add_visitor_technology") || PermissionHelper.checkPermission("edit_visitor_technology")) {
+      dashRoutes.push({
+        path: "/technology-form/:id",
+        component: VisitorTechnologyForm,
+        layout: "/admin",
+      });
+    }  
+  }
+
+  if (PermissionHelper.checkMainPermission(["view_report_abuse_types"])) { 
+    dashRoutes.push({
+      path: "/report_abuse/type",
+      component: ReportAbuseTypesList,
+      layout: "/admin",
+    });
+
+    if (PermissionHelper.checkPermission("add_report_abuse_types") || PermissionHelper.checkPermission("edit_report_abuse_types")) {  
+      dashRoutes.push({
+        path: "/report-abuse-type-form/:id",
+        component: ReportAbuseTypesForm,
+        layout: "/admin",
+      });
+    }  
+  }
+
+  if (PermissionHelper.checkMainPermission(["view_community"])) { 
+    dashRoutes.push({
+      path: "/communities",
+      component: CommunityList,
+      layout: "/admin",
+    });
+
+    if (PermissionHelper.checkPermission("add_community") || PermissionHelper.checkPermission("edit_community")) {  
+      dashRoutes.push({
+        path: "/communities-form/:id",
+        component: CommunityForm,
+        layout: "/admin",
+      });
+    }  
+  }
+
+  if (PermissionHelper.checkMainPermission(["view_community_post"])) { 
+    dashRoutes.push({
+      path: "/community-posts",
+      component: CommunityPostList,
+      layout: "/admin",
+    });
+
+    dashRoutes.push({
+      path: "/community-posts-lists/:id",
+      component: CommunityPostList,
+      layout: "/admin",
+    });
+
+    if (PermissionHelper.checkPermission("edit_community_post")) {  
+      dashRoutes.push({
+        path: "/community-posts-form/:id",
+        component: CommunityPostForm,
+        layout: "/admin",
+      });  
+    }
+  }
+
+  if (PermissionHelper.checkMainPermission(["view_community_post_reply"])) { 
+    dashRoutes.push({
+      path: "/community-posts-reply/:id",
+      component: CommunityPostReplyList,
+      layout: "/admin",
+    });
+
+    dashRoutes.push({
+      path: "/community-posts-reply-view/:id",
+      component: CommunityPostReplyView,
+      layout: "/admin",
+    });
+
+    dashRoutes.push({
+      path: "/community-posts-reply-comments/:id",
+      component: CommunityPostReplyCommentsList,
+      layout: "/admin",
+    });
+    
+    if (PermissionHelper.checkPermission("edit_community_post_reply")) {  
+      dashRoutes.push({
+        path: "/community-posts-reply-form/:id",
+        component: CommunityPostReplyForm,
+        layout: "/admin",
+      });
+    }
+  }    
+
+  if (PermissionHelper.checkMainPermission(["view_report_abuses"])) { 
+    dashRoutes.push({
+      path: "/report-abuses",
+      component: ReportAbusesList,
+      layout: "/admin",
+    });
+
+    dashRoutes.push({
+      path: "/report-abuse-view/:id",
+      component: ReportAbuseView,
+      layout: "/admin",
+    });
   }
 }
 
