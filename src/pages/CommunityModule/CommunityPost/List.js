@@ -91,6 +91,11 @@ class CommunityPostList extends React.PureComponent {
                 ),
             },
             {
+                title: "Community",
+                field: "community.name",
+                sorting: false
+            },
+            {
                 title: "Visitor Name",
                 field: "visitor.name",
                 sorting: false

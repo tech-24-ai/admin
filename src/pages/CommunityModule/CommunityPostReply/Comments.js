@@ -11,22 +11,20 @@ import { TableAction } from '../../../material-table/TableAction';
 import { PermissionHelper } from '_helpers';
 import Link from "@material-ui/core/Link";
 import { crudService } from "_services";
-import { COMMUNITY_POST_STATUS, COMMUNITY_POST_DISCUSSION_STATUS } from "_constants/form.constants";
 import { Typography, Paper, Divider, TextField } from '@material-ui/core';
-import { Visibility, ThumbUp, Edit, Delete} from '@material-ui/icons';
+import { Visibility, ThumbUp, Delete } from '@material-ui/icons';
 import TablePagination from '@material-ui/core/TablePagination';
 import moment from "moment";
-import Badge from "components/Badge/Badge.js";
 
-const title = 'Answers'
+const title = 'Comments'
 
 const initialState = {
     form: {
-        title: '',
         description: '',
+        created_at: '',
         visitor: '',
-        views_counter: '',
         __meta__:'',
+        communityPost: {}
     },
     page: 0,
     rowsPerPage : 10,
@@ -39,9 +37,7 @@ class CommunityPostReplyList extends React.PureComponent {
         super(props)
         this.state = initialState
         this.deleteCrud = this.deleteCrud.bind(this);
-        this.editCrud = this.editCrud.bind(this);
         this.deleteAll = this.deleteAll.bind(this);
-        this.communityPostReplyDetails = this.communityPostReplyDetails.bind(this);
     }
 
     componentDidUpdate() {
@@ -55,13 +51,6 @@ class CommunityPostReplyList extends React.PureComponent {
             }
             this.props.clearConfirm();
         }
-    }
-
-    toggleModal(log) {
-        this.props.openModal({
-          open: true,
-          component: log,
-        });
     }
 
     deleteData = (id) => {
@@ -80,18 +69,10 @@ class CommunityPostReplyList extends React.PureComponent {
         this.props.showConfirm('Confirm', `Are you sure want to delete ${data.length} row ?`, data)
     }
 
-    editCrud(data) {
-        this.props.history.push(`/admin/community-posts-reply-form/${data.id}`)
-    }
-
-    communityPostReplyDetails(data) {
-        this.props.history.push(`/admin/community-posts-reply-view/${data.id}`)
-    }
-
     bindData = () => {
         const { id } = this.props.match.params
         if (id && id !== '') {
-            crudService._get('community/posts', id).then((response) => {
+            crudService._get('community/posts_reply', id).then((response) => {
                 if (response.status === 200) {
                     this.setState({
                         form: response.data,
@@ -107,7 +88,6 @@ class CommunityPostReplyList extends React.PureComponent {
     }
 
     handleChangePage = (event, newPage) => {
-        console.log("page change = ", newPage);
         this.setState({
             page: newPage,
         })
@@ -129,7 +109,7 @@ class CommunityPostReplyList extends React.PureComponent {
             page: page,
             pageSize: rowsPerPage
         };
-        crudService._getAll(`community/posts_reply?community_post_id=${id}`, tempQuery).then((response) => {
+        crudService._getAll(`community/posts_reply_comments?parent_id=${id}`, tempQuery).then((response) => {
             if (response.status === 200) {
                 this.setState({
                     totalRecords: response.data.total,
@@ -144,94 +124,14 @@ class CommunityPostReplyList extends React.PureComponent {
         const { form, page, rowsPerPage, totalRecords, postrReplyDataArray } = this.state
         let url = `community/posts_reply?community_post_id=${id}`;
         
-        // const columns = [            
-        //     {
-        //         title: "Description",
-        //         field: "description",
-        //         render: (item) =>
-        //         item.description && (
-        //             <div>
-        //                 {item.description?.substring(0, 30)}{" "}
-        //                 {item.description.length > 30 &&
-        //                     <span>
-        //                         <Link
-        //                         onClick={() => this.toggleModal(item.description)}
-        //                         href="javascript:"
-        //                         >
-        //                         ... More
-        //                         </Link>
-        //                     </span>
-        //                 }
-        //             </div>
-        //         ),
-        //     },
-        //     {
-        //         title: "Community",
-        //         field: "communityPost.community.name",
-        //         sorting: false
-        //     },
-        //     {
-        //         title: "Visitor Name",
-        //         field: "visitor.name",
-        //         sorting: false
-        //     },
-        //     {
-        //         title: "Total Helpful",
-        //         field: "__meta__.total_helpful",
-        //         sorting: false
-        //     },
-        //     {
-        //         title: "Status",
-        //         field: "status",
-        //         lookupConstant: COMMUNITY_POST_STATUS,
-        //     },
-        //     {
-        //         title: "Correct Answer",
-        //         field: "is_correct_answer",
-        //         lookupConstant: COMMUNITY_POST_DISCUSSION_STATUS,
-        //     },
-        //     {
-        //         title: "Date",
-        //         field: "updated_at"
-        //     },
-        //     TableAction(PermissionHelper.checkPermission('delete_community_post_reply') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_community_post_reply') ? this.editCrud : null, null, null, this.communityPostReplyDetails)
-        // ]
-
         const replyDataItems = postrReplyDataArray.map((item, i) => 
             <GridContainer style={{ marginBottom: 10 }} key={i} > 
                 <GridItem xs={12}>
                     <Grid component="label" container spacing={1}> 
-                        <Grid item xs={4}>
+                        <Grid item xs={11}>
                             By {item.visitor.name} On  {moment(item.created_at).format("DD-MM-YYYY")}
-                        </Grid>       
-                        <Grid item xs={4}>
-                            {item.__meta__.total_helpful} Helpful
-                            <span style={{margin: 10}}></span>
-                            {item.__meta__.total_comments} Comments
-                        </Grid>    
-                        <Grid item xs={2} style={{textAlign: "right"}}>
-                            <CorrectAnswer is_correct={item.is_correct_answer} />
-                        </Grid>    
-                        <Grid item xs={1} style={{textAlign: "right"}}>    
-                            <ReplyStatus status_name={item.status} />
-                        </Grid>    
-                        <Grid item xs={1} style={{textAlign: "right"}}>    
-                            <span>
-                                <Link
-                                href={`/admin/community-posts-reply-comments/${item.id}`}
-                                style={{paddingRight: 5}}
-                                >
-                                    <Visibility fontSize="small" />
-                                </Link>
-                            </span>
-                            <span>
-                                <Link
-                                href={`/admin/community-posts-reply-form/${item.id}`}
-                                style={{paddingRight: 5}}
-                                >
-                                    <Edit fontSize="small" />
-                                </Link>
-                            </span>   
+                        </Grid>     
+                        <Grid item xs={1} style={{textAlign: "right"}}> 
                             <span>
                                 <Link
                                 onClick={() => this.deleteCrud(item)}
@@ -261,7 +161,7 @@ class CommunityPostReplyList extends React.PureComponent {
                         <GridContainer >
                             <GridItem xs={12}>
                                 <Typography gutterBottom variant="h6">
-                                    {form.title}
+                                    {form.communityPost.title}
                                 </Typography>
                             </GridItem>   
                             <GridItem xs={12} style={{ marginBottom: 10 }}>    
@@ -269,24 +169,47 @@ class CommunityPostReplyList extends React.PureComponent {
                             </GridItem>   
                             <GridItem xs={12} style={{ marginBottom: 10 }}>
                                 <Typography variant="body2" gutterBottom>
-                                    {form.description}
+                                    {form.communityPost.description}
                                 </Typography>
                             </GridItem>   
                             <GridItem xs={12}>
                                 <Grid component="label" container spacing={1} alignItems="center">
                                     <Grid item xs={1} fontSize="small" style={{display: "flex"}}>
                                         <Visibility fontSize="small" style={{marginRight: 5}} /> 
-                                        {form.views_counter}
+                                        {form.communityPost.views_counter}
                                     </Grid>         
                                     <Grid item xs={1} style={{display: "flex"}}>
                                         <ThumbUp fontSize="small" style={{marginRight: 5}} />
-                                        {form.__meta__.total_helpful}
+                                        {form.__meta__.total_post_helpful}
                                     </Grid>  
                                     <Grid item xs={3}>
-                                        Posted by {form.visitor.name}
+                                        Posted by {form.communityPost?.visitor?.name}
                                     </Grid>
                                 </Grid>
                             </GridItem>
+                        </GridContainer>
+                        
+                        <GridContainer >
+                            <GridItem xs={12} style={{ marginTop: 10, marginBottom: 10 }}>  
+                                <Divider />
+                            </GridItem>
+                            <GridItem xs={12}>
+                                <Grid component="label" container spacing={1}> 
+                                    <Grid item xs={4}>
+                                        Answer By {form.visitor.name} On  {moment(form.created_at).format("DD-MM-YYYY")}
+                                    </Grid>       
+                                    <Grid item xs={4}>
+                                        {form.__meta__.total_helpful} Helpful
+                                    </Grid>   
+                                    <Grid item xs={1} style={{textAlign: "right"}}>    
+                                    </Grid> 
+                                </Grid>
+                            </GridItem>
+                            <GridItem xs={12} style={{ marginTop: 10 }}>
+                                <Typography variant="body2">
+                                    {form.description}
+                                </Typography>
+                            </GridItem> 
                         </GridContainer>
                     </Paper>
                 </GridItem>
@@ -329,52 +252,9 @@ class CommunityPostReplyList extends React.PureComponent {
                     </Paper>
                 </GridItem>
 
-                {/* <GridItem xs={12}>
-                    <MaterialDataTable
-                        title={title}
-                        columns={columns}
-                        addData={false}
-                        deleteAll={PermissionHelper.checkPermission('delete_community_post_reply') ? this.deleteAll : false}
-                        url={url}
-                        selection={true}
-                        refresh={true}
-                        serverSide={true}
-                        search={true}
-                        sorting={true}
-                        filtering={true}
-                    />
-                </GridItem> */}
             </GridContainer>
         );
     }
-}
-
-function ReplyStatus({status_name}) {
-
-    let status = COMMUNITY_POST_STATUS.find((item) => {
-        return item.id == status_name;
-    });
-
-    let statusName = status.name;
-    let color = "warning";
-    if(statusName == 'Approved') {
-        color = "success";
-    } else if (statusName == 'Pending') {
-        color = "warning";
-    } else if (statusName == 'Rejected') {
-        color = "danger";
-    }
-
-    return <Badge color={color} children={statusName}  />;
-}
-
-function CorrectAnswer({is_correct}) {
-
-    if(is_correct == 1) {
-        return <Badge color="success" children="Correct Answer"  />;
-    } else {
-        return null;
-    }   
 }
 
 const mapStateToProps = (state) => {
@@ -387,7 +267,6 @@ const actionCreators = {
     deleteCrud: crudActions._delete,
     showConfirm: confirmActions.show,
     clearConfirm: confirmActions.clear,
-    openModal: modalActions.open,
 }
 
 export default connect(mapStateToProps, actionCreators)(CommunityPostReplyList);
