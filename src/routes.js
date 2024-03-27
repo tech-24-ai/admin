@@ -343,6 +343,9 @@ import CommunityPostReplyCommentsList from "pages/CommunityModule/CommunityPostR
 import ReportAbusesList from "pages/CommunityModule/ReportAbuses/List.js";
 import ReportAbuseView from "pages/CommunityModule/ReportAbuses/View.js";
 
+import BadgeList from "pages/CommunityModule/Badge/List.js";
+import BadgeForm from "pages/CommunityModule/Badge/Form.js";
+
 import { PermissionHelper, UserHelper } from "_helpers";
 import { ImageOutlined } from "@material-ui/icons";
 
@@ -2353,6 +2356,22 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
       layout: "/admin",
     });
   }
+
+  if (PermissionHelper.checkMainPermission(["view_badge"])) { 
+    dashRoutes.push({
+      path: "/badge",
+      component: BadgeList,
+      layout: "/admin",
+    });
+    
+    if (PermissionHelper.checkPermission("add_badge") || PermissionHelper.checkPermission("edit_badge")) {  
+      dashRoutes.push({
+        path: "/badge-form/:id",
+        component: BadgeForm,
+        layout: "/admin",
+      });
+    }    
+  }  
 }
 
 export default dashRoutes;

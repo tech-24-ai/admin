@@ -218,6 +218,7 @@ class CommunityPostReplyList extends React.PureComponent {
                         <Grid item xs={1} style={{textAlign: "right"}}>    
                             <span>
                                 <Link
+                                title="View Comments"
                                 href={`/admin/community-posts-reply-comments/${item.id}`}
                                 style={{paddingRight: 5}}
                                 >

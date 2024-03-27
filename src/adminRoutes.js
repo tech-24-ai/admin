@@ -1258,6 +1258,17 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
     });
   }
 
+  if (PermissionHelper.checkMainPermission(["view_badge"])) { 
+    views.push({
+      path: "/badge",
+      name: "Badge",
+      rtlName: "",
+      mini: "",
+      rtlMini: "",
+      layout: "/admin",
+    });
+  }  
+
   // if (PermissionHelper.checkMainPermission(["view_report_abuses"])) {
   //   views.push({
   //     path: "/report-abuses",
