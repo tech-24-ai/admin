@@ -19,6 +19,7 @@ class VisitorList extends React.PureComponent {
     this.editCrud = this.editCrud.bind(this);
     this.addCrud = this.addCrud.bind(this);
     this.deleteAll = this.deleteAll.bind(this);
+    this.viewVisitorCommunityProfile = this.viewVisitorCommunityProfile.bind(this);
   }
 
   componentDidUpdate() {
@@ -70,6 +71,10 @@ class VisitorList extends React.PureComponent {
     this.props.history.push(`/admin/visitor-form/new`);
   }
 
+  viewVisitorCommunityProfile(data) {
+    this.props.history.push(`/admin/visitor-community-profile/${data.id}`)
+  }
+
   render() {
     const columns = [
       {
@@ -106,8 +111,11 @@ class VisitorList extends React.PureComponent {
           : null,false,
         PermissionHelper.checkPermission("update_visitor_password")
           ? this.changePassword
-          : null,false,
-        ({ rowData }) => {
+          : null,
+        PermissionHelper.checkPermission("view_visitor_community_profile")
+          ? this.viewVisitorCommunityProfile
+          : null,
+          ({ rowData }) => {
           return (
             <>
               {rowData.visitor_ip && rowData.visitor_ip != "" ? (

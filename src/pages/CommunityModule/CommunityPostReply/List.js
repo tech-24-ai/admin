@@ -204,7 +204,7 @@ class CommunityPostReplyList extends React.PureComponent {
                         <Grid item xs={4}>
                             By {item.visitor.name} On  {moment(item.created_at).format("DD-MM-YYYY")}
                         </Grid>       
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
                             {item.__meta__.total_helpful} Helpful
                             <span style={{margin: 10}}></span>
                             {item.__meta__.total_comments} Comments
@@ -215,7 +215,7 @@ class CommunityPostReplyList extends React.PureComponent {
                         <Grid item xs={1} style={{textAlign: "right"}}>    
                             <ReplyStatus status_name={item.status} />
                         </Grid>    
-                        <Grid item xs={1} style={{textAlign: "right"}}>    
+                        <Grid item xs={2} style={{textAlign: "right"}}>    
                             <span>
                                 <Link
                                 title="View Comments"

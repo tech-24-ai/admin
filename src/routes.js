@@ -346,6 +346,9 @@ import ReportAbuseView from "pages/CommunityModule/ReportAbuses/View.js";
 import BadgeList from "pages/CommunityModule/Badge/List.js";
 import BadgeForm from "pages/CommunityModule/Badge/Form.js";
 
+
+import VisitorCommunityProfile from "pages/CommunityModule/VisitorProfile/View.js";
+
 import { PermissionHelper, UserHelper } from "_helpers";
 import { ImageOutlined } from "@material-ui/icons";
 
@@ -2371,6 +2374,13 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
         layout: "/admin",
       });
     }    
+
+    dashRoutes.push({
+      path: "/visitor-community-profile/:id",
+      component: VisitorCommunityProfile,
+      layout: "/admin",
+    });
+    
   }  
 }
 
