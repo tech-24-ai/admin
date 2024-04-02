@@ -1247,7 +1247,7 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
     });
   }
    
-  if (PermissionHelper.checkMainPermission(["view_community_post"])) { 
+  if (PermissionHelper.checkMainPermission(["view_community_query"])) { 
     views.push({
       path: "/community-posts",
       name: "Community Queries",

@@ -33,6 +33,7 @@ const initialState = {
         name: '',
         email: '',
         mobile: '',
+        communities: []
     },
 }
 
@@ -51,6 +52,11 @@ class UserForm extends React.PureComponent {
     handleInputChange(event) {
         const newState = Object.assign({}, this.state);
         newState.form[event.target.name] = event.target.value;
+        
+        if(event.target.name == 'role_id') {
+            newState.form['role'] = event.target.label;
+            newState.form['communities'] = [];
+        }    
         this.setState(newState);
         this.handleError();
     }
@@ -95,6 +101,19 @@ class UserForm extends React.PureComponent {
             },
         ]
 
+        if(form.role && form.role.toLowerCase().includes('moderator')) 
+        {
+            formFields.push({
+                name: "communities",
+                label: "Choose Community",
+                type: "multi_autocomplete",
+                url: `community`,
+                getOptionLabel: "name",
+                getOptionValue: "id",
+                value: form.communities,
+                error: this.validator.message("Communities", form.communities, "required"),
+            });
+        }
         return formFields
     }
 
@@ -110,11 +129,16 @@ class UserForm extends React.PureComponent {
     handleSubmit(e) {
         e.preventDefault();
         if (this.validator.allValid()) {
+            const userCommunities = this.state.form.communities.map(
+                (option) => option.id
+            );
+            
             let data = {
                 role_id: this.state.form.role_id,
                 name: this.state.form.name,
                 email: this.state.form.email,
                 mobile: this.state.form.mobile,
+                communities: JSON.stringify(userCommunities),
             }
             const { id } = this.props.match.params
             if (id && id === 'new') {
@@ -147,7 +171,7 @@ class UserForm extends React.PureComponent {
             crudService._get('users', id).then((response) => {
                 if (response.status === 200) {
                     this.setState({
-                        form: response.data,
+                        form: response.data
                     })
                 }
             })

@@ -2231,7 +2231,10 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
       }
     );
   }
+}
 
+if(PermissionHelper.checkMainPermission(["view_community_manager"]))
+{
   if (PermissionHelper.checkMainPermission(["view_tags"])) {  
     dashRoutes.push({
       path: "/tags",
@@ -2296,7 +2299,7 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
     }  
   }
 
-  if (PermissionHelper.checkMainPermission(["view_community_post"])) { 
+  if (PermissionHelper.checkMainPermission(["view_community_query"])) { 
     dashRoutes.push({
       path: "/community-posts",
       component: CommunityPostList,
@@ -2309,7 +2312,7 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
       layout: "/admin",
     });
 
-    if (PermissionHelper.checkPermission("edit_community_post")) {  
+    if (PermissionHelper.checkPermission("edit_community_query")) {  
       dashRoutes.push({
         path: "/community-posts-form/:id",
         component: CommunityPostForm,
@@ -2318,7 +2321,7 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
     }
   }
 
-  if (PermissionHelper.checkMainPermission(["view_community_post_reply"])) { 
+  if (PermissionHelper.checkMainPermission(["view_community_query_answer"])) { 
     dashRoutes.push({
       path: "/community-posts-reply/:id",
       component: CommunityPostReplyList,
@@ -2332,12 +2335,12 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
     });
 
     dashRoutes.push({
-      path: "/community-posts-reply-comments/:id",
+      path: "/community-posts-reply-comments/:id/:depth_level_2?/:depth_level_3?/:depth_level_4?/:depth_level_5?",
       component: CommunityPostReplyCommentsList,
       layout: "/admin",
     });
     
-    if (PermissionHelper.checkPermission("edit_community_post_reply")) {  
+    if (PermissionHelper.checkPermission("edit_community_query_answer")) {  
       dashRoutes.push({
         path: "/community-posts-reply-form/:id",
         component: CommunityPostReplyForm,
@@ -2382,6 +2385,6 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
     });
     
   }  
-}
+}  
 
 export default dashRoutes;

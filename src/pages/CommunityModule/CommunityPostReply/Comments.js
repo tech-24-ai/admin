@@ -159,14 +159,16 @@ class CommunityPostReplyList extends React.PureComponent {
                                 </span>
                             )}
 
-                            <span>
-                                <Link
-                                onClick={() => this.deleteCrud(item)}
-                                href="javascript:"
-                                >
-                                    <Delete fontSize="small" />
-                                </Link>
-                            </span>   
+                            { PermissionHelper.checkPermission('delete_community_answer_comments') && (        
+                                <span>
+                                    <Link
+                                    onClick={() => this.deleteCrud(item)}
+                                    href="javascript:"
+                                    >
+                                        <Delete fontSize="small" />
+                                    </Link>
+                                </span>  
+                            )}     
                         </Grid> 
                     </Grid>
                 </GridItem>

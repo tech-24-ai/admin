@@ -64,7 +64,7 @@ class CommunityList extends React.PureComponent {
                 title: "Date",
                 field: "updated_at"
             },
-            TableAction(null, PermissionHelper.checkPermission('edit_community') ? this.editCrud : null, null, null, PermissionHelper.checkPermission('view_community_post') ? this.viewCommunityPost : null)
+            TableAction(null, PermissionHelper.checkPermission('edit_community') ? this.editCrud : null, null, null, PermissionHelper.checkPermission('view_community_query') ? this.viewCommunityPost : null)
         ]
 
         return (
