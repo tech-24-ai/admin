@@ -346,8 +346,10 @@ import ReportAbuseView from "pages/CommunityModule/ReportAbuses/View.js";
 import BadgeList from "pages/CommunityModule/Badge/List.js";
 import BadgeForm from "pages/CommunityModule/Badge/Form.js";
 
-
 import VisitorCommunityProfile from "pages/CommunityModule/VisitorProfile/View.js";
+
+import NewsAnnouncementList from "pages/CommunityModule/NewsAnnouncement/List.js";
+import NewsAnnouncementForm from "pages/CommunityModule/NewsAnnouncement/Form.js";
 
 import { PermissionHelper, UserHelper } from "_helpers";
 import { ImageOutlined } from "@material-ui/icons";
@@ -2377,14 +2379,31 @@ if(PermissionHelper.checkMainPermission(["view_community_manager"]))
         layout: "/admin",
       });
     }    
+  }
 
+  if (PermissionHelper.checkMainPermission(["view_visitor_community_profile"])) { 
     dashRoutes.push({
       path: "/visitor-community-profile/:id",
       component: VisitorCommunityProfile,
       layout: "/admin",
     });
-    
   }  
+  
+  if (PermissionHelper.checkMainPermission(["view_news_announcements"])) {
+    dashRoutes.push({
+      path: "/news-announcements",
+      component: NewsAnnouncementList,
+      layout: "/admin",
+    });
+    
+    if (PermissionHelper.checkPermission("add_news_announcements") || PermissionHelper.checkPermission("edit_news_announcements")) {
+      dashRoutes.push({
+        path: "/news-announcements-form/:id",
+        component: NewsAnnouncementForm,
+        layout: "/admin",
+      });
+    }
+  }    
 }  
 
 export default dashRoutes;

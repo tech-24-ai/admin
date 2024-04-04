@@ -1280,6 +1280,17 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
   //   });
   // }
 
+  if (PermissionHelper.checkMainPermission(["view_news_announcements"])) {
+    views.push({
+      path: "/news-announcements",
+      name: "News & Announcements",
+      rtlName: "",
+      mini: "",
+      rtlMini: "",
+      layout: "/admin",
+    });
+  }
+
   dashRoutes.push({
     collapse: true,
     name: "Community",
