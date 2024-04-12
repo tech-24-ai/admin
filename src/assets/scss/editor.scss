@@ -1,0 +1,39 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.gjs-pn-btn {
+  min-width: 25px;
+  min-height: 25px;
+}
+
+.gjs-pn-options {
+  right: 30% !important;
+}
+.gjs-pn-views {
+  width: 25% !important;
+  border: none !important;
+}
+
+.gjs-pn-views-container {
+  width: 25% !important;
+
+  .gjs-block-categories {
+    .gjs-blocks-c {
+      .gjs-block {
+        padding: 10px !important;
+        min-height: 75px !important;
+        margin: 10px 1.5% 5px !important;
+
+        .gjs-block__media {
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+.gjs-cv-canvas {
+  width: 75% !important;
+}
