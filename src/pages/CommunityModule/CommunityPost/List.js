@@ -128,7 +128,7 @@ class CommunityPostList extends React.PureComponent {
                 title: "Date",
                 field: "updated_at"
             },
-            TableAction(PermissionHelper.checkPermission('delete_community_query') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_community_post') ? this.editCrud : null, null, null, PermissionHelper.checkPermission('view_community_query_answer') ? this.viewCommunityPostReply : null)
+            TableAction(PermissionHelper.checkPermission('delete_community_query') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_community_query') ? this.editCrud : null, null, null, PermissionHelper.checkPermission('view_community_query_answer') ? this.viewCommunityPostReply : null)
         ]
 
         return (
