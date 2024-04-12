@@ -13,7 +13,7 @@ import Link from "@material-ui/core/Link";
 import { crudService } from "_services";
 import { COMMUNITY_POST_STATUS, COMMUNITY_POST_DISCUSSION_STATUS } from "_constants/form.constants";
 import { Typography, Paper, Divider, TextField } from '@material-ui/core';
-import { Visibility, ThumbUp, Edit, Delete} from '@material-ui/icons';
+import { Visibility, ThumbUp, Edit, Delete, Check} from '@material-ui/icons';
 import TablePagination from '@material-ui/core/TablePagination';
 import moment from "moment";
 import Badge from "components/Badge/Badge.js";
@@ -42,6 +42,7 @@ class CommunityPostReplyList extends React.PureComponent {
         this.editCrud = this.editCrud.bind(this);
         this.deleteAll = this.deleteAll.bind(this);
         this.communityPostReplyDetails = this.communityPostReplyDetails.bind(this);
+        this.markCorrectAnswer = this.markCorrectAnswer.bind(this);
     }
 
     componentDidUpdate() {
@@ -49,7 +50,11 @@ class CommunityPostReplyList extends React.PureComponent {
             if (this.props.confirm.data.length) {
                 this.props.confirm.data.map(value => this.deleteData(value.id))
             } else {
-                if (this.props.confirm.data.id) {
+                console.log('confirm data = ', this.props.confirm.data)
+                if (this.props.confirm.data.id && this.props.confirm.data.type == 'update_correct_ans') {
+                    this.updateCorrectAnswerStatus(this.props.confirm.data.id);
+                }
+                else if (this.props.confirm.data.id) {
                     this.deleteData(this.props.confirm.data.id);
                 }
             }
@@ -107,7 +112,6 @@ class CommunityPostReplyList extends React.PureComponent {
     }
 
     handleChangePage = (event, newPage) => {
-        console.log("page change = ", newPage);
         this.setState({
             page: newPage,
         })
@@ -135,6 +139,33 @@ class CommunityPostReplyList extends React.PureComponent {
                     totalRecords: response.data.total,
                     postrReplyDataArray: response.data.data
                 })
+            }
+        })
+    }
+
+    markCorrectAnswer = (id) => {
+        
+        let data = {
+            id: id,
+            type: 'update_correct_ans'
+        }
+
+        this.props.showConfirm('Confirm', `Are you sure you want to Mark as Correct Answer?`, data)
+
+        // crudService._create('community/reply_mark_correct_answer', data).then((response) => {
+        //     if (response.status === 200) {
+        //         this.getPostReplyData()
+        //     }
+        // })
+    }
+
+    updateCorrectAnswerStatus = (id) => {
+        let data = {
+            id: id
+        }
+        crudService._create('community/reply_mark_correct_answer', data).then((response) => {
+            if (response.status === 200) {
+                this.getPostReplyData()
             }
         })
     }
@@ -216,6 +247,21 @@ class CommunityPostReplyList extends React.PureComponent {
                             <ReplyStatus status_name={item.status} />
                         </Grid>    
                         <Grid item xs={2} style={{textAlign: "right"}}>    
+                            { item.status == 1 && item.is_correct_answer == 0 ? (
+                                <span>
+                                    <Link
+                                    title="Mark as Correct Answer"
+                                    onClick={() => this.markCorrectAnswer(item.id) }
+                                    href="javascript:"
+                                    style={{paddingRight: 5}}
+                                    >
+                                        <Check fontSize="small" />
+                                    </Link>
+                                </span>
+                            ) : (
+                                ""
+                            )}
+
                             { PermissionHelper.checkPermission('view_community_answer_comments') && (
                                 <span>
                                     <Link
