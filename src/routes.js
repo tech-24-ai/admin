@@ -343,6 +343,20 @@ import CommunityPostReplyCommentsList from "pages/CommunityModule/CommunityPostR
 import ReportAbusesList from "pages/CommunityModule/ReportAbuses/List.js";
 import ReportAbuseView from "pages/CommunityModule/ReportAbuses/View.js";
 
+import BadgeList from "pages/CommunityModule/Badge/List.js";
+import BadgeForm from "pages/CommunityModule/Badge/Form.js";
+
+import VisitorCommunityProfile from "pages/CommunityModule/VisitorProfile/View.js";
+
+import NewsAnnouncementList from "pages/CommunityModule/NewsAnnouncement/List.js";
+import NewsAnnouncementForm from "pages/CommunityModule/NewsAnnouncement/Form.js";
+
+import ResearchTopicsList from "pages/DocumentModule/ResearchTopics/List.js";
+import ResearchTopicsForm from "pages/DocumentModule/ResearchTopics/Form.js";
+
+import ResearchTagsList from "pages/DocumentModule/ResearchTags/List.js";
+import ResearchTagsForm from "pages/DocumentModule/ResearchTags/Form.js";
+
 import { PermissionHelper, UserHelper } from "_helpers";
 import { ImageOutlined } from "@material-ui/icons";
 
@@ -1652,6 +1666,45 @@ if (true) {
         });
       }
     }
+
+    if (PermissionHelper.checkPermission("view_research_topics")) {
+      dashRoutes.push({
+        path: "/research-topics",
+        component: ResearchTopicsList,
+        layout: "/admin",
+      });
+      
+      if (
+        PermissionHelper.checkPermission("add_research_topic") ||
+        PermissionHelper.checkPermission("edit_research_topic")
+      ) {
+        dashRoutes.push({
+          path: "/research-topics-form/:id",
+          component: ResearchTopicsForm,
+          layout: "/admin",
+        });
+      }  
+    }  
+
+    if (PermissionHelper.checkPermission("view_research_tags")) {
+      dashRoutes.push({
+        path: "/research-tags",
+        component: ResearchTagsList,
+        layout: "/admin",
+      });
+  
+      if (
+        PermissionHelper.checkPermission("add_research_tag") ||
+        PermissionHelper.checkPermission("edit_research_tag")
+      ) {
+        dashRoutes.push({
+          path: "/research-tags-form/:id",
+          component: ResearchTagsForm,
+          layout: "/admin",
+        });
+      }  
+    }  
+
     if (PermissionHelper.checkPermission("view_documents")) {
       dashRoutes.push({
         path: "/documents",
@@ -2225,7 +2278,10 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
       }
     );
   }
+}
 
+if(PermissionHelper.checkMainPermission(["view_community_manager"]))
+{
   if (PermissionHelper.checkMainPermission(["view_tags"])) {  
     dashRoutes.push({
       path: "/tags",
@@ -2290,7 +2346,7 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
     }  
   }
 
-  if (PermissionHelper.checkMainPermission(["view_community_post"])) { 
+  if (PermissionHelper.checkMainPermission(["view_community_query"])) { 
     dashRoutes.push({
       path: "/community-posts",
       component: CommunityPostList,
@@ -2303,7 +2359,7 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
       layout: "/admin",
     });
 
-    if (PermissionHelper.checkPermission("edit_community_post")) {  
+    if (PermissionHelper.checkPermission("edit_community_query")) {  
       dashRoutes.push({
         path: "/community-posts-form/:id",
         component: CommunityPostForm,
@@ -2312,7 +2368,7 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
     }
   }
 
-  if (PermissionHelper.checkMainPermission(["view_community_post_reply"])) { 
+  if (PermissionHelper.checkMainPermission(["view_community_query_answer"])) { 
     dashRoutes.push({
       path: "/community-posts-reply/:id",
       component: CommunityPostReplyList,
@@ -2326,12 +2382,12 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
     });
 
     dashRoutes.push({
-      path: "/community-posts-reply-comments/:id",
+      path: "/community-posts-reply-comments/:id/:depth_level_2?/:depth_level_3?/:depth_level_4?/:depth_level_5?",
       component: CommunityPostReplyCommentsList,
       layout: "/admin",
     });
     
-    if (PermissionHelper.checkPermission("edit_community_post_reply")) {  
+    if (PermissionHelper.checkPermission("edit_community_query_answer")) {  
       dashRoutes.push({
         path: "/community-posts-reply-form/:id",
         component: CommunityPostReplyForm,
@@ -2353,6 +2409,47 @@ if (PermissionHelper.checkMainPermission(["view_logs_manager"])) {
       layout: "/admin",
     });
   }
-}
+
+  if (PermissionHelper.checkMainPermission(["view_badge"])) { 
+    dashRoutes.push({
+      path: "/badge",
+      component: BadgeList,
+      layout: "/admin",
+    });
+    
+    if (PermissionHelper.checkPermission("add_badge") || PermissionHelper.checkPermission("edit_badge")) {  
+      dashRoutes.push({
+        path: "/badge-form/:id",
+        component: BadgeForm,
+        layout: "/admin",
+      });
+    }    
+  }
+
+  if (PermissionHelper.checkMainPermission(["view_visitor_community_profile"])) { 
+    dashRoutes.push({
+      path: "/visitor-community-profile/:id",
+      component: VisitorCommunityProfile,
+      layout: "/admin",
+    });
+  }  
+  
+  if (PermissionHelper.checkMainPermission(["view_news_announcements"])) {
+    dashRoutes.push({
+      path: "/news-announcements",
+      component: NewsAnnouncementList,
+      layout: "/admin",
+    });
+    
+    if (PermissionHelper.checkPermission("add_news_announcements") || PermissionHelper.checkPermission("edit_news_announcements")) {
+      dashRoutes.push({
+        path: "/news-announcements-form/:id",
+        component: NewsAnnouncementForm,
+        layout: "/admin",
+      });
+    }
+  }
+    
+}  
 
 export default dashRoutes;

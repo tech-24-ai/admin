@@ -194,7 +194,7 @@ class CommunityPostReplyList extends React.PureComponent {
         //         title: "Date",
         //         field: "updated_at"
         //     },
-        //     TableAction(PermissionHelper.checkPermission('delete_community_post_reply') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_community_post_reply') ? this.editCrud : null, null, null, this.communityPostReplyDetails)
+        //     TableAction(PermissionHelper.checkPermission('delete_community_query_answer') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_community_query_answer') ? this.editCrud : null, null, null, this.communityPostReplyDetails)
         // ]
 
         const replyDataItems = postrReplyDataArray.map((item, i) => 
@@ -204,7 +204,7 @@ class CommunityPostReplyList extends React.PureComponent {
                         <Grid item xs={4}>
                             By {item.visitor.name} On  {moment(item.created_at).format("DD-MM-YYYY")}
                         </Grid>       
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
                             {item.__meta__.total_helpful} Helpful
                             <span style={{margin: 10}}></span>
                             {item.__meta__.total_comments} Comments
@@ -215,31 +215,40 @@ class CommunityPostReplyList extends React.PureComponent {
                         <Grid item xs={1} style={{textAlign: "right"}}>    
                             <ReplyStatus status_name={item.status} />
                         </Grid>    
-                        <Grid item xs={1} style={{textAlign: "right"}}>    
-                            <span>
-                                <Link
-                                href={`/admin/community-posts-reply-comments/${item.id}`}
-                                style={{paddingRight: 5}}
-                                >
-                                    <Visibility fontSize="small" />
-                                </Link>
-                            </span>
-                            <span>
-                                <Link
-                                href={`/admin/community-posts-reply-form/${item.id}`}
-                                style={{paddingRight: 5}}
-                                >
-                                    <Edit fontSize="small" />
-                                </Link>
-                            </span>   
-                            <span>
-                                <Link
-                                onClick={() => this.deleteCrud(item)}
-                                href="javascript:"
-                                >
-                                    <Delete fontSize="small" />
-                                </Link>
-                            </span>   
+                        <Grid item xs={2} style={{textAlign: "right"}}>    
+                            { PermissionHelper.checkPermission('view_community_answer_comments') && (
+                                <span>
+                                    <Link
+                                    title="View Comments"
+                                    href={`/admin/community-posts-reply-comments/${item.id}`}
+                                    style={{paddingRight: 5}}
+                                    >
+                                        <Visibility fontSize="small" />
+                                    </Link>
+                                </span>
+                            )}
+
+                            { PermissionHelper.checkPermission('edit_community_query_answer') && (
+                                <span>
+                                    <Link
+                                    href={`/admin/community-posts-reply-form/${item.id}`}
+                                    style={{paddingRight: 5}}
+                                    >
+                                        <Edit fontSize="small" />
+                                    </Link>
+                                </span>   
+                            )}
+
+                            { PermissionHelper.checkPermission('delete_community_query_answer') && (        
+                                <span>
+                                    <Link
+                                    onClick={() => this.deleteCrud(item)}
+                                    href="javascript:"
+                                    >
+                                        <Delete fontSize="small" />
+                                    </Link>
+                                </span>   
+                            )}    
                         </Grid> 
                     </Grid>
                 </GridItem>
@@ -334,7 +343,7 @@ class CommunityPostReplyList extends React.PureComponent {
                         title={title}
                         columns={columns}
                         addData={false}
-                        deleteAll={PermissionHelper.checkPermission('delete_community_post_reply') ? this.deleteAll : false}
+                        deleteAll={PermissionHelper.checkPermission('delete_community_query_answer') ? this.deleteAll : false}
                         url={url}
                         selection={true}
                         refresh={true}

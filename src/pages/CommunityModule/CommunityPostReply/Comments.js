@@ -15,6 +15,8 @@ import { Typography, Paper, Divider, TextField } from '@material-ui/core';
 import { Visibility, ThumbUp, Delete } from '@material-ui/icons';
 import TablePagination from '@material-ui/core/TablePagination';
 import moment from "moment";
+import Button from "@material-ui/core/Button";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
 const title = 'Comments'
 
@@ -70,16 +72,17 @@ class CommunityPostReplyList extends React.PureComponent {
     }
 
     bindData = () => {
-        const { id } = this.props.match.params
-        if (id && id !== '') {
-            crudService._get('community/posts_reply', id).then((response) => {
-                if (response.status === 200) {
-                    this.setState({
-                        form: response.data,
-                    })
-                }
-            })
-        }
+        const params = this.props.match.params
+        const params_array = Object.values(params).filter(Boolean);
+        let parent_id = params_array.slice(-1)[0];
+
+        crudService._get('community/posts_reply', parent_id).then((response) => {
+            if (response.status === 200) {
+                this.setState({
+                    form: response.data,
+                })
+            }
+        })
     }
 
     componentDidMount() {
@@ -102,14 +105,17 @@ class CommunityPostReplyList extends React.PureComponent {
     };
     
     getPostReplyData = () => {
-        const { id } = this.props.match.params
-        const { page, rowsPerPage } = this.state
+        console.log('param ', this.props)
+        const params = this.props.match.params
+        const params_array = Object.values(params).filter(Boolean);
+        let parent_id = params_array.slice(-1)[0];
 
+        const { page, rowsPerPage } = this.state
         const tempQuery = {
             page: page,
             pageSize: rowsPerPage
         };
-        crudService._getAll(`community/posts_reply_comments?parent_id=${id}`, tempQuery).then((response) => {
+        crudService._getAll(`community/posts_reply_comments?parent_id=${parent_id}`, tempQuery).then((response) => {
             if (response.status === 200) {
                 this.setState({
                     totalRecords: response.data.total,
@@ -120,26 +126,49 @@ class CommunityPostReplyList extends React.PureComponent {
     }
 
     render() {
-        const { id } = this.props.match.params
         const { form, page, rowsPerPage, totalRecords, postrReplyDataArray } = this.state
-        let url = `community/posts_reply?community_post_id=${id}`;
+        const params = this.props.match.params
+        const params_array = Object.values(params).filter(Boolean);
+        let url_paramas = params_array.join("/");
         
         const replyDataItems = postrReplyDataArray.map((item, i) => 
             <GridContainer style={{ marginBottom: 10 }} key={i} > 
                 <GridItem xs={12}>
                     <Grid component="label" container spacing={1}> 
-                        <Grid item xs={11}>
+                        <Grid item xs={4}>
                             By {item.visitor.name} On  {moment(item.created_at).format("DD-MM-YYYY")}
                         </Grid>     
-                        <Grid item xs={1} style={{textAlign: "right"}}> 
-                            <span>
-                                <Link
-                                onClick={() => this.deleteCrud(item)}
-                                href="javascript:"
-                                >
-                                    <Delete fontSize="small" />
-                                </Link>
-                            </span>   
+                        <Grid item xs={3}>
+                            {item.__meta__.total_helpful} Helpful
+                            <span style={{margin: 10}}></span>
+                            { params_array.length < 5 && (
+                                `${item.__meta__.total_comments} Comments`
+                            )}
+                        </Grid>  
+                        <Grid item xs={3}></Grid>
+                        <Grid item xs={2} style={{textAlign: "right"}}> 
+                            { params_array.length < 5 && (
+                                <span>
+                                    <Link
+                                    title="View Comments"
+                                    href={`/admin/community-posts-reply-comments/${url_paramas}/${item.id}`}
+                                    style={{paddingRight: 5}}
+                                    >
+                                        <Visibility fontSize="small" />
+                                    </Link>
+                                </span>
+                            )}
+
+                            { PermissionHelper.checkPermission('delete_community_answer_comments') && (        
+                                <span>
+                                    <Link
+                                    onClick={() => this.deleteCrud(item)}
+                                    href="javascript:"
+                                    >
+                                        <Delete fontSize="small" />
+                                    </Link>
+                                </span>  
+                            )}     
                         </Grid> 
                     </Grid>
                 </GridItem>
@@ -156,8 +185,17 @@ class CommunityPostReplyList extends React.PureComponent {
 
         return (
             <GridContainer>
+                <GridItem xs={12} style={{ marginBottom: 20 }}>
+                    <Button style={{ float: "right" }}
+                    variant="contained"
+                    startIcon={<KeyboardBackspaceIcon />}
+                    onClick={() => { this.props.history.goBack() }}
+                    >
+                        Back
+                    </Button>
+                </GridItem>  
                 <GridItem xs={12}>
-                   <Paper style={{ marginBottom: 20, padding: 20 }}>
+                    <Paper style={{ marginBottom: 20, padding: 20 }}>
                         <GridContainer >
                             <GridItem xs={12}>
                                 <Typography gutterBottom variant="h6">

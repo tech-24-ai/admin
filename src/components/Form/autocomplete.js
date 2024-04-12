@@ -45,12 +45,14 @@ class MuiAutocompleteBox extends React.Component {
   };
 
   handleChange = (value, name, label) => {
+    const { formField } = this.props;
     const [data] = this.state.options.filter((data) => data.id == value);
+    let val = data[formField.getOptionLabel];
     const event = {
       target: {
         name: name,
         value: value,
-        label: data && data.day_of_week ? data.day_of_week : null,
+        label: data && data.day_of_week ? data.day_of_week : val,
       },
     };
     this.props.handleInputChange(event);

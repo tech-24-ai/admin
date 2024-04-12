@@ -38,6 +38,7 @@ import RenderTableDynamicForm from "./renderTableDynamicForm";
 import RenderScheduleDynamicForm from "./renderScheduleDynamicForm";
 import RenderTableDynamicList from "./renderTableDynamicList";
 import RenderEditor from "./renderEditor";
+import RenderPageBuilder from "./renderPageBuilder";
 import TreeBox from "./treeBox";
 import Chatform from "./chatform";
 import { crudService } from "../../_services";
@@ -577,6 +578,14 @@ class MyForm extends React.PureComponent {
             case "editor":
               return (
                 <RenderEditor
+                  key={index}
+                  formField={formField}
+                  handleInputChange={this.handleInputChange}
+                />
+              );
+            case "pageBuilder":
+              return (
+                <RenderPageBuilder
                   key={index}
                   formField={formField}
                   handleInputChange={this.handleInputChange}

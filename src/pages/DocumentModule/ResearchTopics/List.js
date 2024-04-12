@@ -8,15 +8,15 @@ import MaterialDataTable from "material-table/Table.js";
 import { crudActions, confirmActions } from '../../../_actions';
 import { TableAction } from '../../../material-table/TableAction';
 import { PermissionHelper } from '_helpers';
-import { fileService } from "_services";
 
-const title = 'Community'
-class CommunityList extends React.PureComponent {
+const title = 'Research Topics'
+class ResearchTopicsList extends React.PureComponent {
     constructor(props) {
         super(props)
+        this.deleteCrud = this.deleteCrud.bind(this);
         this.addCrud = this.addCrud.bind(this);
         this.editCrud = this.editCrud.bind(this);
-        this.viewCommunityPost = this.viewCommunityPost.bind(this);
+        this.deleteAll = this.deleteAll.bind(this);
     }
 
     componentDidUpdate() {
@@ -32,44 +32,37 @@ class CommunityList extends React.PureComponent {
         }
     }
 
+    deleteData = (id) => {
+        this.props.deleteCrud('form', 'research_topics', id);
+    }
+
+    deleteCrud(data) {
+        this.props.showConfirm('Confirm', `Are you sure want to delete ${data.name} ?`, data)
+    }
+
+    deleteAll(data) {
+        this.props.showConfirm('Confirm', `Are you sure want to delete ${data.length} row ?`, data)
+    }
+
     editCrud(data) {
-        this.props.history.push(`/admin/communities-form/${data.id}`)
+        this.props.history.push(`/admin/research-topics-form/${data.id}`)
     }
 
     addCrud() {
-        this.props.history.push(`/admin/communities-form/new`)
-    }
-
-    viewCommunityPost(data) {
-        this.props.history.push(`/admin/community-posts-lists/${data.id}`)
+        this.props.history.push(`/admin/research-topics-form/new`)
     }
 
     render() {
         const columns = [            
             {
-                title: "Name",
-                field: "name",
-            },
-            {
-                title: "Total Queries",
-                field: "__meta__.total_posts",
-                sorting: false
-            },
-            {
-                title: "Total Answers",
-                field: "__meta__.total_post_reply",
-                sorting: false
-            },
-            {
-                title: "Total Members",
-                field: "__meta__.total_members",
-                sorting: false
+                title: "Title",
+                field: "title"
             },
             {
                 title: "Date",
                 field: "updated_at"
             },
-            TableAction(null, PermissionHelper.checkPermission('edit_community') ? this.editCrud : null, null, null, PermissionHelper.checkPermission('view_community_query') ? this.viewCommunityPost : null)
+            TableAction(PermissionHelper.checkPermission('delete_research_topic') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_research_topic') ? this.editCrud : null)
         ]
 
         return (
@@ -78,10 +71,10 @@ class CommunityList extends React.PureComponent {
                     <MaterialDataTable
                         title={title}
                         columns={columns}
-                        addData={PermissionHelper.checkPermission('add_community') ? this.addCrud : false}
-                        deleteAll={false}
-                        url='community'
-                        selection={false}
+                        addData={PermissionHelper.checkPermission('add_research_topic') ? this.addCrud : false}
+                        deleteAll={PermissionHelper.checkPermission('delete_research_topic') ? this.deleteAll : false}
+                        url='research_topics'
+                        selection={true}
                         refresh={true}
                         serverSide={true}
                         search={true}
@@ -101,8 +94,9 @@ const mapStateToProps = (state) => {
 }
 
 const actionCreators = {
+    deleteCrud: crudActions._delete,
     showConfirm: confirmActions.show,
     clearConfirm: confirmActions.clear,
 }
 
-export default connect(mapStateToProps, actionCreators)(CommunityList);
+export default connect(mapStateToProps, actionCreators)(ResearchTopicsList);

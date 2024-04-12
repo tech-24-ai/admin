@@ -32,7 +32,7 @@ const initialState = {
     image: "",
     banner: "",
     slug: "",
-    html: "",
+    html: { html: "", css: "" },
   },
 };
 
@@ -48,6 +48,7 @@ class BlogListForm extends React.PureComponent {
   }
 
   handleInputChange(event) {
+    console.log("EVent", event);
     const newState = Object.assign({}, this.state);
     if (!!event.target) {
       newState.form[event.target.name] = event.target.value;
@@ -105,7 +106,7 @@ class BlogListForm extends React.PureComponent {
           "required|min:3"
         ),
       },
-      
+
       {
         name: "status",
         label: "Status",
@@ -113,13 +114,13 @@ class BlogListForm extends React.PureComponent {
         options: BLOG_STATUS,
         value: form.status || "",
         icon: "assignment",
-        error: this.validator.message("status", form.status, ""),
+        error: this.validator.message("status", form.status, "required"),
       },
       {
         name: "banner",
         label: "Banner Image",
         type: "imageUpload",
-        aspect:Number(20/5),
+        aspect: Number(20 / 5),
         uploadUrl: "upload/image",
         value: form.banner || "",
         icon: "image",
@@ -171,11 +172,11 @@ class BlogListForm extends React.PureComponent {
       },
       {
         name: "html",
-        label: "Html",
-        type: "editor",
+        label: "Editor",
+        type: "pageBuilder",
         value: form.html,
         icon: "assignment",
-        error: this.validator.message("editor1", form.html, "min:3"),
+        // error: this.validator.message("editor2", form.html, "min:3"),
       },
     ];
 
@@ -206,6 +207,7 @@ class BlogListForm extends React.PureComponent {
 
   handleSubmit(e) {
     e.preventDefault();
+    console.log("IsValid", this.validator.allValid());
     if (this.validator.allValid()) {
       let data = {
         blog_topic_id: this.state.form.blog_topic_id,
@@ -218,8 +220,9 @@ class BlogListForm extends React.PureComponent {
         image: this.state.form.image,
         banner: this.state.form.banner,
         slug: this.state.form.slug,
-        html: this.state.form.html,
+        html: JSON.stringify(this.state.form.html),
       };
+      console.log("DATA", data);
       const { id } = this.props.match.params;
       if (id && id === "new") {
         this.props.create("formData", "blogs", data);

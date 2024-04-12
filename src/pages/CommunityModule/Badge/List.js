@@ -8,16 +8,17 @@ import MaterialDataTable from "material-table/Table.js";
 import { crudActions, confirmActions } from '../../../_actions';
 import { TableAction } from '../../../material-table/TableAction';
 import { PermissionHelper } from '_helpers';
-import { fileService } from "_services";
 
-const title = 'Community'
-class CommunityList extends React.PureComponent {
+const title = 'Badge'
+class BadgeList extends React.PureComponent {
     constructor(props) {
         super(props)
+        this.deleteCrud = this.deleteCrud.bind(this);
         this.addCrud = this.addCrud.bind(this);
         this.editCrud = this.editCrud.bind(this);
-        this.viewCommunityPost = this.viewCommunityPost.bind(this);
+        this.deleteAll = this.deleteAll.bind(this);
     }
+
 
     componentDidUpdate() {
         if (this.props.confirm.confirm) {
@@ -32,44 +33,45 @@ class CommunityList extends React.PureComponent {
         }
     }
 
+    deleteData = (id) => {
+        this.props.deleteCrud('form', 'community/badge', id);
+    }
+
+    deleteCrud(data) {
+        this.props.showConfirm('Confirm', `Are you sure want to delete ${data.title} ?`, data)
+    }
+
+    deleteAll(data) {
+        this.props.showConfirm('Confirm', `Are you sure want to delete ${data.length} row ?`, data)
+    }
+
     editCrud(data) {
-        this.props.history.push(`/admin/communities-form/${data.id}`)
+        this.props.history.push(`/admin/badge-form/${data.id}`)
     }
 
     addCrud() {
-        this.props.history.push(`/admin/communities-form/new`)
-    }
-
-    viewCommunityPost(data) {
-        this.props.history.push(`/admin/community-posts-lists/${data.id}`)
+        this.props.history.push(`/admin/badge-form/new`)
     }
 
     render() {
         const columns = [            
             {
-                title: "Name",
-                field: "name",
-            },
+                title: "Title",
+                field: "title"
+            },           
             {
-                title: "Total Queries",
-                field: "__meta__.total_posts",
-                sorting: false
-            },
+                title: "Min. Range",
+                field: "min_range"
+            },           
             {
-                title: "Total Answers",
-                field: "__meta__.total_post_reply",
-                sorting: false
-            },
-            {
-                title: "Total Members",
-                field: "__meta__.total_members",
-                sorting: false
+                title: "Max. Range",
+                field: "max_range"
             },
             {
                 title: "Date",
                 field: "updated_at"
             },
-            TableAction(null, PermissionHelper.checkPermission('edit_community') ? this.editCrud : null, null, null, PermissionHelper.checkPermission('view_community_query') ? this.viewCommunityPost : null)
+            TableAction(PermissionHelper.checkPermission('delete_badge') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_badge') ? this.editCrud : null)
         ]
 
         return (
@@ -78,10 +80,10 @@ class CommunityList extends React.PureComponent {
                     <MaterialDataTable
                         title={title}
                         columns={columns}
-                        addData={PermissionHelper.checkPermission('add_community') ? this.addCrud : false}
-                        deleteAll={false}
-                        url='community'
-                        selection={false}
+                        addData={PermissionHelper.checkPermission('add_badge') ? this.addCrud : false}
+                        deleteAll={PermissionHelper.checkPermission('delete_badge') ? this.deleteAll : false}
+                        url='community/badge'
+                        selection={true}
                         refresh={true}
                         serverSide={true}
                         search={true}
@@ -101,8 +103,9 @@ const mapStateToProps = (state) => {
 }
 
 const actionCreators = {
+    deleteCrud: crudActions._delete,
     showConfirm: confirmActions.show,
     clearConfirm: confirmActions.clear,
 }
 
-export default connect(mapStateToProps, actionCreators)(CommunityList);
+export default connect(mapStateToProps, actionCreators)(BadgeList);

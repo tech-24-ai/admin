@@ -654,6 +654,29 @@ if (PermissionHelper.checkMainPermission(["view_master_manager"])) {
           layout: "/admin",
         });
       }
+
+      if (PermissionHelper.checkMainPermission(["view_research_topics"])) {
+        subViews.push({
+          path: "/research-topics",
+          name: "Research Topics",
+          rtlName: "",
+          mini: "",
+          rtlMini: "",
+          layout: "/admin",
+        });
+      }
+
+      if (PermissionHelper.checkPermission("view_research_tags")) {
+        subViews.push({
+          path: "/research-tags",
+          name: "Research Tags",
+          rtlName: "",
+          mini: "",
+          rtlMini: "",
+          layout: "/admin",
+        });
+      }
+       
       if (PermissionHelper.checkMainPermission(["view_documents"])) {
         subViews.push({
           path: "/documents",
@@ -1247,7 +1270,7 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
     });
   }
    
-  if (PermissionHelper.checkMainPermission(["view_community_post"])) { 
+  if (PermissionHelper.checkMainPermission(["view_community_query"])) { 
     views.push({
       path: "/community-posts",
       name: "Community Queries",
@@ -1257,6 +1280,17 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
       layout: "/admin",
     });
   }
+
+  if (PermissionHelper.checkMainPermission(["view_badge"])) { 
+    views.push({
+      path: "/badge",
+      name: "Badge",
+      rtlName: "",
+      mini: "",
+      rtlMini: "",
+      layout: "/admin",
+    });
+  }  
 
   // if (PermissionHelper.checkMainPermission(["view_report_abuses"])) {
   //   views.push({
@@ -1268,6 +1302,17 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
   //     layout: "/admin",
   //   });
   // }
+
+  if (PermissionHelper.checkMainPermission(["view_news_announcements"])) {
+    views.push({
+      path: "/news-announcements",
+      name: "News & Announcements",
+      rtlName: "",
+      mini: "",
+      rtlMini: "",
+      layout: "/admin",
+    });
+  }
 
   dashRoutes.push({
     collapse: true,

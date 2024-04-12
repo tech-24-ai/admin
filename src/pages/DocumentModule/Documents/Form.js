@@ -16,6 +16,7 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import MyForm from "components/Form";
 import {
+  BLOG_STATUS,
   EU_SUBSCRIPTION_CATEGORY,
   EU_DOCUMENT_CATEGORY,
 } from "../../../_constants/form.constants";
@@ -24,7 +25,7 @@ import {
 import styles from "assets/jss/material-dashboard-pro-react/views/extendedFormsStyle.js";
 
 import { connect } from "react-redux";
-import { crudActions, fileActions } from "../../../_actions";
+import { crudActions, fileActions, alertActions } from "../../../_actions";
 import { crudService } from "../../../_services";
 import SimpleReactValidator from "simple-react-validator";
 import { Assignment, Category } from "@material-ui/icons";
@@ -36,19 +37,25 @@ const initialState = {
   form: {
     document_type_id: "",
     document_type: "",
+    category_id: "",
+    category_name: "",
+    research_topic_id: "",
+    topic_name: "",
     name: "",
     url: "",
     price: "",
-    is_embedded: 0,
+    // is_embedded: 0,
     seo_url_slug: "",
-    tag: "",
+    tags: [],
     description: "",
+    details: "",
     document_category: "3",
-    subscription_category: "",
-    basic_document_price: "",
-    basic_document_special_price: "",
-    advance_document_price: "",
-    advance_document_special_price: "",
+    // subscription_category: "",
+    // basic_document_price: "",
+    // basic_document_special_price: "",
+    // advance_document_price: "",
+    // advance_document_special_price: "",
+    status: "",
   },
 };
 
@@ -65,12 +72,21 @@ class DocumentForm extends React.PureComponent {
 
   handleInputChange(event) {
     const newState = Object.assign({}, this.state);
-    console.log(event.targe);
     // newState.form[event.target.name] = event.target.value;
     if (!!event.target) {
       if (event.target.type == "checkbox") {
         newState.form[event.target.name] = event.target.checked;
-      } else {
+      }
+      // else if (event.target.name == "url") {
+      //   let val = event.target.value;
+      //   if(checkValidUrl(val)) {
+      //     newState.form[event.target.name] = event.target.value;
+      //   } else {
+      //     newState.form[event.target.name] = "";
+      //     this.props.showError("please enter valid url, Valid only google docs url.");
+      //   }
+      // }
+      else {
         newState.form[event.target.name] = event.target.value;
       }
     } else {
@@ -107,6 +123,36 @@ class DocumentForm extends React.PureComponent {
         ),
       },
       {
+        name: "category_id",
+        label: "Choose Category",
+        type: "autocomplete",
+        url: "categories/all",
+        getOptionLabel: "name",
+        getOptionValue: "id",
+        value: form.category_id || "",
+        option: { label: form.category_name, value: form.category_id },
+        error: this.validator.message(
+          "category_id",
+          form.category_id,
+          "required"
+        ),
+      },
+      {
+        name: "research_topic_id",
+        label: "Choose Research Topic",
+        type: "autocomplete",
+        url: "research_topics",
+        getOptionLabel: "title",
+        getOptionValue: "id",
+        value: form.research_topic_id || "",
+        option: { label: form.topic_name, value: form.research_topic_id },
+        error: this.validator.message(
+          "research_topic_id",
+          form.research_topic_id,
+          "required"
+        ),
+      },
+      {
         name: "url",
         label: "Url",
         type: "file",
@@ -114,12 +160,12 @@ class DocumentForm extends React.PureComponent {
         uploadUrl: "upload/document",
         error: this.validator.message("url", form.url, "url"),
       },
-      {
-        name: "is_embedded",
-        label: "Is Embedded",
-        type: "checkbox",
-        value: form.is_embedded == 1 ? true : false,
-      },
+      // {
+      //   name: "is_embedded",
+      //   label: "Is Embedded",
+      //   type: "checkbox",
+      //   value: form.is_embedded == 1 ? true : false,
+      // },
       {
         name: "seo_url_slug",
         label: "Seo Slug Url",
@@ -133,11 +179,25 @@ class DocumentForm extends React.PureComponent {
         ),
       },
       {
-        name: "tag",
-        label: "Tag",
-        type: "textbox",
-        value: form.tag || "",
-        icon: "assignment",
+        name: "tags",
+        label: "Choose Tags",
+        type: "multi_autocomplete",
+        url: `research_tags`,
+        getOptionLabel: "name",
+        getOptionValue: "id",
+        value: form.tags,
+        error: this.validator.message("Tag", form.tags, "required"),
+      },
+      {
+        name: "details",
+        label: "Details",
+        type: "textarea",
+        value: form.details || "",
+        error: this.validator.message(
+          "details",
+          form.details,
+          "required"
+        ),
       },
       {
         name: "description",
@@ -146,6 +206,15 @@ class DocumentForm extends React.PureComponent {
         value: form.description,
         icon: "assignment",
         error: this.validator.message("editor1", form.description, "min:3"),
+      },
+      {
+        name: "status",
+        label: "Status",
+        type: "select",
+        options: BLOG_STATUS,
+        value: form.status || "",
+        icon: "assignment",
+        error: this.validator.message("status", form.status, "required"),
       },
       // {
       //   name: "document_category",
@@ -160,81 +229,81 @@ class DocumentForm extends React.PureComponent {
       //     "required"
       //   ),
       // },
-      {
-        name: "subscription_category",
-        label: "Subscription Category",
-        type: "select",
-        options: EU_SUBSCRIPTION_CATEGORY,
-        value: form.subscription_category || "",
-        icon: "assignment",
-        error: this.validator.message(
-          "subscription_category",
-          form.subscription_category,
-          "required"
-        ),
-      },
-      {
-        name: "basic_document_price",
-        label: "Basic Document Price",
-        type: "textbox",
-        value: form.basic_document_price || "",
-        icon: "assignment",
-        hidden:
-          form.subscription_category == "3" || form.subscription_category == "2"
-            ? false
-            : true,
-        error: this.validator.message(
-          "basic_document_price",
-          form.basic_document_price,
-          form.subscription_category == "3" || form.subscription_category == "2"
-            ? ""
-            : ""
-        ),
-      },
-      {
-        name: "basic_document_special_price",
-        label: "Basic Document Special Price",
-        type: "textbox",
-        value: form.basic_document_special_price || "",
-        icon: "assignment",
-        hidden:
-          form.subscription_category == "3" || form.subscription_category == "2"
-            ? false
-            : true,
-        error: this.validator.message(
-          "basic_document_special_price",
-          form.basic_document_special_price,
-          form.subscription_category == "3" || form.subscription_category == "2"
-            ? ""
-            : ""
-        ),
-      },
-      {
-        name: "advance_document_price",
-        label: "Advance Document Price",
-        type: "textbox",
-        value: form.advance_document_price || "",
-        icon: "assignment",
-        hidden: form.subscription_category == "3" ? false : true,
-        error: this.validator.message(
-          "advance_document_price",
-          form.advance_document_price,
-          form.subscription_category == "3" ? "" : ""
-        ),
-      },
-      {
-        name: "advance_document_special_price",
-        label: "Advance Document Special Price",
-        type: "textbox",
-        value: form.advance_document_special_price || "",
-        hidden: form.subscription_category == "3" ? false : true,
-        icon: "assignment",
-        error: this.validator.message(
-          "advance_document_special_price",
-          form.advance_document_special_price,
-          form.subscription_category == "3" ? "" : ""
-        ),
-      },
+      // {
+      //   name: "subscription_category",
+      //   label: "Subscription Category",
+      //   type: "select",
+      //   options: EU_SUBSCRIPTION_CATEGORY,
+      //   value: form.subscription_category || "",
+      //   icon: "assignment",
+      //   error: this.validator.message(
+      //     "subscription_category",
+      //     form.subscription_category,
+      //     "required"
+      //   ),
+      // },
+      // {
+      //   name: "basic_document_price",
+      //   label: "Basic Document Price",
+      //   type: "textbox",
+      //   value: form.basic_document_price || "",
+      //   icon: "assignment",
+      //   hidden:
+      //     form.subscription_category == "3" || form.subscription_category == "2"
+      //       ? false
+      //       : true,
+      //   error: this.validator.message(
+      //     "basic_document_price",
+      //     form.basic_document_price,
+      //     form.subscription_category == "3" || form.subscription_category == "2"
+      //       ? ""
+      //       : ""
+      //   ),
+      // },
+      // {
+      //   name: "basic_document_special_price",
+      //   label: "Basic Document Special Price",
+      //   type: "textbox",
+      //   value: form.basic_document_special_price || "",
+      //   icon: "assignment",
+      //   hidden:
+      //     form.subscription_category == "3" || form.subscription_category == "2"
+      //       ? false
+      //       : true,
+      //   error: this.validator.message(
+      //     "basic_document_special_price",
+      //     form.basic_document_special_price,
+      //     form.subscription_category == "3" || form.subscription_category == "2"
+      //       ? ""
+      //       : ""
+      //   ),
+      // },
+      // {
+      //   name: "advance_document_price",
+      //   label: "Advance Document Price",
+      //   type: "textbox",
+      //   value: form.advance_document_price || "",
+      //   icon: "assignment",
+      //   hidden: form.subscription_category == "3" ? false : true,
+      //   error: this.validator.message(
+      //     "advance_document_price",
+      //     form.advance_document_price,
+      //     form.subscription_category == "3" ? "" : ""
+      //   ),
+      // },
+      // {
+      //   name: "advance_document_special_price",
+      //   label: "Advance Document Special Price",
+      //   type: "textbox",
+      //   value: form.advance_document_special_price || "",
+      //   hidden: form.subscription_category == "3" ? false : true,
+      //   icon: "assignment",
+      //   error: this.validator.message(
+      //     "advance_document_special_price",
+      //     form.advance_document_special_price,
+      //     form.subscription_category == "3" ? "" : ""
+      //   ),
+      // },
     ];
 
     return formFields;
@@ -278,24 +347,39 @@ class DocumentForm extends React.PureComponent {
   handleSubmit(e) {
     e.preventDefault();
     if (this.validator.allValid()) {
+
+      const documentTags = this.state.form.tags.map(
+        (option) => option.id
+      );
+
       let data = {
         document_type_id: this.state.form.document_type_id,
+        category_id: this.state.form.category_id,
+        research_topic_id: this.state.form.research_topic_id,
         name: this.state.form.name,
         url: this.state.form.url,
         price: this.state.form.price,
         description: this.state.form.description,
         document_category: this.state.form.document_category,
         seo_url_slug: this.state.form.seo_url_slug,
-        tag: this.state.form.tag,
-        is_embedded: this.state.form.is_embedded == true ? 1 : 0,
-        advance_document_price: this.state.form.advance_document_price,
-        advance_document_special_price: this.state.form
-          .advance_document_special_price,
-        basic_document_price: this.state.form.basic_document_price,
-        basic_document_special_price: this.state.form
-          .basic_document_special_price,
-        subscription_category: this.state.form.subscription_category,
+        tags: JSON.stringify(documentTags),
+        status: this.state.form.status,
+        details: this.state.form.details,
+        // is_embedded: this.state.form.is_embedded == true ? 1 : 0,
+        // advance_document_price: this.state.form.advance_document_price,
+        // advance_document_special_price: this.state.form
+        //   .advance_document_special_price,
+        // basic_document_price: this.state.form.basic_document_price,
+        // basic_document_special_price: this.state.form
+        //   .basic_document_special_price,
+        // subscription_category: this.state.form.subscription_category,
       };
+
+      if(data.url && !checkValidUrl(data.url)) {
+        this.props.showError("The URL should be from Google docs or uploaded.");
+        return false;
+      }  
+
       const { id } = this.props.match.params;
       if (id && id === "new") {
         this.props.create("formData", "documents", data);
@@ -366,6 +450,15 @@ DocumentForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+function checkValidUrl(val) {
+  var urlRegx = new RegExp('(docs.google.com|(tech24))(://[A-Za-z]+-)?', 'i');
+  if(urlRegx.test(val)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function mapState(state) {
   const { form, confirm } = state;
   return { form, confirm };
@@ -378,6 +471,7 @@ const actionCreators = {
   create: crudActions._create,
   update: crudActions._update,
   upload: fileActions._upload,
+  showError: alertActions.error,
 };
 
 export default withStyles(styles)(

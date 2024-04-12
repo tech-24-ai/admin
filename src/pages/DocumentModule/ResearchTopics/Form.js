@@ -1,30 +1,37 @@
+/*eslint-disable*/
 import React from "react";
+// @material-ui/core components
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from 'prop-types';
+
+// material ui icons
 import MailOutline from "@material-ui/icons/Business";
+
+// core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js"; 
+import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import MyForm from "components/Form";
+
+// style for this view
 import styles from "assets/jss/material-dashboard-pro-react/views/validationFormsStyle.js";
+
 import { connect } from 'react-redux';
 import { crudActions } from '../../../_actions';
 import { crudService } from "../../../_services";
-
 import SimpleReactValidator from 'simple-react-validator';
 
 const initialState = {
     id: 'new',
     form: {
-        key: '',
-        value: ''
-    }
+        title: '',
+    },
 }
+class ResearchTopicsForm extends React.PureComponent {
 
-class ConfigForm extends React.PureComponent {
     constructor(props) {
         super(props)
         this.state = initialState
@@ -32,88 +39,35 @@ class ConfigForm extends React.PureComponent {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
-        this.validator = new SimpleReactValidator({autoForceUpdate: this});
-
+        this.validator = new SimpleReactValidator({ autoForceUpdate: this });
     }
 
-        handleInputChange(event) { 
-            const newState = Object.assign({}, this.state);
-            newState.form[event.target.name] = event.target.value;
-            this.setState(newState);
-            this.handleError();
-        }
+    handleInputChange(event) {
+        const newState = Object.assign({}, this.state);
+        newState.form[event.target.name] = event.target.value;
+        this.setState(newState);
+        this.handleError();
+    }
 
-        getFormFields = () => {
-            const { form } = this.state
-            const formFields = [
-                {
-                    name: 'key',
-                    label: 'Key',
-                    type: 'textbox',
-                    readOnly: true,
-                    disabled: true,
-                    value: form.key || '',
-                    icon: 'assignment',
-                    error: this.validator.message('key', form.key, 'required|min:3')
-                },
-                {
-                    name: 'value', 
-                    label: 'Value',
-                    type: 'textbox',
-                    value: form.value || '',
-                    icon: 'assignment',
-                    error: this.validator.message('value', form.value, 'required|min:1')
-                },
-                
+    getFormFields = () => {
+        const { form } = this.state
+        const formFields = [
+            {
+                name: 'title',
+                label: 'Title',
+                type: 'textbox',
+                value: form.title || '',
+                icon: 'assignment',
+                error: this.validator.message('name', form.title, 'required|min:3')
+            },
+        ]
 
-            ]
+        return formFields
+    }
 
-            return formFields
-        }
-
-        getValue(val) {
-            
-            const { id } = this.props.match.params;
-            if (id && id === 'new') {
-                return val;
-            } else {
-
-                if (null === val) {
-                    return '';
-                } else {
-                    return val;
-                }
-
-            }
-        }
-
-        handleError() {
-            this.validator.showMessages();
-            this.forceUpdate();
-        }
-
-        goBack = () => {
-            this.props.history.goBack();
-        }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        if (this.validator.allValid()) {
-            let data = {
-                key: this.state.form.key,
-                value: this.state.form.value
-            }
-            const { id } = this.props.match.params
-            if (id && id === 'new') {
-                this.props.create('formData', 'config', data)
-            } else {
-                this.props.update('formData', 'config', id, data)
-            }
-            this.resetForm();             
-            this.goBack();
-        } else {
-            this.handleError();
-        }
+    handleError() {
+        this.validator.showMessages();
+        this.forceUpdate();
     }
 
     resetForm = () => {
@@ -128,10 +82,36 @@ class ConfigForm extends React.PureComponent {
         this.props.clearCrud('form')
     }
 
+    goBack = () => {
+        this.resetForm();
+        this.props.history.goBack();
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        if (this.validator.allValid()) {
+            let data = {
+                title: this.state.form.title,
+            }
+            const { id } = this.props.match.params
+            if (id && id === 'new') {
+                let st = this.props.create('formData', 'research_topics', data)
+                console.log('st = ', st);
+            } else {
+                this.props.update('formData', 'research_topics', id, data)
+            }
+            
+            this.resetForm();
+            this.goBack();
+        } else {
+            this.handleError();
+        }
+    }
+
     bindData = () => {
         const { id } = this.props.match.params
-        if (id && id !== 'new') {                        
-            crudService._get('config', id).then((response) => {                
+        if (id && id !== 'new') {
+            crudService._get('research_topics', id).then((response) => {
                 if (response.status === 200) {
                     this.setState({
                         form: response.data,
@@ -145,14 +125,13 @@ class ConfigForm extends React.PureComponent {
         this.bindData();
     }
 
-
     render() {
         const { classes } = this.props;
         const { id } = this.props.match.params
-        let title = 'Add Config'
+        let title = 'Add New Research Topic'
         let btnText = 'Create'
         if (id && id !== 'new') {
-            title = 'Edit Config'
+            title = 'Edit Research Topic'
             btnText = 'Update'
         }
 
@@ -180,10 +159,9 @@ class ConfigForm extends React.PureComponent {
             </GridContainer>
         );
     }
-
 }
 
-ConfigForm.propTypes = {
+ResearchTopicsForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
@@ -196,12 +174,10 @@ const mapStateToProps = (state) => {
 }
 
 const actionCreators = {
-    getAll: crudActions._getAll,
     getCrud: crudActions._get,
     clearCrud: crudActions._clear,
     create: crudActions._create,
     update: crudActions._update,
 };
-  
 
-export default withStyles(styles)(connect(mapStateToProps, actionCreators)(ConfigForm));
+export default withStyles(styles)(connect(mapStateToProps, actionCreators)(ResearchTopicsForm));

@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import PropTypes from 'prop-types';
 
 // material ui icons
-import MailOutline from "@material-ui/icons/PermIdentity";
+import MailOutline from "@material-ui/icons/Business";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -15,10 +15,9 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import MyForm from "components/Form";
-
-
+import { STATUS } from "_constants/form.constants";
 // style for this view
-import styles from "assets/jss/material-dashboard-pro-react/views/extendedFormsStyle.js";
+import styles from "assets/jss/material-dashboard-pro-react/views/validationFormsStyle.js";
 
 import { connect } from 'react-redux';
 import { crudActions } from '../../../_actions';
@@ -28,16 +27,14 @@ import SimpleReactValidator from 'simple-react-validator';
 const initialState = {
     id: 'new',
     form: {
-        role_id: '',
-        role: '',
-        name: '',
-        email: '',
-        mobile: '',
-        communities: []
+        community_id: '',
+        title: '',
+        description: '',
+        status: ''
     },
 }
 
-class UserForm extends React.PureComponent {
+class NewsAnnouncementForm extends React.PureComponent {
 
     constructor(props) {
         super(props)
@@ -51,106 +48,61 @@ class UserForm extends React.PureComponent {
 
     handleInputChange(event) {
         const newState = Object.assign({}, this.state);
-        newState.form[event.target.name] = event.target.value;
-        
-        if(event.target.name == 'role_id') {
-            newState.form['role'] = event.target.label;
-            newState.form['communities'] = [];
-        }    
+        if (!!event.target) {
+            newState.form[event.target.name] = event.target.value;
+        } else {
+            newState.form["description"] = event;
+        }
         this.setState(newState);
         this.handleError();
     }
 
     getFormFields = () => {
-        const { form } = this.state
+        const { form } = this.state;
         const formFields = [
             {
-                name: 'name',
-                label: 'Name',
-                type: 'textbox',
-                value: form.name || '',
-                icon: 'account_circle',
-                error: this.validator.message('name', form.name, 'required|min:3')
-            },
-            {
-                name: 'role_id',
-                label: 'Choose Role',
+                name: 'community_id',
+                label: 'Select Community',
                 type: 'autocomplete',
-                url: 'roles',
+                url: 'community',
                 getOptionLabel: 'name',
                 getOptionValue: 'id',
-                value: form.role_id,
-                option: { label: form.role, value: form.role_id },
-                error: this.validator.message('role_id', form.role_id, 'required')
+                value: form.community_id,
+                error: this.validator.message('community', form.community_id, 'required')
             },
             {
-                name: 'email',
-                label: 'Email',
-                type: 'textbox',
-                value: form.email || '',
-                icon: 'email',
-                error: this.validator.message('email', form.email, 'required|email')
+                name: "title",
+                label: "Title",
+                type: "textbox",
+                value: form.title || "",
+                icon: "assignment",
+                error: this.validator.message("title", form.title, "required"),
             },
             {
-                name: 'mobile',
-                label: 'Mobile',
-                type: 'textbox',
-                value: form.mobile || '',
-                icon: 'call',
-                error: this.validator.message('mobile', form.mobile, 'required|min:10|max:15')
+                name: "description",
+                label: "Description",
+                type: "editor",
+                value: form.description,
+                icon: "assignment",
+                error: this.validator.message("description", form.description, "required|min:3"),
+            },
+            {
+                name: "status",
+                label: "Status",
+                type: "select",
+                options: STATUS,
+                value: form.status || "",
+                icon: "assignment",
+                error: this.validator.message("status", form.status, "required"),
             },
         ]
 
-        if(form.role && form.role.toLowerCase().includes('moderator')) 
-        {
-            formFields.push({
-                name: "communities",
-                label: "Choose Community",
-                type: "multi_autocomplete",
-                url: `community`,
-                getOptionLabel: "name",
-                getOptionValue: "id",
-                value: form.communities,
-                error: this.validator.message("Communities", form.communities, "required"),
-            });
-        }
         return formFields
     }
 
     handleError() {
         this.validator.showMessages();
         this.forceUpdate();
-    }
-
-    goBack = () => {        
-        this.props.history.goBack();
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        if (this.validator.allValid()) {
-            const userCommunities = this.state.form.communities.map(
-                (option) => option.id
-            );
-            
-            let data = {
-                role_id: this.state.form.role_id,
-                name: this.state.form.name,
-                email: this.state.form.email,
-                mobile: this.state.form.mobile,
-                communities: JSON.stringify(userCommunities),
-            }
-            const { id } = this.props.match.params
-            if (id && id === 'new') {
-                this.props.create('formData', 'users', data)
-            } else {
-                this.props.update('formData', 'users', id, data)
-            }
-            this.resetForm();
-            this.goBack();
-        } else {
-            this.handleError();
-        }
     }
 
     resetForm = () => {
@@ -165,13 +117,40 @@ class UserForm extends React.PureComponent {
         this.props.clearCrud('form')
     }
 
+    goBack = () => {
+        this.resetForm();
+        this.props.history.goBack();
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        if (this.validator.allValid()) {
+            let data = {
+                community_id: this.state.form.community_id,
+                title: this.state.form.title,
+                status: this.state.form.status,
+                description: this.state.form.description,
+            };
+            const { id } = this.props.match.params;
+            if (id && id === "new") {
+                this.props.create("formData", "news_announcements", data);
+            } else {
+                this.props.update("formData", "news_announcements", id, data);
+            }
+            this.resetForm();
+            this.goBack();
+        } else {
+            this.handleError();
+        }
+    }
+
     bindData = () => {
         const { id } = this.props.match.params
         if (id && id !== 'new') {
-            crudService._get('users', id).then((response) => {
+            crudService._get('news_announcements', id).then((response) => {
                 if (response.status === 200) {
                     this.setState({
-                        form: response.data
+                        form: response.data,
                     })
                 }
             })
@@ -185,11 +164,11 @@ class UserForm extends React.PureComponent {
     render() {
         const { classes } = this.props;
         const { id } = this.props.match.params
-        let title = 'Add New User/Admin'
-        let btnText = 'Create'
-        if (id && id !== 'new') {
-            title = 'Edit User/Admin Details'
-            btnText = 'Update'
+        let title = "Add News & Announcements";
+        let btnText = "Create";
+        if (id && id !== "new") {
+            title = "Edit News & Announcements";
+            btnText = "Update";
         }
 
         return (
@@ -216,14 +195,13 @@ class UserForm extends React.PureComponent {
             </GridContainer>
         );
     }
-
 }
 
-UserForm.propTypes = {
+NewsAnnouncementForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-function mapState(state) {
+const mapStateToProps = (state) => {
     const { form, confirm } = state;
     return {
         form,
@@ -238,4 +216,4 @@ const actionCreators = {
     update: crudActions._update,
 };
 
-export default withStyles(styles)(connect(mapState, actionCreators)(UserForm));
+export default withStyles(styles)(connect(mapStateToProps, actionCreators)(NewsAnnouncementForm));

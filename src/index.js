@@ -16,12 +16,13 @@
 */
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from 'react-redux';
-
+import { Provider } from "react-redux";
 import "assets/scss/material-dashboard-pro-react.scss?v=1.8.0";
-import { store } from './_helpers';
+import { store } from "./_helpers";
+import "../src/assets/scss/editor.scss";
+import "grapesjs/dist/css/grapes.min.css";
 import App from "./app";
-import "./style.css"
+import "./style.css";
 
 ReactDOM.render(
   <Provider store={store}>
