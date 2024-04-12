@@ -351,6 +351,12 @@ import VisitorCommunityProfile from "pages/CommunityModule/VisitorProfile/View.j
 import NewsAnnouncementList from "pages/CommunityModule/NewsAnnouncement/List.js";
 import NewsAnnouncementForm from "pages/CommunityModule/NewsAnnouncement/Form.js";
 
+import ResearchTopicsList from "pages/DocumentModule/ResearchTopics/List.js";
+import ResearchTopicsForm from "pages/DocumentModule/ResearchTopics/Form.js";
+
+import ResearchTagsList from "pages/DocumentModule/ResearchTags/List.js";
+import ResearchTagsForm from "pages/DocumentModule/ResearchTags/Form.js";
+
 import { PermissionHelper, UserHelper } from "_helpers";
 import { ImageOutlined } from "@material-ui/icons";
 
@@ -1660,6 +1666,45 @@ if (true) {
         });
       }
     }
+
+    if (PermissionHelper.checkPermission("view_research_topics")) {
+      dashRoutes.push({
+        path: "/research-topics",
+        component: ResearchTopicsList,
+        layout: "/admin",
+      });
+      
+      if (
+        PermissionHelper.checkPermission("add_research_topic") ||
+        PermissionHelper.checkPermission("edit_research_topic")
+      ) {
+        dashRoutes.push({
+          path: "/research-topics-form/:id",
+          component: ResearchTopicsForm,
+          layout: "/admin",
+        });
+      }  
+    }  
+
+    if (PermissionHelper.checkPermission("view_research_tags")) {
+      dashRoutes.push({
+        path: "/research-tags",
+        component: ResearchTagsList,
+        layout: "/admin",
+      });
+  
+      if (
+        PermissionHelper.checkPermission("add_research_tag") ||
+        PermissionHelper.checkPermission("edit_research_tag")
+      ) {
+        dashRoutes.push({
+          path: "/research-tags-form/:id",
+          component: ResearchTagsForm,
+          layout: "/admin",
+        });
+      }  
+    }  
+
     if (PermissionHelper.checkPermission("view_documents")) {
       dashRoutes.push({
         path: "/documents",
@@ -2403,7 +2448,8 @@ if(PermissionHelper.checkMainPermission(["view_community_manager"]))
         layout: "/admin",
       });
     }
-  }    
+  }
+    
 }  
 
 export default dashRoutes;

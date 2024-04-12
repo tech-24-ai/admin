@@ -51,7 +51,13 @@ const errorHandler = (error) => {
       }
       break;
     case 422:
-      dispatch(alertActions.error(response.data.message));
+      if(response.data.message) {
+        dispatch(alertActions.error(response.data.message));
+      } else {
+        if(response.data.length > 0) {
+          dispatch(alertActions.error(response.data[0].message));
+        }  
+      }  
       break;
     case 423:
       dispatch(alertActions.warning(response.data.message));

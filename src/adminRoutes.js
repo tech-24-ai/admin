@@ -654,6 +654,29 @@ if (PermissionHelper.checkMainPermission(["view_master_manager"])) {
           layout: "/admin",
         });
       }
+
+      if (PermissionHelper.checkMainPermission(["view_research_topics"])) {
+        subViews.push({
+          path: "/research-topics",
+          name: "Research Topics",
+          rtlName: "",
+          mini: "",
+          rtlMini: "",
+          layout: "/admin",
+        });
+      }
+
+      if (PermissionHelper.checkPermission("view_research_tags")) {
+        subViews.push({
+          path: "/research-tags",
+          name: "Research Tags",
+          rtlName: "",
+          mini: "",
+          rtlMini: "",
+          layout: "/admin",
+        });
+      }
+       
       if (PermissionHelper.checkMainPermission(["view_documents"])) {
         subViews.push({
           path: "/documents",

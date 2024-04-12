@@ -12,6 +12,7 @@ import { PermissionHelper } from "_helpers";
 import {
   EU_SUBSCRIPTION_CATEGORY,
   EU_DOCUMENT_CATEGORY,
+  BLOG_STATUS,
 } from "../../../_constants/form.constants";
 
 const title = "Documents";
@@ -86,9 +87,13 @@ export class DocumentList extends React.PureComponent {
         lookupConstant: EU_DOCUMENT_CATEGORY,
       },
       {
-        title: "Subscription Category",
-        field: "subscription_category",
-        lookupConstant: EU_SUBSCRIPTION_CATEGORY,
+        title: "Category",
+        field: "category_name.name",
+      },
+      {
+          title: "Status",
+          field: "status",
+          lookupConstant: BLOG_STATUS,
       },
       {
         title: "Date",
