@@ -102,7 +102,7 @@ class VisitorCommunityProfile extends React.PureComponent {
                         <Grid item xs={4}>
                             By {item.communityPostReply.visitor.name}
                         </Grid>      
-                        <Grid item xs={1}>
+                        <Grid item xs={2}>
                             <Badge color="gray" children={moment(item.created_at).format("DD-MM-YYYY")}  />
                         </Grid>   
                         <Grid item xs={4}>
