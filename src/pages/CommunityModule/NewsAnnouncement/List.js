@@ -87,7 +87,7 @@ class NewsAnnouncementList extends React.PureComponent {
                         refresh={true}
                         serverSide={true}
                         search={true}
-                        sorting={true}
+                        sorting={false}
                         filtering={true}
                     />
                 </GridItem>
