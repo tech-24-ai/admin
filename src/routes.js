@@ -324,6 +324,7 @@ import TagsList from "pages/CommunityModule/Tags/List.js";
 import TagsForm from "pages/CommunityModule/Tags/Form.js";
 
 import CommunityList from "pages/CommunityModule/Community/List.js";
+import CommunityMembersList from "pages/CommunityModule/Community/MembersList.js";
 import CommunityForm from "pages/CommunityModule/Community/Form.js";
 
 import VisitorTechnologyList from "pages/CommunityModule/Technology/List.js";
@@ -2334,6 +2335,12 @@ if(PermissionHelper.checkMainPermission(["view_community_manager"]))
     dashRoutes.push({
       path: "/communities",
       component: CommunityList,
+      layout: "/admin",
+    });
+
+    dashRoutes.push({
+      path: "/community-members/:id",
+      component: CommunityMembersList,
       layout: "/admin",
     });
 

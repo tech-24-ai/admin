@@ -9,6 +9,8 @@ import { crudActions, confirmActions } from '../../../_actions';
 import { TableAction } from '../../../material-table/TableAction';
 import { PermissionHelper } from '_helpers';
 import { fileService } from "_services";
+import IconButton from "@material-ui/core/IconButton";
+import GroupIcon from '@material-ui/icons/Group';
 
 const title = 'Community'
 class CommunityList extends React.PureComponent {
@@ -17,6 +19,7 @@ class CommunityList extends React.PureComponent {
         this.addCrud = this.addCrud.bind(this);
         this.editCrud = this.editCrud.bind(this);
         this.viewCommunityPost = this.viewCommunityPost.bind(this);
+        this.viewCommunityMembers = this.viewCommunityMembers.bind(this);
     }
 
     componentDidUpdate() {
@@ -44,6 +47,10 @@ class CommunityList extends React.PureComponent {
         this.props.history.push(`/admin/community-posts-lists/${data.id}`)
     }
 
+    viewCommunityMembers(data) {
+        this.props.history.push(`/admin/community-members/${data.id}`)
+    }
+
     render() {
         const columns = [            
             {
@@ -69,7 +76,28 @@ class CommunityList extends React.PureComponent {
                 title: "Date",
                 field: "updated_at"
             },
-            TableAction(null, PermissionHelper.checkPermission('edit_community') ? this.editCrud : null, null, null, PermissionHelper.checkPermission('view_community_query') ? this.viewCommunityPost : null)
+            TableAction(null, 
+                PermissionHelper.checkPermission('edit_community') ? this.editCrud : null, 
+                null, 
+                null, 
+                PermissionHelper.checkPermission('view_community_query') ? this.viewCommunityPost : null,
+                ({ rowData }) => {
+                    return (
+                      <>
+                         {PermissionHelper.checkPermission('view_community_members') ? (
+                            <IconButton
+                                aria-label="edit"
+                                onClick={(event) => { this.viewCommunityMembers(rowData) }}
+                            >
+                                <GroupIcon fontSize="small" />
+                            </IconButton>
+                        ) : (
+                         <></>
+                        )}   
+                      </>
+                    );
+                }
+            )
         ]
 
         return (
