@@ -131,7 +131,7 @@ export class DocumentList extends React.PureComponent {
             refresh={true}
             serverSide={true}
             search={true}
-            sorting={true}
+            sorting={false}
             export={
               PermissionHelper.checkPermission("export_documents")
                 ? this.export
