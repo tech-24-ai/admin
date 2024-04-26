@@ -12,7 +12,7 @@ import { PermissionHelper } from "_helpers";
 import {
   EU_SUBSCRIPTION_CATEGORY,
   EU_DOCUMENT_CATEGORY,
-  BLOG_STATUS,
+  DOCUMENT_STATUS,
 } from "../../../_constants/form.constants";
 
 const title = "Documents";
@@ -93,7 +93,7 @@ export class DocumentList extends React.PureComponent {
       {
           title: "Status",
           field: "status",
-          lookupConstant: BLOG_STATUS,
+          lookupConstant: DOCUMENT_STATUS,
       },
       {
         title: "Date",

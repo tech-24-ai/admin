@@ -387,3 +387,30 @@ export const COMMUNITY_POST_DISCUSSION_STATUS = [
   { id: "0", name: "No" },
   { id: "1", name: "Yes" },
 ];
+
+export const DOCUMENT_CONTENT_TYPE = [
+  { id: 1, name: "Upload Doc/Docx format" },
+  { id: 2, name: "Via Google Docs" },
+  { id: 3, name: "Upload PDF/PPTX/Excel" },
+  { id: 4, name: "Add Manual Content" },
+];
+
+
+export const DOCUMENT_STATUS = [
+  {
+    id: "0",
+    name: "Inactive",
+  },
+  {
+    id: "1",
+    name: "Active",
+  },
+  {
+    id: "2",
+    name: "Draft",
+  },
+  {
+    id: "3",
+    name: "Approved",
+  }
+];

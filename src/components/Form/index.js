@@ -20,6 +20,7 @@ import RenderMultiSelectBox from "./renderMultiSelect";
 import RenderPassBox from "./renderPassBox";
 import RenderCheckTextBox from "./renderChecktBox";
 import RenderFileBox from "./renderFilebox";
+import GoogleDriveFilebox from "./googleDriveFilebox";
 import RenderDate from "./renderDate";
 import RenderImageUpload from "./renderImageUpload";
 import RenderColorPicker from "./renderColorPicker";
@@ -331,6 +332,14 @@ class MyForm extends React.PureComponent {
             case "file":
               return (
                 <RenderFileBox
+                  key={index}
+                  formField={formField}
+                  handleInputChange={this.handleInputChange}
+                />
+              );
+            case "googleDriveFileUpload":
+              return (
+                <GoogleDriveFilebox
                   key={index}
                   formField={formField}
                   handleInputChange={this.handleInputChange}

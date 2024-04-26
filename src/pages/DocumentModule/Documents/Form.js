@@ -16,9 +16,10 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import MyForm from "components/Form";
 import {
-  BLOG_STATUS,
+  DOCUMENT_STATUS,
   EU_SUBSCRIPTION_CATEGORY,
   EU_DOCUMENT_CATEGORY,
+  DOCUMENT_CONTENT_TYPE,
 } from "../../../_constants/form.constants";
 
 // style for this view
@@ -43,6 +44,7 @@ const initialState = {
     topic_name: "",
     name: "",
     image: "",
+    document_content_type: "",
     url: "",
     price: "",
     // is_embedded: 0,
@@ -78,6 +80,10 @@ class DocumentForm extends React.PureComponent {
       if (event.target.type == "checkbox") {
         newState.form[event.target.name] = event.target.checked;
       }
+      else if(event.target.name == 'document_content_type') {
+        newState.form[event.target.name] = event.target.value;
+        newState.form['url'] = "";
+      }  
       // else if (event.target.name == "url") {
       //   let val = event.target.value;
       //   if(checkValidUrl(val)) {
@@ -163,19 +169,47 @@ class DocumentForm extends React.PureComponent {
         error: this.validator.message("image", form.image, "required"),
       },
       {
+        name: "document_content_type",
+        label: "Document Content Type",
+        type: "select",
+        options: DOCUMENT_CONTENT_TYPE,
+        value: form.document_content_type || "",
+        icon: "assignment",
+        error: this.validator.message("document_content_type", form.document_content_type, "required"),
+      }
+    ];
+
+    if(form.document_content_type && form.document_content_type == 1) {
+      formFields.push({
+        name: "url",
+        label: "Document Url",
+        type: "googleDriveFileUpload",
+        value: form.url || "",
+        uploadUrl: "uploadDocumentOnGoogleDrive",
+        error: this.validator.message("url", form.url, "required|url"),
+      });
+    }
+    else if(form.document_content_type && form.document_content_type == 2) {
+      formFields.push({
+        name: "url",
+        label: "Document Url",
+        type: "textbox",
+        value: form.url || "",
+        error: this.validator.message("url", form.url, "required|url"),
+      });
+    }
+    else if(form.document_content_type && form.document_content_type == 3) {
+      formFields.push({
         name: "url",
         label: "Document Url",
         type: "file",
         value: form.url || "",
-        uploadUrl: "upload/document",
-        error: this.validator.message("url", form.url, "url"),
-      },
-      // {
-      //   name: "is_embedded",
-      //   label: "Is Embedded",
-      //   type: "checkbox",
-      //   value: form.is_embedded == 1 ? true : false,
-      // },
+        uploadUrl: "upload/researchDocument",
+        error: this.validator.message("url", form.url, "required|url"),
+      });
+    }
+
+    formFields.push(  
       {
         name: "seo_url_slug",
         label: "Seo Slug Url",
@@ -209,112 +243,40 @@ class DocumentForm extends React.PureComponent {
           "required"
         ),
       },
-      {
+    );
+
+    if(form.document_content_type && form.document_content_type == 4) 
+    {
+      formFields.push({
+        name: "html",
+        label: "Editor",
+        type: "pageBuilder",
+        value: form.description,
+        icon: "assignment",
+        // error: this.validator.message("editor2", form.html, "min:3"),
+      })
+    } else {
+      formFields.push({
         name: "description",
         label: "Description",
         type: "editor",
         value: form.description,
         icon: "assignment",
         error: this.validator.message("editor1", form.description, "min:3"),
-      },
+      })
+    } 
+
+    formFields.push(  
       {
         name: "status",
         label: "Status",
         type: "select",
-        options: BLOG_STATUS,
+        options: DOCUMENT_STATUS,
         value: form.status || "",
         icon: "assignment",
         error: this.validator.message("status", form.status, "required"),
-      },
-      // {
-      //   name: "document_category",
-      //   label: "Document Category",
-      //   type: "select",
-      //   options: EU_DOCUMENT_CATEGORY,
-      //   value: form.document_category || "",
-      //   icon: "assignment",
-      //   error: this.validator.message(
-      //     "document_category",
-      //     form.document_category,
-      //     "required"
-      //   ),
-      // },
-      // {
-      //   name: "subscription_category",
-      //   label: "Subscription Category",
-      //   type: "select",
-      //   options: EU_SUBSCRIPTION_CATEGORY,
-      //   value: form.subscription_category || "",
-      //   icon: "assignment",
-      //   error: this.validator.message(
-      //     "subscription_category",
-      //     form.subscription_category,
-      //     "required"
-      //   ),
-      // },
-      // {
-      //   name: "basic_document_price",
-      //   label: "Basic Document Price",
-      //   type: "textbox",
-      //   value: form.basic_document_price || "",
-      //   icon: "assignment",
-      //   hidden:
-      //     form.subscription_category == "3" || form.subscription_category == "2"
-      //       ? false
-      //       : true,
-      //   error: this.validator.message(
-      //     "basic_document_price",
-      //     form.basic_document_price,
-      //     form.subscription_category == "3" || form.subscription_category == "2"
-      //       ? ""
-      //       : ""
-      //   ),
-      // },
-      // {
-      //   name: "basic_document_special_price",
-      //   label: "Basic Document Special Price",
-      //   type: "textbox",
-      //   value: form.basic_document_special_price || "",
-      //   icon: "assignment",
-      //   hidden:
-      //     form.subscription_category == "3" || form.subscription_category == "2"
-      //       ? false
-      //       : true,
-      //   error: this.validator.message(
-      //     "basic_document_special_price",
-      //     form.basic_document_special_price,
-      //     form.subscription_category == "3" || form.subscription_category == "2"
-      //       ? ""
-      //       : ""
-      //   ),
-      // },
-      // {
-      //   name: "advance_document_price",
-      //   label: "Advance Document Price",
-      //   type: "textbox",
-      //   value: form.advance_document_price || "",
-      //   icon: "assignment",
-      //   hidden: form.subscription_category == "3" ? false : true,
-      //   error: this.validator.message(
-      //     "advance_document_price",
-      //     form.advance_document_price,
-      //     form.subscription_category == "3" ? "" : ""
-      //   ),
-      // },
-      // {
-      //   name: "advance_document_special_price",
-      //   label: "Advance Document Special Price",
-      //   type: "textbox",
-      //   value: form.advance_document_special_price || "",
-      //   hidden: form.subscription_category == "3" ? false : true,
-      //   icon: "assignment",
-      //   error: this.validator.message(
-      //     "advance_document_special_price",
-      //     form.advance_document_special_price,
-      //     form.subscription_category == "3" ? "" : ""
-      //   ),
-      // },
-    ];
+      }
+    );
 
     return formFields;
   };
@@ -362,15 +324,24 @@ class DocumentForm extends React.PureComponent {
         (option) => option.id
       );
 
+      let description = "";
+
+      if(this.state.form.document_content_type == 4) {
+        description = JSON.stringify(this.state.form.description);
+      } else{
+        description = this.state.form.description;
+      }
+
       let data = {
         document_type_id: this.state.form.document_type_id,
         category_id: this.state.form.category_id,
         research_topic_id: this.state.form.research_topic_id,
         name: this.state.form.name,
         image: this.state.form.image,
+        document_content_type: this.state.form.document_content_type,
         url: this.state.form.url,
         price: this.state.form.price,
-        description: this.state.form.description,
+        description: description,
         document_category: this.state.form.document_category,
         seo_url_slug: this.state.form.seo_url_slug,
         tags: JSON.stringify(documentTags),
@@ -385,9 +356,17 @@ class DocumentForm extends React.PureComponent {
         //   .basic_document_special_price,
         // subscription_category: this.state.form.subscription_category,
       };
-
-      if(data.url && !checkValidUrl(data.url)) {
-        this.props.showError("The URL should be from Google docs or uploaded.");
+      
+      if(data.url && data.document_content_type == 1 && !checkValidUrl(data.url)) {
+        this.props.showError("Please choose the file to upload over Google Drive.");
+        return false;
+      }
+      else if(data.url && data.document_content_type == 2 && !checkValidUrl(data.url)) {
+        this.props.showError("Only Google docs URL is allowed.");
+        return false;
+      }
+      else if(data.url && data.document_content_type == 3 && !checkDomainUrl(data.url)) {
+        this.props.showError("Please choose the file to upload.");
         return false;
       }  
 
@@ -462,7 +441,16 @@ DocumentForm.propTypes = {
 };
 
 function checkValidUrl(val) {
-  var urlRegx = new RegExp('(docs.google.com|(tech24))(://[A-Za-z]+-)?', 'i');
+  var urlRegx = new RegExp('(docs.google.com)(://[A-Za-z]+-)?', 'i');
+  if(urlRegx.test(val)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function checkDomainUrl(val) {
+  var urlRegx = new RegExp('(tech24)(://[A-Za-z]+-)?', 'i');
   if(urlRegx.test(val)) {
     return true;
   } else {
