@@ -48,7 +48,11 @@ class CommunityPostForm extends React.PureComponent {
 
     handleInputChange(event) {
         const newState = Object.assign({}, this.state);
-        newState.form[event.target.name] = event.target.value;
+        if (!!event.target) {
+            newState.form[event.target.name] = event.target.value;
+        } else {
+            newState.form["description"] = event;
+        }
         this.setState(newState);
         this.handleError();
     }
@@ -68,12 +72,18 @@ class CommunityPostForm extends React.PureComponent {
             {
                 name: "description",
                 label: "Query Description",
-                type: "textbox",
+                type: "editor",
                 value: form.description || "",
                 icon: "assignment",
                 disabled: true,
                 readonly: true,
             },
+            // {
+            //     name: "attachment",
+            //     label: "Attachments",
+            //     type: "post_attachments",
+            //     options: form.attachments
+            // },
             {
                 name: "status",
                 label: "Status",
@@ -81,7 +91,7 @@ class CommunityPostForm extends React.PureComponent {
                 options: COMMUNITY_POST_STATUS,
                 value: form.status || "",
                 icon: "assignment",
-                error: this.validator.message("status", form.status, ""),
+                error: this.validator.message("status", form.status, "required"),
             },
             {
                 name: "is_discussion_open",
@@ -90,7 +100,7 @@ class CommunityPostForm extends React.PureComponent {
                 options: COMMUNITY_POST_DISCUSSION_STATUS,
                 value: form.is_discussion_open || "",
                 icon: "assignment",
-                error: this.validator.message("is_discussion_open", form.is_discussion_open, ""),
+                error: this.validator.message("is_discussion_open", form.is_discussion_open, "required"),
             },
         ]
 

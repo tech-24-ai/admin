@@ -47,7 +47,11 @@ class CommunityPostReplyForm extends React.PureComponent {
 
     handleInputChange(event) {
         const newState = Object.assign({}, this.state);
-        newState.form[event.target.name] = event.target.value;
+        if (!!event.target) {
+            newState.form[event.target.name] = event.target.value;
+        } else {
+            newState.form["description"] = event;
+        }
         this.setState(newState);
         this.handleError();
     }
@@ -67,7 +71,7 @@ class CommunityPostReplyForm extends React.PureComponent {
             {
                 name: "description",
                 label: "Answer",
-                type: "textbox",
+                type: "editor",
                 value: form.description || "",
                 icon: "assignment",
                 disabled: true,
