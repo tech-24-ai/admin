@@ -31,6 +31,7 @@ const initialState = {
         color: '',
         header_color: '',
         bg_color: '',
+        bg_image: '',
         image: '',
         sort_order: '',
         detail: '',
@@ -94,6 +95,14 @@ class CategoryForm extends React.PureComponent {
                 type: 'color',
                 value: form.bg_color || '',
                 error: this.validator.message('bg_color', form.bg_color, 'min:3')
+            },
+            {
+                name: 'bg_image',
+                label: 'Background Image',
+                type: 'imageUpload',
+                value: form.bg_image || '',
+                uploadUrl: 'upload/image',
+                error: this.validator.message('bg_image', form.bg_image, 'required')
             },
             {
                 name: 'image',
@@ -178,6 +187,7 @@ class CategoryForm extends React.PureComponent {
                 color: this.state.form.color,
                 header_color: this.state.form.header_color,
                 bg_color: this.state.form.bg_color,
+                bg_image: this.state.form.bg_image,
                 image: this.state.form.image,
                 no_flow: this.state.form.no_flow,
                 sort_order: this.state.form.sort_order,
