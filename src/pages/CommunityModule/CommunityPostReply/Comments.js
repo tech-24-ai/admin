@@ -174,7 +174,7 @@ class CommunityPostReplyList extends React.PureComponent {
                 </GridItem>
                 <GridItem xs={12} style={{ marginTop: 10 }}>
                     <Typography variant="body2">
-                        {item.description}
+                        <div dangerouslySetInnerHTML={{ __html: item.description }} />
                     </Typography>
                 </GridItem> 
                 <GridItem xs={12} style={{ marginBottom: 10,  marginTop: 10 }}>  
@@ -207,7 +207,7 @@ class CommunityPostReplyList extends React.PureComponent {
                             </GridItem>   
                             <GridItem xs={12} style={{ marginBottom: 10 }}>
                                 <Typography variant="body2" gutterBottom>
-                                    {form.communityPost.description}
+                                    <div dangerouslySetInnerHTML={{ __html: form.communityPost.description }} />
                                 </Typography>
                             </GridItem>   
                             <GridItem xs={12}>
@@ -245,7 +245,7 @@ class CommunityPostReplyList extends React.PureComponent {
                             </GridItem>
                             <GridItem xs={12} style={{ marginTop: 10 }}>
                                 <Typography variant="body2">
-                                    {form.description}
+                                    <div dangerouslySetInnerHTML={{ __html: form.description }} />
                                 </Typography>
                             </GridItem> 
                         </GridContainer>
