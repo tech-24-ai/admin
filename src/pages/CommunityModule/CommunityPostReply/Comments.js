@@ -12,11 +12,13 @@ import { PermissionHelper } from '_helpers';
 import Link from "@material-ui/core/Link";
 import { crudService } from "_services";
 import { Typography, Paper, Divider, TextField } from '@material-ui/core';
-import { Visibility, ThumbUp, Delete } from '@material-ui/icons';
+import { Visibility, ThumbUp, Delete, Edit } from '@material-ui/icons';
 import TablePagination from '@material-ui/core/TablePagination';
 import moment from "moment";
 import Button from "@material-ui/core/Button";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import { COMMUNITY_POST_STATUS } from "_constants/form.constants";
+import Badge from "components/Badge/Badge.js";
 
 const title = 'Comments'
 
@@ -144,8 +146,11 @@ class CommunityPostReplyList extends React.PureComponent {
                             { params_array.length < 5 && (
                                 `${item.__meta__.total_comments} Comments`
                             )}
-                        </Grid>  
-                        <Grid item xs={3}></Grid>
+                        </Grid>   
+                        <Grid item xs={2}></Grid> 
+                        <Grid item xs={1} style={{textAlign: "right"}}>    
+                            <ReplyCommentStatus status_name={item.status} />
+                        </Grid> 
                         <Grid item xs={2} style={{textAlign: "right"}}> 
                             { params_array.length < 5 && (
                                 <span>
@@ -159,6 +164,19 @@ class CommunityPostReplyList extends React.PureComponent {
                                 </span>
                             )}
 
+                            { PermissionHelper.checkPermission('edit_community_answer_comments') && (
+                                <span>
+                                    <Link
+                                    onClick={() => 
+                                        this.props.history.push( `/admin/community-posts-reply-comments-form/${item.id}`)
+                                    }
+                                    style={{paddingRight: 5}}
+                                    >
+                                        <Edit fontSize="small" />
+                                    </Link>
+                                </span>   
+                            )}
+                            
                             { PermissionHelper.checkPermission('delete_community_answer_comments') && (        
                                 <span>
                                     <Link
@@ -293,6 +311,25 @@ class CommunityPostReplyList extends React.PureComponent {
             </GridContainer>
         );
     }
+}
+
+function ReplyCommentStatus({status_name}) {
+
+    let status = COMMUNITY_POST_STATUS.find((item) => {
+        return item.id == status_name;
+    });
+
+    let statusName = status.name;
+    let color = "warning";
+    if(statusName == 'Approved') {
+        color = "success";
+    } else if (statusName == 'Pending') {
+        color = "warning";
+    } else if (statusName == 'Rejected') {
+        color = "danger";
+    }
+
+    return <Badge color={color} children={statusName}  />;
 }
 
 const mapStateToProps = (state) => {

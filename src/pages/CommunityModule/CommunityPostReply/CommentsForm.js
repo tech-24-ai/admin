@@ -33,7 +33,7 @@ const initialState = {
     },
 }
 
-class CommunityPostReplyForm extends React.PureComponent {
+class CommunityPostReplyCommentForm extends React.PureComponent {
 
     constructor(props) {
         super(props)
@@ -70,7 +70,7 @@ class CommunityPostReplyForm extends React.PureComponent {
             // },
             {
                 name: "description",
-                label: "Answer",
+                label: "Comment",
                 type: "editor",
                 value: form.description || "",
                 icon: "assignment",
@@ -120,9 +120,9 @@ class CommunityPostReplyForm extends React.PureComponent {
                 status: this.state.form.status,
             }
             const { id } = this.props.match.params
-            // this.props.update('formData', 'community/posts_reply/status_update', id, data)
+            // this.props.update('formData', 'community/posts_reply_comments/status_update', id, data)
 
-            crudService._update("community/posts_reply/status_update", id, data).then((response) => {
+            crudService._update("community/posts_reply_comments/status_update", id, data).then((response) => {
                 if (response.status === 200) {
                 //   this.resetForm();
                   this.goBack();
@@ -153,7 +153,7 @@ class CommunityPostReplyForm extends React.PureComponent {
     render() {
         const { classes } = this.props;
         const { id } = this.props.match.params
-        let title = 'Update Answer Status'
+        let title = 'Update Comment Status'
         let btnText = 'Update'
 
         return (
@@ -182,7 +182,7 @@ class CommunityPostReplyForm extends React.PureComponent {
     }
 }
 
-CommunityPostReplyForm.propTypes = {
+CommunityPostReplyCommentForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
@@ -201,4 +201,4 @@ const actionCreators = {
     update: crudActions._update,
 };
 
-export default withStyles(styles)(connect(mapStateToProps, actionCreators)(CommunityPostReplyForm));
+export default withStyles(styles)(connect(mapStateToProps, actionCreators)(CommunityPostReplyCommentForm));
