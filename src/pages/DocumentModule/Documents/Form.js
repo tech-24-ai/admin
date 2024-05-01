@@ -45,7 +45,9 @@ const initialState = {
     name: "",
     image: "",
     document_content_type: "",
+    google_doc_url: "",
     url: "",
+    drive_document_id: "",
     price: "",
     // is_embedded: 0,
     seo_url_slug: "",
@@ -83,6 +85,8 @@ class DocumentForm extends React.PureComponent {
       else if(event.target.name == 'document_content_type') {
         newState.form[event.target.name] = event.target.value;
         newState.form['url'] = "";
+        newState.form['drive_document_id'] = "";
+        newState.form['google_doc_url'] = "";
       }  
       // else if (event.target.name == "url") {
       //   let val = event.target.value;
@@ -181,27 +185,27 @@ class DocumentForm extends React.PureComponent {
 
     if(form.document_content_type && form.document_content_type == 1) {
       formFields.push({
-        name: "url",
-        label: "Document Url",
+        name: "drive_document_id",
+        label: "Upload Document",
         type: "googleDriveFileUpload",
-        value: form.url || "",
+        value: form.drive_document_id || "",
         uploadUrl: "uploadDocumentOnGoogleDrive",
-        error: this.validator.message("url", form.url, "required|url"),
+        error: this.validator.message("url", form.drive_document_id, "required"),
       });
     }
     else if(form.document_content_type && form.document_content_type == 2) {
       formFields.push({
-        name: "url",
+        name: "google_doc_url",
         label: "Document Url",
         type: "textbox",
-        value: form.url || "",
-        error: this.validator.message("url", form.url, "required|url"),
+        value: form.google_doc_url || "",
+        error: this.validator.message("url", form.google_doc_url, "required|url"),
       });
     }
     else if(form.document_content_type && form.document_content_type == 3) {
       formFields.push({
         name: "url",
-        label: "Document Url",
+        label: "Upload Document",
         type: "file",
         value: form.url || "",
         uploadUrl: "upload/researchDocument",
@@ -255,7 +259,7 @@ class DocumentForm extends React.PureComponent {
         icon: "assignment",
         // error: this.validator.message("editor2", form.html, "min:3"),
       })
-    } else {
+    } else if (form.document_content_type && form.document_content_type == 3) {
       formFields.push({
         name: "description",
         label: "Description",
@@ -339,7 +343,9 @@ class DocumentForm extends React.PureComponent {
         name: this.state.form.name,
         image: this.state.form.image,
         document_content_type: this.state.form.document_content_type,
+        drive_document_id: this.state.form.drive_document_id,
         url: this.state.form.url,
+        google_doc_url: this.state.form.google_doc_url,
         price: this.state.form.price,
         description: description,
         document_category: this.state.form.document_category,
@@ -357,11 +363,11 @@ class DocumentForm extends React.PureComponent {
         // subscription_category: this.state.form.subscription_category,
       };
       
-      if(data.url && data.document_content_type == 1 && !checkValidUrl(data.url)) {
+      if(data.url && data.document_content_type == 1 && drive_document_id == "") {
         this.props.showError("Please choose the file to upload over Google Drive.");
         return false;
       }
-      else if(data.url && data.document_content_type == 2 && !checkValidUrl(data.url)) {
+      else if(data.url && data.document_content_type == 2 && !checkValidUrl(data.google_doc_url)) {
         this.props.showError("Only Google docs URL is allowed.");
         return false;
       }
@@ -372,12 +378,22 @@ class DocumentForm extends React.PureComponent {
 
       const { id } = this.props.match.params;
       if (id && id === "new") {
-        this.props.create("formData", "documents", data);
+        crudService._create("documents", data).then((response) => {
+          if (response.status === 200) {
+            this.resetForm();
+            this.goBack();
+          }
+        });
+
       } else {
-        this.props.update("formData", "documents", id, data);
+        crudService._update("documents", id, data).then((response) => {
+          if (response.status === 200) {
+            this.resetForm();
+            this.goBack();
+          }
+        });
       }
-      this.resetForm();
-      this.goBack();
+      
     } else {
       this.handleError();
     }

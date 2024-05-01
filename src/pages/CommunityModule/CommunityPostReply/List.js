@@ -274,15 +274,19 @@ class CommunityPostReplyList extends React.PureComponent {
                                 </span>
                             )}
 
-                            { PermissionHelper.checkPermission('edit_community_query_answer') && (
+                            { PermissionHelper.checkPermission('edit_community_query_answer') && item.is_correct_answer == 0 ? (
                                 <span>
                                     <Link
-                                    href={`/admin/community-posts-reply-form/${item.id}`}
+                                    onClick={() => 
+                                        this.props.history.push( `/admin/community-posts-reply-form/${item.id}`)
+                                    }
                                     style={{paddingRight: 5}}
                                     >
                                         <Edit fontSize="small" />
                                     </Link>
                                 </span>   
+                            ) : (
+                                ""
                             )}
 
                             { PermissionHelper.checkPermission('delete_community_query_answer') && (        
