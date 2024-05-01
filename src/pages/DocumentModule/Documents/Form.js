@@ -26,7 +26,7 @@ import {
 import styles from "assets/jss/material-dashboard-pro-react/views/extendedFormsStyle.js";
 
 import { connect } from "react-redux";
-import { crudActions, fileActions, alertActions } from "../../../_actions";
+import { crudActions, fileActions, alertActions, loaderActions } from "../../../_actions";
 import { crudService } from "../../../_services";
 import SimpleReactValidator from "simple-react-validator";
 import { Assignment, Category } from "@material-ui/icons";
@@ -378,16 +378,20 @@ class DocumentForm extends React.PureComponent {
 
       const { id } = this.props.match.params;
       if (id && id === "new") {
+        this.props.showLoader();
         crudService._create("documents", data).then((response) => {
           if (response.status === 200) {
+            this.props.hideLoader();
             this.resetForm();
             this.goBack();
           }
         });
 
       } else {
+        this.props.showLoader();
         crudService._update("documents", id, data).then((response) => {
           if (response.status === 200) {
+            this.props.hideLoader();
             this.resetForm();
             this.goBack();
           }
@@ -487,6 +491,8 @@ const actionCreators = {
   update: crudActions._update,
   upload: fileActions._upload,
   showError: alertActions.error,
+  showLoader: loaderActions.show,
+  hideLoader: loaderActions.hide,
 };
 
 export default withStyles(styles)(
