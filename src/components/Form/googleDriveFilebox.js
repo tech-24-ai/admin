@@ -42,7 +42,7 @@ class GoogleDriveFilebox extends React.PureComponent {
           handleInputChange({
             target: {
               name: formField.name,
-              value: response.data.result.webViewLink,
+              value: response.data.result.document_id,
             },
           });
         } else {
@@ -88,6 +88,7 @@ class GoogleDriveFilebox extends React.PureComponent {
           inputProps={{
             value: formField.value,
             name: formField.name,
+            readOnly: true,
             onChange: (event) => {
               handleInputChange(event);
             },

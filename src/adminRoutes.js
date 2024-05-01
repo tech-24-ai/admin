@@ -1146,6 +1146,14 @@ if (PermissionHelper.checkMainPermission(["view_setting_manager"])) {
         rtlMini: "",
         layout: "/admin",
       },
+      // {
+      //   path: "/google-drive",
+      //   name: "Connect Google Drive",
+      //   rtlName: "",
+      //   mini: "",
+      //   rtlMini: "",
+      //   layout: "/admin",
+      // },
       // temporary commented start
       // {
       //   path: "/market-product",
