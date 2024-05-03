@@ -20,7 +20,7 @@ import { COMMUNITY_POST_STATUS, COMMUNITY_POST_DISCUSSION_STATUS } from "_consta
 import styles from "assets/jss/material-dashboard-pro-react/views/validationFormsStyle.js";
 
 import { connect } from 'react-redux';
-import { crudActions } from '../../../_actions';
+import { crudActions, loaderActions } from '../../../_actions';
 import { crudService } from "../../../_services";
 import SimpleReactValidator from 'simple-react-validator';
 
@@ -29,7 +29,8 @@ const initialState = {
     form: {
         communityPost: '',
         description: '',
-        status: ''
+        status: '',
+        back_url: '',
     },
 }
 
@@ -110,12 +111,15 @@ class CommunityPostReplyCommentForm extends React.PureComponent {
 
     goBack = () => {
         // this.resetForm();
-        this.props.history.goBack();
+        const { form } = this.state
+        let back_url = form.back_url;
+        this.props.history.push(`/admin/${back_url}`);
     }
 
     handleSubmit(e) {
         e.preventDefault();
         if (this.validator.allValid()) {
+            this.props.showLoader();
             let data = {
                 status: this.state.form.status,
             }
@@ -199,6 +203,8 @@ const actionCreators = {
     clearCrud: crudActions._clear,
     create: crudActions._create,
     update: crudActions._update,
+    showLoader: loaderActions.show,
+    hideLoader: loaderActions.hide,
 };
 
 export default withStyles(styles)(connect(mapStateToProps, actionCreators)(CommunityPostReplyCommentForm));
