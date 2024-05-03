@@ -33,6 +33,8 @@ const initialState = {
     banner: "",
     slug: "",
     html: { html: "", css: "" },
+    author: "",
+    read_time: "",
   },
 };
 
@@ -171,6 +173,30 @@ class BlogListForm extends React.PureComponent {
         ),
       },
       {
+        name: "author",
+        label: "Author",
+        type: "textbox",
+        value: form.author || "",
+        icon: "assignment",
+        error: this.validator.message(
+          "author",
+          form.author,
+          "required"
+        ),
+      },
+      {
+        name: "read_time",
+        label: "Read Time",
+        type: "textbox",
+        value: form.read_time || "",
+        icon: "assignment",
+        error: this.validator.message(
+          "read_time",
+          form.read_time,
+          "required"
+        ),
+      },
+      {
         name: "html",
         label: "Editor",
         type: "pageBuilder",
@@ -221,6 +247,8 @@ class BlogListForm extends React.PureComponent {
         banner: this.state.form.banner,
         slug: this.state.form.slug,
         html: JSON.stringify(this.state.form.html),
+        author: this.state.form.author,
+        read_time: this.state.form.read_time,
       };
       console.log("DATA", data);
       const { id } = this.props.match.params;
