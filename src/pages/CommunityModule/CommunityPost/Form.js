@@ -20,7 +20,7 @@ import { COMMUNITY_POST_STATUS, COMMUNITY_POST_DISCUSSION_STATUS } from "_consta
 import styles from "assets/jss/material-dashboard-pro-react/views/validationFormsStyle.js";
 
 import { connect } from 'react-redux';
-import { crudActions } from '../../../_actions';
+import { crudActions, loaderActions } from '../../../_actions';
 import { crudService } from "../../../_services";
 import SimpleReactValidator from 'simple-react-validator';
 
@@ -30,7 +30,8 @@ const initialState = {
         title: '',
         description: '',
         status: '',
-        is_discussion_open: ''
+        is_discussion_open: '',
+        reject_reason: ''
     },
 }
 
@@ -48,11 +49,19 @@ class CommunityPostForm extends React.PureComponent {
 
     handleInputChange(event) {
         const newState = Object.assign({}, this.state);
-        if (!!event.target) {
-            newState.form[event.target.name] = event.target.value;
+        if (!!event.target) 
+        {
+            if(event.target.name == 'status') {
+                newState.form[event.target.name] = event.target.value;
+                newState.form['reject_reason'] = "";
+            }
+            else {
+                newState.form[event.target.name] = event.target.value;
+            }    
         } else {
             newState.form["description"] = event;
         }
+        
         this.setState(newState);
         this.handleError();
     }
@@ -104,6 +113,20 @@ class CommunityPostForm extends React.PureComponent {
             },
         ]
 
+        if(form.status == 2)
+        {
+            formFields.push(
+                {
+                    name: "reject_reason",
+                    label: "Reject Reason",
+                    type: "textbox",
+                    value: form.reject_reason || "",
+                    icon: "assignment",
+                    error: this.validator.message("reason", form.reject_reason, "required"),
+                }
+            )
+        }
+
         return formFields
     }
 
@@ -126,20 +149,25 @@ class CommunityPostForm extends React.PureComponent {
 
     goBack = () => {
         this.resetForm();
-        this.props.history.goBack();
+        this.props.history.push('/admin/community-posts')
     }
 
     handleSubmit(e) {
         e.preventDefault();
         if (this.validator.allValid()) {
+            this.props.showLoader();
             let data = {
                 status: this.state.form.status,
                 is_discussion_open: this.state.form.is_discussion_open,
+                reject_reason: this.state.form.reject_reason,
             }
             const { id } = this.props.match.params
-            this.props.update('formData', 'community/posts/status_update', id, data)
-            this.resetForm();
-            this.goBack();
+            crudService._update("community/posts/status_update", id, data).then((response) => {
+                if (response.status === 200) {
+                //   this.resetForm();
+                  this.goBack();
+                }
+            });
         } else {
             this.handleError();
         }
@@ -211,6 +239,8 @@ const actionCreators = {
     clearCrud: crudActions._clear,
     create: crudActions._create,
     update: crudActions._update,
+    showLoader: loaderActions.show,
+    hideLoader: loaderActions.hide,
 };
 
 export default withStyles(styles)(connect(mapStateToProps, actionCreators)(CommunityPostForm));

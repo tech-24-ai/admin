@@ -24,6 +24,7 @@ const title = 'Comments'
 
 const initialState = {
     form: {
+        community_post_id: '',
         description: '',
         created_at: '',
         visitor: '',
@@ -132,6 +133,22 @@ class CommunityPostReplyList extends React.PureComponent {
         const params = this.props.match.params
         const params_array = Object.values(params).filter(Boolean);
         let url_paramas = params_array.join("/");
+        console.log("params ", params_array.length);
+
+        let backRedirectUrl;
+
+        if(params_array.length > 1) {
+            
+            params_array.pop()
+            let ids = params_array.join("/")
+            console.log("ids = ", ids)
+            backRedirectUrl = `/admin/community-posts-reply-comments/${ids}`;
+        } else {
+            let community_post_id = form.community_post_id;
+            backRedirectUrl = `/admin/community-posts-reply/${community_post_id}`;
+        }
+
+        console.log("backRedirectUrl ", backRedirectUrl);
         
         const replyDataItems = postrReplyDataArray.map((item, i) => 
             <GridContainer style={{ marginBottom: 10 }} key={i} > 
@@ -204,13 +221,16 @@ class CommunityPostReplyList extends React.PureComponent {
         return (
             <GridContainer>
                 <GridItem xs={12} style={{ marginBottom: 20 }}>
-                    <Button style={{ float: "right" }}
-                    variant="contained"
-                    startIcon={<KeyboardBackspaceIcon />}
-                    onClick={() => { this.props.history.goBack() }}
+                     <Link
+                    href={backRedirectUrl}
                     >
-                        Back
-                    </Button>
+                        <Button style={{ float: "right" }}
+                        variant="contained"
+                        startIcon={<KeyboardBackspaceIcon />}
+                        >
+                            Back
+                        </Button>
+                    </Link>
                 </GridItem>  
                 <GridItem xs={12}>
                     <Paper style={{ marginBottom: 20, padding: 20 }}>
