@@ -75,8 +75,6 @@ class CommunityPostForm extends React.PureComponent {
                 type: "textbox",
                 value: form.title || "",
                 icon: "assignment",
-                disabled: true,
-                readonly: true,
             },
             {
                 name: "description",
@@ -84,8 +82,6 @@ class CommunityPostForm extends React.PureComponent {
                 type: "editor",
                 value: form.description || "",
                 icon: "assignment",
-                disabled: true,
-                readonly: true,
             },
             // {
             //     name: "attachment",
@@ -157,6 +153,8 @@ class CommunityPostForm extends React.PureComponent {
         if (this.validator.allValid()) {
             this.props.showLoader();
             let data = {
+                title: this.state.form.title,
+                description: this.state.form.description,
                 status: this.state.form.status,
                 is_discussion_open: this.state.form.is_discussion_open,
                 reject_reason: this.state.form.reject_reason,
