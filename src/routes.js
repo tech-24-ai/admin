@@ -1155,117 +1155,117 @@ if (PermissionHelper.checkPermission("view_master_manager")) {
 }
 // temporary commented start
 // // Vendor Manager
-// if (PermissionHelper.checkPermission("view_vendor_manager")) {
-//   if (PermissionHelper.checkPermission("view_vendors")) {
-//     dashRoutes.push({
-//       path: "/vendors",
-//       component: VendorList,
-//       layout: "/admin",
-//     });
-//   }
-//   if (
-//     PermissionHelper.checkPermission("add_vendors") ||
-//     PermissionHelper.checkPermission("edit_vendors")
-//   ) {
-//     dashRoutes.push(
-//       {
-//         path: "/vendor-form/:id",
-//         component: VendorTabForm,
-//         layout: "/admin",
-//       },
-//       {
-//         path: "/basic-info",
-//         component: VendorForm,
-//         layout: "/admin/vendor-form/:id",
-//       },
-//       {
-//         path: "/key-people",
-//         component: KeyPeopleList,
-//         layout: "/admin/vendor-form/:id",
-//       },
-//       {
-//         path: "/locations",
-//         component: LocationsList,
-//         layout: "/admin/vendor-form/:id",
-//       },
-//       {
-//         path: "/financials",
-//         component: FinancialsList,
-//         layout: "/admin/vendor-form/:id",
-//       },
+if (PermissionHelper.checkPermission("view_vendor_manager")) {
+  if (PermissionHelper.checkPermission("view_vendors")) {
+    dashRoutes.push({
+      path: "/vendors",
+      component: VendorList,
+      layout: "/admin",
+    });
+  }
+  if (
+    PermissionHelper.checkPermission("add_vendors") ||
+    PermissionHelper.checkPermission("edit_vendors")
+  ) {
+    dashRoutes.push(
+      {
+        path: "/vendor-form/:id",
+        component: VendorTabForm,
+        layout: "/admin",
+      },
+      {
+        path: "/basic-info",
+        component: VendorForm,
+        layout: "/admin/vendor-form/:id",
+      },
+      {
+        path: "/key-people",
+        component: KeyPeopleList,
+        layout: "/admin/vendor-form/:id",
+      },
+      {
+        path: "/locations",
+        component: LocationsList,
+        layout: "/admin/vendor-form/:id",
+      },
+      {
+        path: "/financials",
+        component: FinancialsList,
+        layout: "/admin/vendor-form/:id",
+      },
 
-//       {
-//         path: "/funding",
-//         component: FundingList,
-//         layout: "/admin/vendor-form/:id",
-//       },
+      {
+        path: "/funding",
+        component: FundingList,
+        layout: "/admin/vendor-form/:id",
+      },
 
-//       {
-//         path: "/employee-job-count",
-//         component: EmployeeJobCountList,
-//         layout: "/admin/vendor-form/:id",
-//       },
+      {
+        path: "/employee-job-count",
+        component: EmployeeJobCountList,
+        layout: "/admin/vendor-form/:id",
+      },
 
-//       {
-//         path: "/acquisition",
-//         component: AcquisitionList,
-//         layout: "/admin/vendor-form/:id",
-//       },
+      {
+        path: "/acquisition",
+        component: AcquisitionList,
+        layout: "/admin/vendor-form/:id",
+      },
 
-//       {
-//         path: "/patents",
-//         component: PatentList,
-//         layout: "/admin/vendor-form/:id",
-//       },
-//       {
-//         path: "/google-trend",
-//         component: GoogleTrendList,
-//         layout: "/admin/vendor-form/:id",
-//       },
+      {
+        path: "/patents",
+        component: PatentList,
+        layout: "/admin/vendor-form/:id",
+      },
+      {
+        path: "/google-trend",
+        component: GoogleTrendList,
+        layout: "/admin/vendor-form/:id",
+      },
 
-//       {
-//         path: "/ips",
-//         component: IpsList,
-//         layout: "/admin/vendor-form/:id",
-//       },
+      {
+        path: "/ips",
+        component: IpsList,
+        layout: "/admin/vendor-form/:id",
+      },
 
-//       {
-//         path: "/itmap-score",
-//         component: ITMAPScoreList,
-//         layout: "/admin/vendor-form/:id",
-//       },
+      {
+        path: "/itmap-score",
+        component: ITMAPScoreList,
+        layout: "/admin/vendor-form/:id",
+      },
 
-//       {
-//         path: "/twitter-data",
-//         component: TwitterDataList,
-//         layout: "/admin/vendor-form/:id",
-//       },
+      {
+        path: "/twitter-data",
+        component: TwitterDataList,
+        layout: "/admin/vendor-form/:id",
+      },
 
-//       {
-//         path: "/web-traffic",
-//         component: WebTrafficList,
-//         layout: "/admin/vendor-form/:id",
-//       },
+      {
+        path: "/web-traffic",
+        component: WebTrafficList,
+        layout: "/admin/vendor-form/:id",
+      },
 
-//       {
-//         path: "/news-list",
-//         component: NewsList,
-//         layout: "/admin/vendor-form/:id",
-//       },
+      {
+        path: "/news-list",
+        component: NewsList,
+        layout: "/admin/vendor-form/:id",
+      },
 
-//       {
-//         path: "/document-list",
-//         component: VendorDocumentList,
-//         layout: "/admin/vendor-form/:id",
-//       },
+      {
+        path: "/document-list",
+        component: VendorDocumentList,
+        layout: "/admin/vendor-form/:id",
+      },
 
-//       {
-//         path: "/competitive-dynamic",
-//         component: CompetitiveDynamicList,
-//         layout: "/admin/vendor-form/:id",
-//       }
-//     );
-//   }
+      {
+        path: "/competitive-dynamic",
+        component: CompetitiveDynamicList,
+        layout: "/admin/vendor-form/:id",
+      }
+    );
+  }
 
 //   if (
 //     PermissionHelper.checkPermission("add_vendor_key_people") ||
@@ -1419,24 +1419,24 @@ if (PermissionHelper.checkPermission("view_master_manager")) {
 //     });
 //   }
 
-//   if (PermissionHelper.checkPermission("view_vendor_category")) {
-//     dashRoutes.push({
-//       path: "/vendor_category",
-//       component: VendorCategoryList,
-//       layout: "/admin",
-//     });
-//   }
+  if (PermissionHelper.checkPermission("view_vendor_category")) {
+    dashRoutes.push({
+      path: "/vendor_category",
+      component: VendorCategoryList,
+      layout: "/admin",
+    });
+  }
 
-//   if (
-//     PermissionHelper.checkPermission("add_vendor_category") ||
-//     PermissionHelper.checkPermission("edit_vendor_category")
-//   ) {
-//     dashRoutes.push({
-//       path: "/vendor-category-form/:id",
-//       component: VendorCategoryForm,
-//       layout: "/admin",
-//     });
-//   }
+  if (
+    PermissionHelper.checkPermission("add_vendor_category") ||
+    PermissionHelper.checkPermission("edit_vendor_category")
+  ) {
+    dashRoutes.push({
+      path: "/vendor-category-form/:id",
+      component: VendorCategoryForm,
+      layout: "/admin",
+    });
+  }
 // }
 // temporary commented end
 //search log
@@ -1448,7 +1448,7 @@ if (PermissionHelper.checkPermission("view_master_manager")) {
 //       layout: "/consultant",
 //     });
 //   }
-// }
+}
 dashRoutes.push({
   path: "/search-log",
   component: SearchlogList,

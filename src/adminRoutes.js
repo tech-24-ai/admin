@@ -451,39 +451,39 @@ if (PermissionHelper.checkMainPermission(["view_master_manager"])) {
 }
 // temporary commented start
 // // Vendor Manager
-// if (PermissionHelper.checkMainPermission(["view_vendor_manager"])) {
-//   let views = [];
-//   if (PermissionHelper.checkMainPermission(["view_vendors"])) {
-//     views.push({
-//       path: "/vendors",
-//       name: "Vendors",
-//       rtlName: "",
-//       mini: "",
-//       rtlMini: "",
-//       layout: "/admin",
-//     });
-//   }
+if (PermissionHelper.checkMainPermission(["view_vendor_manager"])) {
+  let views = [];
+  if (PermissionHelper.checkMainPermission(["view_vendors"])) {
+    views.push({
+      path: "/vendors",
+      name: "Vendors",
+      rtlName: "",
+      mini: "",
+      rtlMini: "",
+      layout: "/admin",
+    });
+  }
 
-//   if (PermissionHelper.checkMainPermission(["view_vendor_category"])) {
-//     views.push({
-//       path: "/vendor_category",
-//       name: "Vendor Category",
-//       rtlName: "",
-//       mini: "",
-//       rtlMini: "",
-//       layout: "/admin",
-//     });
-//   }
+  if (PermissionHelper.checkMainPermission(["view_vendor_category"])) {
+    views.push({
+      path: "/vendor_category",
+      name: "Vendor Category",
+      rtlName: "",
+      mini: "",
+      rtlMini: "",
+      layout: "/admin",
+    });
+  }
 
-//   dashRoutes.push({
-//     collapse: true,
-//     name: "Vendor Manager",
-//     rtlName: "",
-//     icon: VendorIcon,
-//     state: "VendorModuleCollapse",
-//     views: views,
-//   });
-// }
+  dashRoutes.push({
+    collapse: true,
+    name: "Vendor Manager",
+    rtlName: "",
+    icon: VendorIcon,
+    state: "VendorModuleCollapse",
+    views: views,
+  });
+}
 // temporary commented end
 
 //End User
@@ -1256,16 +1256,16 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
   //   });
   // }
 
-  // if (PermissionHelper.checkMainPermission(["view_report_abuse_types"])) {
-  //   views.push({
-  //     path: "/report_abuse/type",
-  //     name: "Report Abuse Type",
-  //     rtlName: "",
-  //     mini: "",
-  //     rtlMini: "",
-  //     layout: "/admin",
-  //   });
-  // }
+  if (PermissionHelper.checkMainPermission(["view_report_abuse_types"])) {
+    views.push({
+      path: "/report_abuse/type",
+      name: "Report Abuse Type",
+      rtlName: "",
+      mini: "",
+      rtlMini: "",
+      layout: "/admin",
+    });
+  }
 
   if (PermissionHelper.checkMainPermission(["view_community"])) { 
     views.push({
@@ -1300,16 +1300,16 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
     });
   }  
 
-  // if (PermissionHelper.checkMainPermission(["view_report_abuses"])) {
-  //   views.push({
-  //     path: "/report-abuses",
-  //     name: "Report Abuses",
-  //     rtlName: "",
-  //     mini: "",
-  //     rtlMini: "",
-  //     layout: "/admin",
-  //   });
-  // }
+  if (PermissionHelper.checkMainPermission(["view_report_abuses"])) {
+    views.push({
+      path: "/report-abuses",
+      name: "Report Abuses",
+      rtlName: "",
+      mini: "",
+      rtlMini: "",
+      layout: "/admin",
+    });
+  }
 
   if (PermissionHelper.checkMainPermission(["view_news_announcements"])) {
     views.push({
