@@ -70,7 +70,7 @@ class ReportAbuseTypesList extends React.PureComponent {
                 title: "Date",
                 field: "updated_at"
             },
-            TableAction(PermissionHelper.checkPermission('delete_report_abuse_types') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_tags') ? this.editCrud : null)
+            TableAction(PermissionHelper.checkPermission('delete_report_abuse_types') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_report_abuse_types') ? this.editCrud : null)
         ]
 
         return (
