@@ -98,8 +98,8 @@ class BlogListForm extends React.PureComponent {
       },
       {
         name: "details",
-        label: "Short Description",
-        type: "textarea",
+        label: "Tags",
+        type: "textbox",
         value: form.details || "",
         icon: "assignment",
         error: this.validator.message(
