@@ -98,7 +98,7 @@ class BlogListForm extends React.PureComponent {
       },
       {
         name: "details",
-        label: "Tags",
+        label: "Short Description",
         type: "textbox",
         value: form.details || "",
         icon: "assignment",
