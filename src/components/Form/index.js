@@ -44,6 +44,7 @@ import TreeBox from "./treeBox";
 import Chatform from "./chatform";
 import { crudService } from "../../_services";
 import { Chat } from "@material-ui/icons";
+import PostAttachments from "./post_attachments";
 
 class MyForm extends React.PureComponent {
   handleSubmit = (event) => {
@@ -225,6 +226,14 @@ class MyForm extends React.PureComponent {
             case "color":
               return (
                 <RenderTextBox
+                  key={index}
+                  formField={formField}
+                  handleInputChange={this.handleInputChange}
+                />
+              );
+            case "post_attachments":
+              return (
+                <PostAttachments
                   key={index}
                   formField={formField}
                   handleInputChange={this.handleInputChange}

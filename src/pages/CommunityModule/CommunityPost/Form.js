@@ -83,12 +83,12 @@ class CommunityPostForm extends React.PureComponent {
                 value: form.description || "",
                 icon: "assignment",
             },
-            // {
-            //     name: "attachment",
-            //     label: "Attachments",
-            //     type: "post_attachments",
-            //     options: form.attachments
-            // },
+            {
+                name: "attachment",
+                label: "Attachments",
+                type: "post_attachments",
+                values: form.attachments
+            },
             {
                 name: "status",
                 label: "Status",
