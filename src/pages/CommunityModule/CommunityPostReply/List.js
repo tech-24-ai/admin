@@ -349,7 +349,7 @@ class CommunityPostReplyList extends React.PureComponent {
                                     <div style={{ display: "flex" }}>
                                         {form.attachments.map((item) => (
                                             <div
-                                            style={{ marginRight: 10, marginBottom: 10, color: "blue", textDecoration: "underline"  }}
+                                            style={{ marginRight: 10, marginBottom: 10, color: "blue", textDecoration: "underline", cursor: "pointer"  }}
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 this.handleDocumentDownload(item);
@@ -375,6 +375,7 @@ class CommunityPostReplyList extends React.PureComponent {
                                 </GridItem>   
                             )}    
                             <GridItem xs={12}>
+                                <hr />
                                 <Grid component="label" container spacing={1} alignItems="center">
                                     <Grid item xs={1} fontSize="small" style={{display: "flex"}}>
                                         <Visibility fontSize="small" style={{marginRight: 5}} /> 
