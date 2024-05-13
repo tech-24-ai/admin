@@ -14,7 +14,7 @@ class RenderEditor extends React.PureComponent {
           <label htmlFor="">{formField.label}</label>
         </div>
         <Editor
-          apiKey="6sklm89y7um3fi0i4futimsf1eq8v63jmbhddgeo88v9wqza"
+          apiKey="7l7ragmn51cz1m01rx3nmet4t836bylfx522m19vye0ofdue"
           value={formField.value}
        
           init={{
