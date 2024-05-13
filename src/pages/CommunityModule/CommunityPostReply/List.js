@@ -13,7 +13,7 @@ import Link from "@material-ui/core/Link";
 import { crudService } from "_services";
 import { COMMUNITY_POST_STATUS, COMMUNITY_POST_DISCUSSION_STATUS } from "_constants/form.constants";
 import { Typography, Paper, Divider, TextField } from '@material-ui/core';
-import { Visibility, ThumbUp, Edit, Delete, Check} from '@material-ui/icons';
+import { Visibility, ThumbUp, Edit, Delete, Check, AccessTime} from '@material-ui/icons';
 import TablePagination from '@material-ui/core/TablePagination';
 import moment from "moment";
 import Badge from "components/Badge/Badge.js";
@@ -26,6 +26,8 @@ const initialState = {
         description: '',
         visitor: '',
         views_counter: '',
+        attachments: '',
+        postTags: '',
         __meta__:'',
     },
     page: 0,
@@ -43,6 +45,7 @@ class CommunityPostReplyList extends React.PureComponent {
         this.deleteAll = this.deleteAll.bind(this);
         this.communityPostReplyDetails = this.communityPostReplyDetails.bind(this);
         this.markCorrectAnswer = this.markCorrectAnswer.bind(this);
+        this.handleDocumentDownload = this.handleDocumentDownload.bind(this);
     }
 
     componentDidUpdate() {
@@ -169,6 +172,16 @@ class CommunityPostReplyList extends React.PureComponent {
             }
         })
     }
+
+    handleDocumentDownload = (item) => {
+        const { id, name } = item;
+       
+        this.props.downloadDocument(
+          id,
+          name,
+          `community/communitypost/download_attachment?attachment_id=${id}`
+        );
+    };
 
     render() {
         const { id } = this.props.match.params
@@ -331,6 +344,36 @@ class CommunityPostReplyList extends React.PureComponent {
                                     <div dangerouslySetInnerHTML={{ __html: form.description }} />
                                 </Typography>
                             </GridItem>   
+                            { form.attachments && (
+                                <GridItem xs={12} style={{ marginBottom: 10 }}>
+                                    <div style={{ display: "flex" }}>
+                                        {form.attachments.map((item) => (
+                                            <div
+                                            style={{ cursor: "pointer", backgroundColor: '#d9dfe9', marginRight: 10, marginBottom: 10, padding: "6px 12px", borderRadius: "4px"  }}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                this.handleDocumentDownload(item);
+                                            }}
+                                            >
+                                            {item?.name || "Attachment"}
+                                            </div>
+                                        ))}
+                                    </div>    
+                                </GridItem>   
+                            )}    
+                            { form.postTags && (
+                                <GridItem xs={12} style={{ marginBottom: 10 }}>
+                                    <div style={{ display: "flex" }}>
+                                        {form.postTags.map((item) => (
+                                            <div
+                                            style={{ backgroundColor: '#d9dfe9', marginRight: 10, marginBottom: 10, padding: "6px 12px", borderRadius: "4px"  }}
+                                            >
+                                            {item?.name}
+                                            </div>
+                                        ))}
+                                    </div>    
+                                </GridItem>   
+                            )}    
                             <GridItem xs={12}>
                                 <Grid component="label" container spacing={1} alignItems="center">
                                     <Grid item xs={1} fontSize="small" style={{display: "flex"}}>
@@ -343,6 +386,10 @@ class CommunityPostReplyList extends React.PureComponent {
                                     </Grid>  
                                     <Grid item xs={3}>
                                         Posted by {form.visitor.name}
+                                    </Grid>
+                                    <Grid item xs={2} style={{display: "flex"}}>
+                                        <AccessTime fontSize="small" style={{marginRight: 5}} />
+                                        {form.created_at}
                                     </Grid>
                                 </Grid>
                             </GridItem>
@@ -444,6 +491,7 @@ const mapStateToProps = (state) => {
 
 const actionCreators = {
     deleteCrud: crudActions._delete,
+    downloadDocument: crudActions._downloadPostAttachment,
     showConfirm: confirmActions.show,
     clearConfirm: confirmActions.clear,
     openModal: modalActions.open,

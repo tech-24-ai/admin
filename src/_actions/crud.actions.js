@@ -15,6 +15,7 @@ export const crudActions = {
   _clear,
   _reset,
   _download,
+  _downloadPostAttachment,
 };
 
 function _clear(kind) {
@@ -274,6 +275,43 @@ function _download(kind, url, data) {
           dispatch(loaderActions.hide());
           if (result.data) {
             fileDownload(result.data, `${type}.pdf`);
+          }
+        } else {
+          dispatch(failure(result.message));
+          dispatch(alertActions.error(result.message));
+          dispatch(loaderActions.hide());
+        }
+      },
+      (error) => {
+        dispatch(failure(error.message));
+        dispatch(alertActions.error(error.message));
+        dispatch(loaderActions.hide());
+      }
+    );
+  };
+
+  function request() {
+    return { type: `${kind}.${crudConstants.DELETE_REQUEST}` };
+  }
+  function success(data) {
+    return { type: `${kind}.${crudConstants.DELETE_SUCCESS}`, data };
+  }
+  function failure(error) {
+    return { type: `${kind}.${crudConstants.DELETE_FAILURE}`, error };
+  }
+}
+
+function _downloadPostAttachment(id, extension, customURL) {
+  let kind = "Attachment"
+  return (dispatch) => {
+    dispatch(loaderActions.show());
+    dispatch(request());
+    crudService._downloadAttachment(customURL).then(
+      (result) => {
+        if (result.status === 200) {
+          dispatch(loaderActions.hide());
+          if (result.data) {
+            fileDownload(result.data, `${extension}`);
           }
         } else {
           dispatch(failure(result.message));
