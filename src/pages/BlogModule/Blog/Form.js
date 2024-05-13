@@ -107,6 +107,11 @@ class BlogListForm extends React.PureComponent {
           form.details,
           "required|min:3"
         ),
+        extra_info: (
+          <p>
+            <b>Note:</b> Tags should be seprated by #
+          </p>
+        ),
       },
 
       {

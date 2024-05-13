@@ -9,6 +9,7 @@ export const crudService = {
   _delete,
   _deleteAll,
   _download,
+  _downloadAttachment,
 };
 function _get(type, id) {
   return apiConfig.get(`/${type}/${id}`);
@@ -72,6 +73,13 @@ function _deleteAll(type, data) {
 
 function _download(type, data) {
   return apiConfig.post(`/${type}`, data, {
+    responseType: "blob",
+  });
+}
+
+function _downloadAttachment(type) {
+  return apiConfig.get(`/${type}`,
+  {
     responseType: "blob",
   });
 }
