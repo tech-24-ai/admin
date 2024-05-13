@@ -349,7 +349,7 @@ class CommunityPostReplyList extends React.PureComponent {
                                     <div style={{ display: "flex" }}>
                                         {form.attachments.map((item) => (
                                             <div
-                                            style={{ cursor: "pointer", backgroundColor: '#d9dfe9', marginRight: 10, marginBottom: 10, padding: "6px 12px", borderRadius: "4px"  }}
+                                            style={{ marginRight: 10, marginBottom: 10, color: "blue", textDecoration: "underline"  }}
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 this.handleDocumentDownload(item);
