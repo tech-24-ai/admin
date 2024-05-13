@@ -375,6 +375,7 @@ class CommunityPostReplyList extends React.PureComponent {
                                 </GridItem>   
                             )}    
                             <GridItem xs={12}>
+                                <hr />
                                 <Grid component="label" container spacing={1} alignItems="center">
                                     <Grid item xs={1} fontSize="small" style={{display: "flex"}}>
                                         <Visibility fontSize="small" style={{marginRight: 5}} /> 
