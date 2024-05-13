@@ -109,7 +109,7 @@ class BlogListForm extends React.PureComponent {
         ),
         extra_info: (
           <p>
-            <b>Note:</b> Tags should be seprated by #
+            <b>Note:</b> Tags should be separated by comma(,)
           </p>
         ),
       },
