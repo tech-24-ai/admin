@@ -26,7 +26,12 @@ import {
 import styles from "assets/jss/material-dashboard-pro-react/views/extendedFormsStyle.js";
 
 import { connect } from "react-redux";
-import { crudActions, fileActions, alertActions, loaderActions } from "../../../_actions";
+import {
+  crudActions,
+  fileActions,
+  alertActions,
+  loaderActions,
+} from "../../../_actions";
 import { crudService } from "../../../_services";
 import SimpleReactValidator from "simple-react-validator";
 import { Assignment, Category } from "@material-ui/icons";
@@ -81,13 +86,12 @@ class DocumentForm extends React.PureComponent {
     if (!!event.target) {
       if (event.target.type == "checkbox") {
         newState.form[event.target.name] = event.target.checked;
-      }
-      else if(event.target.name == 'document_content_type') {
+      } else if (event.target.name == "document_content_type") {
         newState.form[event.target.name] = event.target.value;
-        newState.form['url'] = "";
-        newState.form['drive_document_id'] = "";
-        newState.form['google_doc_url'] = "";
-      }  
+        newState.form["url"] = "";
+        newState.form["drive_document_id"] = "";
+        newState.form["google_doc_url"] = "";
+      }
       // else if (event.target.name == "url") {
       //   let val = event.target.value;
       //   if(checkValidUrl(val)) {
@@ -179,30 +183,40 @@ class DocumentForm extends React.PureComponent {
         options: DOCUMENT_CONTENT_TYPE,
         value: form.document_content_type || "",
         icon: "assignment",
-        error: this.validator.message("document_content_type", form.document_content_type, "required"),
-      }
+        error: this.validator.message(
+          "document_content_type",
+          form.document_content_type,
+          "required"
+        ),
+      },
     ];
 
-    if(form.document_content_type && form.document_content_type == 1) {
+    if (form.document_content_type && form.document_content_type == 1) {
       formFields.push({
         name: "drive_document_id",
         label: "Upload Document",
         type: "googleDriveFileUpload",
         value: form.drive_document_id || "",
         uploadUrl: "uploadDocumentOnGoogleDrive",
-        error: this.validator.message("url", form.drive_document_id, "required"),
+        error: this.validator.message(
+          "url",
+          form.drive_document_id,
+          "required"
+        ),
       });
-    }
-    else if(form.document_content_type && form.document_content_type == 2) {
+    } else if (form.document_content_type && form.document_content_type == 2) {
       formFields.push({
         name: "google_doc_url",
         label: "Document Url",
         type: "textbox",
         value: form.google_doc_url || "",
-        error: this.validator.message("url", form.google_doc_url, "required|url"),
+        error: this.validator.message(
+          "url",
+          form.google_doc_url,
+          "required|url"
+        ),
       });
-    }
-    else if(form.document_content_type && form.document_content_type == 3) {
+    } else if (form.document_content_type && form.document_content_type == 3) {
       formFields.push({
         name: "url",
         label: "Upload Document",
@@ -213,7 +227,7 @@ class DocumentForm extends React.PureComponent {
       });
     }
 
-    formFields.push(  
+    formFields.push(
       {
         name: "seo_url_slug",
         label: "Seo Slug Url",
@@ -241,16 +255,11 @@ class DocumentForm extends React.PureComponent {
         label: "Details",
         type: "textarea",
         value: form.details || "",
-        error: this.validator.message(
-          "details",
-          form.details,
-          "required"
-        ),
-      },
+        error: this.validator.message("details", form.details, "required"),
+      }
     );
 
-    if(form.document_content_type && form.document_content_type == 4) 
-    {
+    if (form.document_content_type && form.document_content_type == 4) {
       formFields.push({
         name: "html",
         label: "Editor",
@@ -258,7 +267,7 @@ class DocumentForm extends React.PureComponent {
         value: form.description,
         icon: "assignment",
         // error: this.validator.message("editor2", form.html, "min:3"),
-      })
+      });
     } else if (form.document_content_type && form.document_content_type == 3) {
       formFields.push({
         name: "description",
@@ -267,20 +276,18 @@ class DocumentForm extends React.PureComponent {
         value: form.description,
         icon: "assignment",
         error: this.validator.message("editor1", form.description, "min:3"),
-      })
-    } 
+      });
+    }
 
-    formFields.push(  
-      {
-        name: "status",
-        label: "Status",
-        type: "select",
-        options: DOCUMENT_STATUS,
-        value: form.status || "",
-        icon: "assignment",
-        error: this.validator.message("status", form.status, "required"),
-      }
-    );
+    formFields.push({
+      name: "status",
+      label: "Status",
+      type: "select",
+      options: DOCUMENT_STATUS,
+      value: form.status || "",
+      icon: "assignment",
+      error: this.validator.message("status", form.status, "required"),
+    });
 
     return formFields;
   };
@@ -323,16 +330,16 @@ class DocumentForm extends React.PureComponent {
   handleSubmit(e) {
     e.preventDefault();
     if (this.validator.allValid()) {
-
-      const documentTags = this.state.form.tags.map(
-        (option) => option.id
-      );
+      const documentTags = this.state.form.tags.map((option) => option.id);
 
       let description = "";
 
-      if(this.state.form.document_content_type == 4) {
-        description = JSON.stringify(this.state.form.description);
-      } else{
+      if (this.state.form.document_content_type == 4) {
+        description = this.state.form.description;
+        if (typeof this.state.form.description === "object") {
+          description = JSON.stringify(this.state.form.description);
+        }
+      } else {
         description = this.state.form.description;
       }
 
@@ -362,19 +369,31 @@ class DocumentForm extends React.PureComponent {
         //   .basic_document_special_price,
         // subscription_category: this.state.form.subscription_category,
       };
-      
-      if(data.url && data.document_content_type == 1 && drive_document_id == "") {
-        this.props.showError("Please choose the file to upload over Google Drive.");
+
+      if (
+        data.url &&
+        data.document_content_type == 1 &&
+        drive_document_id == ""
+      ) {
+        this.props.showError(
+          "Please choose the file to upload over Google Drive."
+        );
         return false;
-      }
-      else if(data.url && data.document_content_type == 2 && !checkValidUrl(data.google_doc_url)) {
+      } else if (
+        data.url &&
+        data.document_content_type == 2 &&
+        !checkValidUrl(data.google_doc_url)
+      ) {
         this.props.showError("Only Google docs URL is allowed.");
         return false;
-      }
-      else if(data.url && data.document_content_type == 3 && !checkDomainUrl(data.url)) {
+      } else if (
+        data.url &&
+        data.document_content_type == 3 &&
+        !checkDomainUrl(data.url)
+      ) {
         this.props.showError("Please choose the file to upload.");
         return false;
-      }  
+      }
 
       const { id } = this.props.match.params;
       if (id && id === "new") {
@@ -386,7 +405,6 @@ class DocumentForm extends React.PureComponent {
             this.goBack();
           }
         });
-
       } else {
         this.props.showLoader();
         crudService._update("documents", id, data).then((response) => {
@@ -397,7 +415,6 @@ class DocumentForm extends React.PureComponent {
           }
         });
       }
-      
     } else {
       this.handleError();
     }
@@ -461,8 +478,8 @@ DocumentForm.propTypes = {
 };
 
 function checkValidUrl(val) {
-  var urlRegx = new RegExp('(docs.google.com)(://[A-Za-z]+-)?', 'i');
-  if(urlRegx.test(val)) {
+  var urlRegx = new RegExp("(docs.google.com)(://[A-Za-z]+-)?", "i");
+  if (urlRegx.test(val)) {
     return true;
   } else {
     return false;
@@ -470,8 +487,8 @@ function checkValidUrl(val) {
 }
 
 function checkDomainUrl(val) {
-  var urlRegx = new RegExp('(tech24)(://[A-Za-z]+-)?', 'i');
-  if(urlRegx.test(val)) {
+  var urlRegx = new RegExp("(tech24)(://[A-Za-z]+-)?", "i");
+  if (urlRegx.test(val)) {
     return true;
   } else {
     return false;

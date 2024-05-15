@@ -183,11 +183,7 @@ class BlogListForm extends React.PureComponent {
         type: "textbox",
         value: form.author || "",
         icon: "assignment",
-        error: this.validator.message(
-          "author",
-          form.author,
-          "required"
-        ),
+        error: this.validator.message("author", form.author, "required"),
       },
       {
         name: "read_time",
@@ -195,11 +191,7 @@ class BlogListForm extends React.PureComponent {
         type: "textbox",
         value: form.read_time || "",
         icon: "assignment",
-        error: this.validator.message(
-          "read_time",
-          form.read_time,
-          "required"
-        ),
+        error: this.validator.message("read_time", form.read_time, "required"),
       },
       {
         name: "html",
@@ -238,7 +230,6 @@ class BlogListForm extends React.PureComponent {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log("IsValid", this.validator.allValid());
     if (this.validator.allValid()) {
       let data = {
         blog_topic_id: this.state.form.blog_topic_id,
@@ -251,11 +242,13 @@ class BlogListForm extends React.PureComponent {
         image: this.state.form.image,
         banner: this.state.form.banner,
         slug: this.state.form.slug,
-        html: JSON.stringify(this.state.form.html),
+        html: this.state.form.html,
         author: this.state.form.author,
         read_time: this.state.form.read_time,
       };
-      console.log("DATA", data);
+      if (typeof this.state.form.html === "object") {
+        data.html = JSON.stringify(this.state.form.html);
+      }
       const { id } = this.props.match.params;
       if (id && id === "new") {
         this.props.create("formData", "blogs", data);

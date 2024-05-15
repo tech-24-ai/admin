@@ -10,7 +10,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Grid from '@material-ui/core/Grid';
 import Link from "@material-ui/core/Link";
-import { modalActions } from '../../_actions';
+import { modalActions, crudActions } from '../../_actions';
 import { Button, Modal } from 'antd';
 
 class PostAttachments extends React.Component {
@@ -26,21 +26,35 @@ class PostAttachments extends React.Component {
         };
     }
 
-    toggleModal(url, extension) {
+    toggleModal(url, extension, item) {
         let imageExt = ["image/jpeg","image/jpg","image/png","image/svg+xml"]
+        let pdfExt = ["application/pdf"]
         let media_type = "";
 
-        if(imageExt.includes(extension)) {
+        if(imageExt.includes(extension)) 
+        {
             media_type = "image"
-        } else {
+            this.setState({ mediaUrl: url, mediaExtension: extension, mediaType: media_type, isModalOpen: true });
+        } 
+        else if(pdfExt.includes(extension)) 
+        {
+            media_type = "pdf"
+            const { id, name } = item;
+       
+            this.props.downloadDocument(
+                id,
+                name,
+                `community/communitypost/download_attachment?attachment_id=${id}`
+            );
+        } 
+        else 
+        {
             media_type = "video"
-
             if(extension == "video/quicktime") {
                 extension = "video/mp4";
             }
+            this.setState({ mediaUrl: url, mediaExtension: extension, mediaType: media_type, isModalOpen: true });
         }
-
-        this.setState({ mediaUrl: url, mediaExtension: extension, mediaType: media_type, isModalOpen: true });
     }
 
     closeModal(url, mediaType) {
@@ -67,6 +81,7 @@ class PostAttachments extends React.Component {
         } 
 
         let imageExt = ["image/jpeg","image/jpg","image/png","image/svg+xml"]
+        let pdfExt = ["application/pdf"]
         let replyDataItems;
 
         if(formField.values && attachments.length > 0) 
@@ -75,13 +90,27 @@ class PostAttachments extends React.Component {
                 <Link 
                 key={i} 
                 href="javascript:"
-                onClick={() => this.toggleModal(item.url, item.extension)}
+                onClick={() => this.toggleModal(item.url, item.extension, item)}
                 style={{width: "auto", maxWidth: 150, minWidth: 150, minHeight: 150, height: "auto", margin: 10, border: "1px solid #ccc", display: "flex"}}>    
-                    { imageExt.includes(item.extension) ? (
-                        <img style={{margin: 'auto', display: 'block', maxWidth: '100%', maxHeight: '100%' }} alt={item.name} src={item.url} />
-                    ) : (
-                        <img style={{margin: 'auto', display: 'block', maxWidth: '100%', maxHeight: '100%' }} alt={item.name} src="https://tech24-uat.s3.amazonaws.com/yrUrbuAfMw" />
-                    )}    
+                    {(() => {  
+                        if (imageExt.includes(item.extension)) {   
+                            return (
+                                <img style={{margin: 'auto', display: 'block', maxWidth: '100%', maxHeight: '100%' }} alt={item.name} src={item.url} />
+                            )    
+                        }    
+                        else if (pdfExt.includes(item.extension)) 
+                        { 
+                            return (
+                                <img style={{margin: 'auto', display: 'block', maxWidth: '75%', maxHeight: '100%' }} alt={item.name} src="https://tech24-uat.s3.amazonaws.com/9UtKGqddEl" />
+                            )    
+                        }
+                        else 
+                        {    
+                            return (
+                                <img style={{margin: 'auto', display: 'block', maxWidth: '75%', maxHeight: '100%' }} alt={item.name} src="https://tech24-uat.s3.amazonaws.com/yrUrbuAfMw" />
+                            )    
+                        }   
+                    })()}         
                 </Link>
             )
         } else if(formField.values != "undefined") {
@@ -144,6 +173,7 @@ PostAttachments.defaultProps = {
 
 const actionCreators = {
     openModal: modalActions.open,
+    downloadDocument: crudActions._downloadPostAttachment,
 }
 
 export default connect("",actionCreators)(PostAttachments);
