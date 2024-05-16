@@ -89,8 +89,9 @@ class DocumentForm extends React.PureComponent {
       } else if (event.target.name == "document_content_type") {
         newState.form[event.target.name] = event.target.value;
         newState.form["url"] = "";
-        newState.form["drive_document_id"] = "";
-        newState.form["google_doc_url"] = "";
+        newState.form["description"] = "";
+        // newState.form["drive_document_id"] = "";
+        // newState.form["google_doc_url"] = "";
       }
       // else if (event.target.name == "url") {
       //   let val = event.target.value;
