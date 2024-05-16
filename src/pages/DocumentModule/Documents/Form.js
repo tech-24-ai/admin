@@ -191,32 +191,33 @@ class DocumentForm extends React.PureComponent {
       },
     ];
 
-    if (form.document_content_type && form.document_content_type == 1) {
-      formFields.push({
-        name: "drive_document_id",
-        label: "Upload Document",
-        type: "googleDriveFileUpload",
-        value: form.drive_document_id || "",
-        uploadUrl: "uploadDocumentOnGoogleDrive",
-        error: this.validator.message(
-          "url",
-          form.drive_document_id,
-          "required"
-        ),
-      });
-    } else if (form.document_content_type && form.document_content_type == 2) {
-      formFields.push({
-        name: "google_doc_url",
-        label: "Document Url",
-        type: "textbox",
-        value: form.google_doc_url || "",
-        error: this.validator.message(
-          "url",
-          form.google_doc_url,
-          "required|url"
-        ),
-      });
-    } else if (form.document_content_type && form.document_content_type == 3) {
+    // if (form.document_content_type && form.document_content_type == 1) {
+    //   formFields.push({
+    //     name: "drive_document_id",
+    //     label: "Upload Document",
+    //     type: "googleDriveFileUpload",
+    //     value: form.drive_document_id || "",
+    //     uploadUrl: "uploadDocumentOnGoogleDrive",
+    //     error: this.validator.message(
+    //       "url",
+    //       form.drive_document_id,
+    //       "required"
+    //     ),
+    //   });
+    // } else if (form.document_content_type && form.document_content_type == 2) {
+    //   formFields.push({
+    //     name: "google_doc_url",
+    //     label: "Document Url",
+    //     type: "textbox",
+    //     value: form.google_doc_url || "",
+    //     error: this.validator.message(
+    //       "url",
+    //       form.google_doc_url,
+    //       "required|url"
+    //     ),
+    //   });
+    // } 
+    if (form.document_content_type && form.document_content_type == 3) {
       formFields.push({
         name: "url",
         label: "Upload Document",
@@ -261,14 +262,16 @@ class DocumentForm extends React.PureComponent {
 
     if (form.document_content_type && form.document_content_type == 4) {
       formFields.push({
-        name: "html",
+        name: "description",
         label: "Editor",
         type: "pageBuilder",
         value: form.description,
         icon: "assignment",
-        // error: this.validator.message("editor2", form.html, "min:3"),
+        // error: this.validator.message("editor2", form.description, "min:3"),
       });
-    } else if (form.document_content_type && form.document_content_type == 3) {
+    } 
+    else 
+    {
       formFields.push({
         name: "description",
         label: "Description",
