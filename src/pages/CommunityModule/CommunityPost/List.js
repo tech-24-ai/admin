@@ -93,27 +93,38 @@ class CommunityPostList extends React.PureComponent {
             {
                 title: "Community",
                 field: "community.name",
-                sorting: false
+                sorting: false,
             },
             {
                 title: "Visitor Name",
                 field: "visitor.name",
-                sorting: false
+                sorting: false,
             },
             {
                 title: "Total Answers",
                 field: "__meta__.total_reply",
-                sorting: false
+                filtering: false,
             },
             {
-                title: "Total Helpful",
-                field: "__meta__.total_helpful",
-                sorting: false
+                title: "Total Pending Ans.",
+                field: "__meta__.total_pending_answer",
+                filtering: false,
+            },
+            {
+                title: "Total Pending Comments",
+                field: "__meta__.total_pending_comment",
+                filtering: false,
             },
             {
                 title: "Total Views",
-                field: "views_counter"
+                field: "views_counter",
+                filtering: false,
             },
+            // {
+            //     title: "Total Helpful",
+            //     field: "__meta__.total_helpful",
+            //     sorting: false
+            // },
             {
                 title: "Status",
                 field: "status",
@@ -125,15 +136,15 @@ class CommunityPostList extends React.PureComponent {
                 lookupConstant: COMMUNITY_POST_DISCUSSION_STATUS,
             },
             {
-                title: "Date",
-                field: "updated_at"
+                title: "Created Date",
+                field: "created_at",
             },
             TableAction(PermissionHelper.checkPermission('delete_community_query') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_community_query') ? this.editCrud : null, null, null, PermissionHelper.checkPermission('view_community_query_answer') ? this.viewCommunityPostReply : null)
         ]
 
         return (
             <GridContainer>
-                <GridItem xs={12}>
+                <GridItem xs={12} className="custom-datatable-section">
                     <MaterialDataTable
                         title={title}
                         columns={columns}
