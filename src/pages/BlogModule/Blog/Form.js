@@ -187,7 +187,7 @@ class BlogListForm extends React.PureComponent {
       },
       {
         name: "read_time",
-        label: "Read Time",
+        label: "Read Time (in mins)",
         type: "textbox",
         value: form.read_time || "",
         icon: "assignment",

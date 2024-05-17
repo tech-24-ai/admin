@@ -122,6 +122,7 @@ class CommunityPostReplyCommentForm extends React.PureComponent {
             this.props.showLoader();
             let data = {
                 status: this.state.form.status,
+                description: this.state.form.description,
             }
             const { id } = this.props.match.params
             // this.props.update('formData', 'community/posts_reply_comments/status_update', id, data)
