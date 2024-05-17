@@ -91,7 +91,7 @@ class BlogListForm extends React.PureComponent {
         name: "image",
         label: "Thumbnail Image",
         type: "imageUpload",
-        aspect: Number(18 / 6),
+        aspect: Number(1.5),
         uploadUrl: "upload/image",
         value: form.image || "",
         icon: "image",
