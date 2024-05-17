@@ -390,7 +390,7 @@ class CommunityPostReplyList extends React.PureComponent {
                                     </Grid>
                                     <Grid item xs={2} style={{display: "flex"}}>
                                         <AccessTime fontSize="small" style={{marginRight: 5}} />
-                                        {form.created_at}
+                                        {moment(form.created_at).format("DD-MM-YYYY hh:m A")}
                                     </Grid>
                                 </Grid>
                             </GridItem>
