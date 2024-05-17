@@ -122,6 +122,7 @@ class CommunityPostReplyForm extends React.PureComponent {
             this.props.showLoader();
             let data = {
                 status: this.state.form.status,
+                description: this.state.form.description,
             }
             const { id } = this.props.match.params
             crudService._update("community/posts_reply/status_update", id, data).then((response) => {
