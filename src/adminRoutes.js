@@ -635,6 +635,34 @@ if (PermissionHelper.checkMainPermission(["view_vendor_manager"])) {
         });
       }
 
+      if (PermissionHelper.checkMainPermission(["view_modules"])) {
+        subViews.push({
+          path: "/modules",
+          name: "Modules",
+          rtlName: "",
+          mini: "",
+          rtlMini: "",
+          layout: "/admin",
+        });
+      }
+      if (PermissionHelper.checkMainPermission(["view_products"])) {
+        subViews.push({
+          path: "/products",
+          name: "Products",
+          rtlName: "",
+          mini: "",
+          rtlMini: "",
+          layout: "/admin",
+        });
+      }
+
+      views.push({
+        collapse: true,
+        name: "Module Manager",
+        rtlName: "",
+        state: "ModulesCollapse",
+        views: subViews,
+      });
       // subViews.push({
       //   path: "/donation",
       //   name: "Donation History",
@@ -644,10 +672,15 @@ if (PermissionHelper.checkMainPermission(["view_vendor_manager"])) {
       //   layout: "/admin",
       // });
 
+    }
+    
+    if (PermissionHelper.checkMainPermission(["view_research_document_manager"])) 
+    {
+      let subViews = [];
       if (PermissionHelper.checkMainPermission(["view_document_types"])) {
         subViews.push({
           path: "/document_types",
-          name: "Document Types",
+          name: "Research Document Types",
           rtlName: "",
           mini: "",
           rtlMini: "",
@@ -680,38 +713,19 @@ if (PermissionHelper.checkMainPermission(["view_vendor_manager"])) {
       if (PermissionHelper.checkMainPermission(["view_documents"])) {
         subViews.push({
           path: "/documents",
-          name: "Documents",
+          name: "Research Documents",
           rtlName: "",
           mini: "",
           rtlMini: "",
           layout: "/admin",
         });
       }
-      if (PermissionHelper.checkMainPermission(["view_modules"])) {
-        subViews.push({
-          path: "/modules",
-          name: "Modules",
-          rtlName: "",
-          mini: "",
-          rtlMini: "",
-          layout: "/admin",
-        });
-      }
-      if (PermissionHelper.checkMainPermission(["view_products"])) {
-        subViews.push({
-          path: "/products",
-          name: "Products",
-          rtlName: "",
-          mini: "",
-          rtlMini: "",
-          layout: "/admin",
-        });
-      }
+
       views.push({
         collapse: true,
-        name: "Module Manager",
+        name: "Research Documents",
         rtlName: "",
-        state: "ModulesCollapse",
+        state: "ResearchDocumentCollapse",
         views: subViews,
       });
     }
@@ -919,14 +933,14 @@ if (PermissionHelper.checkMainPermission(["view_vendor_manager"])) {
         views: subViews,
       });
     }
-    views.push({
-      path: "/donation",
-      name: "Donation History",
-      rtlName: "",
-      mini: "",
-      rtlMini: "",
-      layout: "/admin",
-    });
+    // views.push({
+    //   path: "/donation",
+    //   name: "Donation History",
+    //   rtlName: "",
+    //   mini: "",
+    //   rtlMini: "",
+    //   layout: "/admin",
+    // });
     dashRoutes.push({
       collapse: true,
       name: "End User",
