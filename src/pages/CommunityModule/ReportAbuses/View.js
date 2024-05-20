@@ -100,7 +100,7 @@ const Index = (props) => {
                                         <TableCell align="left">
                                             {state.communityPost.title}
                                             <hr style={{margin: "10px 0"}} />
-                                            {state.communityPost.description}
+                                            <div dangerouslySetInnerHTML={{ __html: state.communityPost.description }} />
                                             <h6 style={{color: "#aaaaaa"}}><br />Created By {state.communityPost?.visitor?.name} On {moment(state.communityPost?.created_at).format("DD-MM-YYYY")}</h6>
                                         </TableCell>
                                     </TableRow>
