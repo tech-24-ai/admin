@@ -84,6 +84,10 @@ const Index = (props) => {
                                         <TableCell align="left">{state.visitor.name}</TableCell>
                                     </TableRow>
                                     <TableRow>
+                                        <TableCell  style={{width: '20%'}} component="th" scope="row">Report Abuse Type</TableCell>
+                                        <TableCell align="left">{state.abuseType?.name}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
                                         <TableCell  style={{width: '20%'}} component="th" scope="row">Reason</TableCell>
                                         <TableCell align="left">{state.reason}</TableCell>
                                     </TableRow>
@@ -92,19 +96,27 @@ const Index = (props) => {
                                         <TableCell align="left">{state.community.name}</TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell  style={{width: '20%'}} component="th" scope="row">Community Post</TableCell>
+                                        <TableCell  style={{width: '20%'}} component="th" scope="row">Question</TableCell>
                                         <TableCell align="left">
                                             {state.communityPost.title}
-                                            <h6><br />Created By {state.communityPost?.visitor?.name} On {moment(state.communityPost?.created_at).format("DD-MM-YYYY")}</h6>
+                                            <hr style={{margin: "10px 0"}} />
+                                            {state.communityPost.description}
+                                            <h6 style={{color: "#aaaaaa"}}><br />Created By {state.communityPost?.visitor?.name} On {moment(state.communityPost?.created_at).format("DD-MM-YYYY")}</h6>
                                         </TableCell>
                                     </TableRow>
-                                    <TableRow>
-                                        <TableCell  style={{width: '20%'}} component="th" scope="row">Post Reply</TableCell>
-                                        <TableCell align="left">
-                                            {state.communityPostReply.description}
-                                            <h6><br />Reply By {state.communityPostReply?.visitor?.name} On {moment(state.communityPostReply?.created_at).format("DD-MM-YYYY")}</h6>
-                                        </TableCell>
-                                    </TableRow>
+                                    { state.communityPostReply && (
+                                        <TableRow>
+                                            <TableCell  style={{width: '20%'}} component="th" scope="row">{ state.reply_type == 2 ? ( "Comment" ) : ("Answer")  }</TableCell>
+                                            <TableCell align="left">
+                                                <div dangerouslySetInnerHTML={{ __html: state.communityPostReply?.description }} />
+                                                { state.reply_type == 2 ? (
+                                                    <h6 style={{color: "#aaaaaa"}}><br />Comment By {state.communityPostReply?.visitor?.name} On {moment(state.communityPostReply?.created_at).format("DD-MM-YYYY")}</h6>
+                                                ) : (
+                                                    <h6 style={{color: "#aaaaaa"}}><br />Reply By {state.communityPostReply?.visitor?.name} On {moment(state.communityPostReply?.created_at).format("DD-MM-YYYY")}</h6>    
+                                                )} 
+                                            </TableCell>
+                                        </TableRow>
+                                    )}    
                                 </TableBody>
                             </Table>
                         </TableContainer>
