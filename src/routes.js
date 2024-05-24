@@ -1,6 +1,8 @@
 import Dashboard from "views/Dashboard/Dashboard.js";
 import MIDashboard from "views/Dashboard/MIDashboard.js";
 import ConsultantDashboard from "views/Dashboard/ConsultantDashboard";
+import CommunityDashboard from "views/Dashboard/CommunityDashboard";
+
 
 //Consultant Module
 import ConsultantTabForm from "pages/ConsultantModule/FormTab";
@@ -382,7 +384,11 @@ dashRoutes.push({
   component: ConsultantDashboard,
   layout: "/admin",
 });
-
+dashRoutes.push({
+  path: "/community_dashboard",
+  component: CommunityDashboard,
+  layout: "/admin",
+});
 //Consultant routes
 if (PermissionHelper.checkPermission("view_consultant_manager")) {
   dashRoutes.push({

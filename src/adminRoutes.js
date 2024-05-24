@@ -54,6 +54,14 @@ dashRoutes.push({
       rtlMini: "",
       layout: "/admin",
     },
+    {
+      path: "/community_dashboard",
+      name: "Community Dashboard",
+      rtlName: "",
+      mini: "",
+      rtlMini: "",
+      layout: "/admin",
+    },
   ],
 });
 
