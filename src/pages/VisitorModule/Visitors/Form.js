@@ -260,10 +260,10 @@ class VisitorForm extends React.PureComponent {
                 visitor_group_id: this.state.form.visitor_group_id,
                 linkedin_link: this.state.form.linkedin_link,
                 profile_pic_url: this.state.form.profile_pic_url,
-                country_id: this.state.country_id,
-                connections: this.state.connections,
-                location: this.state.location,
-                company_location: this.state.company_location,
+                country_id: this.state.form.country_id,
+                connections: this.state.form.connections,
+                location: this.state.form.location,
+                company_location: this.state.form.company_location,
                 company_linkedin_link: this.state.form.company_linkedin_link,
             }
             const { id } = this.props.match.params
