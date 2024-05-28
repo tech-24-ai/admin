@@ -1872,94 +1872,94 @@ if (true) {
     }
   }
   // EU Subscription Manager
-  if (PermissionHelper.checkPermission("view_subscription_manager")) {
-    if (PermissionHelper.checkPermission("view_eusubscription_plan")) {
-      dashRoutes.push({
-        path: "/eusubscription-plan",
-        component: EuSubscriptionPlanList,
-        layout: "/admin",
-      });
+  // if (PermissionHelper.checkPermission("view_subscription_manager")) {
+  //   if (PermissionHelper.checkPermission("view_eusubscription_plan")) {
+  //     dashRoutes.push({
+  //       path: "/eusubscription-plan",
+  //       component: EuSubscriptionPlanList,
+  //       layout: "/admin",
+  //     });
 
-      if (
-        PermissionHelper.checkPermission("add_eusubscription_plan") ||
-        PermissionHelper.checkPermission("edit_eusubscription_plan")
-      ) {
-        dashRoutes.push({
-          path: "/eusubscription-plan-form/:id",
-          component: EuSubscriptionPlanForm,
-          layout: "/admin",
-        });
-      }
-    }
-    if (PermissionHelper.checkPermission("view_eusubscriptions")) {
-      dashRoutes.push(
-        {
-          path: "/eusubscriptions",
-          component: EuSubscriptionList,
-          layout: "/admin",
-        },
-        {
-          path: "/eusubscription-pending",
-          component: EuSubscriptionPendingList,
-          layout: "/admin",
-        }
-      );
+  //     if (
+  //       PermissionHelper.checkPermission("add_eusubscription_plan") ||
+  //       PermissionHelper.checkPermission("edit_eusubscription_plan")
+  //     ) {
+  //       dashRoutes.push({
+  //         path: "/eusubscription-plan-form/:id",
+  //         component: EuSubscriptionPlanForm,
+  //         layout: "/admin",
+  //       });
+  //     }
+  //   }
+  //   if (PermissionHelper.checkPermission("view_eusubscriptions")) {
+  //     dashRoutes.push(
+  //       {
+  //         path: "/eusubscriptions",
+  //         component: EuSubscriptionList,
+  //         layout: "/admin",
+  //       },
+  //       {
+  //         path: "/eusubscription-pending",
+  //         component: EuSubscriptionPendingList,
+  //         layout: "/admin",
+  //       }
+  //     );
 
-      if (
-        PermissionHelper.checkPermission("add_eusubscriptions") ||
-        PermissionHelper.checkPermission("edit_eusubscriptions")
-      ) {
-        dashRoutes.push(
-          {
-            path: "/eusubscriptions-form/:id",
-            component: EuSubscriptionsForm,
-            layout: "/admin",
-          },
-          {
-            path: "/eusubscription-pending-form/:id",
-            component: EuSubscriptionPendingForm,
-            layout: "/admin",
-          }
-        );
-      }
-    }
-    if (PermissionHelper.checkPermission("view_eutransactions")) {
-      dashRoutes.push({
-        path: "/eutransactions",
-        component: EuTransactionsList,
-        layout: "/admin",
-      });
+  //     if (
+  //       PermissionHelper.checkPermission("add_eusubscriptions") ||
+  //       PermissionHelper.checkPermission("edit_eusubscriptions")
+  //     ) {
+  //       dashRoutes.push(
+  //         {
+  //           path: "/eusubscriptions-form/:id",
+  //           component: EuSubscriptionsForm,
+  //           layout: "/admin",
+  //         },
+  //         {
+  //           path: "/eusubscription-pending-form/:id",
+  //           component: EuSubscriptionPendingForm,
+  //           layout: "/admin",
+  //         }
+  //       );
+  //     }
+  //   }
+  //   if (PermissionHelper.checkPermission("view_eutransactions")) {
+  //     dashRoutes.push({
+  //       path: "/eutransactions",
+  //       component: EuTransactionsList,
+  //       layout: "/admin",
+  //     });
 
-      if (
-        PermissionHelper.checkPermission("add_eutransactions") ||
-        PermissionHelper.checkPermission("edit_eutransactions")
-      ) {
-        dashRoutes.push({
-          path: "/eutransaction-view/:id",
-          component: EuTransactionsView,
-          layout: "/admin",
-        });
-      }
-    }
-    if (PermissionHelper.checkPermission("view_eudocpurchases")) {
-      dashRoutes.push({
-        path: "/eudocpurchases",
-        component: EuDocPurchaseList,
-        layout: "/admin",
-      });
+  //     if (
+  //       PermissionHelper.checkPermission("add_eutransactions") ||
+  //       PermissionHelper.checkPermission("edit_eutransactions")
+  //     ) {
+  //       dashRoutes.push({
+  //         path: "/eutransaction-view/:id",
+  //         component: EuTransactionsView,
+  //         layout: "/admin",
+  //       });
+  //     }
+  //   }
+  //   if (PermissionHelper.checkPermission("view_eudocpurchases")) {
+  //     dashRoutes.push({
+  //       path: "/eudocpurchases",
+  //       component: EuDocPurchaseList,
+  //       layout: "/admin",
+  //     });
 
-      if (
-        PermissionHelper.checkPermission("add_eudocpurchases") ||
-        PermissionHelper.checkPermission("edit_eudocpurchases")
-      ) {
-        dashRoutes.push({
-          path: "/eudocpurchases-view/:id",
-          component: EuDocPurchaseView,
-          layout: "/admin",
-        });
-      }
-    }
-  }
+  //     if (
+  //       PermissionHelper.checkPermission("add_eudocpurchases") ||
+  //       PermissionHelper.checkPermission("edit_eudocpurchases")
+  //     ) {
+  //       dashRoutes.push({
+  //         path: "/eudocpurchases-view/:id",
+  //         component: EuDocPurchaseView,
+  //         layout: "/admin",
+  //       });
+  //     }
+  //   }
+  // }
   // Report Manager
   if (PermissionHelper.checkPermission("view_visitor_report_manager")) {
     if (PermissionHelper.checkPermission("view_visitor_ip_logs")) {
