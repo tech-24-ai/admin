@@ -187,7 +187,7 @@ class Dashboard extends React.PureComponent {
 
           <GridContainer>
             <GridItem xs={12}>
-              <Card>
+              {/* <Card>
                 <CardHeader color="success" icon>
                   <CardIcon color="success">
                     <Icon>view_module</Icon>
@@ -220,7 +220,7 @@ class Dashboard extends React.PureComponent {
                     }}
                   />
                 </CardBody>
-              </Card>
+              </Card> */}
             </GridItem>
           </GridContainer>
         </div>

@@ -31,7 +31,8 @@ const initialState = {
         description: '',
         status: '',
         is_discussion_open: '',
-        reject_reason: ''
+        reject_reason: '',
+        postTags: [],
     },
 }
 
@@ -88,6 +89,16 @@ class CommunityPostForm extends React.PureComponent {
                 label: "Attachments",
                 type: "post_attachments",
                 values: form.attachments
+            },
+            {
+                name: "postTags",
+                label: "Tags",
+                type: "multi_autocomplete",
+                url: `community/tags`,
+                getOptionLabel: "name",
+                getOptionValue: "id",
+                value: form.postTags || "",
+                icon: "assignment",
             },
             {
                 name: "status",
@@ -152,11 +163,17 @@ class CommunityPostForm extends React.PureComponent {
         e.preventDefault();
         if (this.validator.allValid()) {
             this.props.showLoader();
+            
+            const post_tags = this.state.form.postTags.map(
+                (option) => option.id
+            );
+
             let data = {
                 title: this.state.form.title,
                 description: this.state.form.description,
                 status: this.state.form.status,
                 is_discussion_open: this.state.form.is_discussion_open,
+                postTags: JSON.stringify(post_tags),
                 reject_reason: this.state.form.reject_reason,
             }
             const { id } = this.props.match.params
