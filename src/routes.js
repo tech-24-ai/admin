@@ -361,6 +361,10 @@ import ResearchTopicsForm from "pages/DocumentModule/ResearchTopics/Form.js";
 import ResearchTagsList from "pages/DocumentModule/ResearchTags/List.js";
 import ResearchTagsForm from "pages/DocumentModule/ResearchTags/Form.js";
 
+import visitorReport from "pages/CommunityModule/Reports/visitorReport.js";
+import discussionGroupReport from "pages/CommunityModule/Reports/discussionGroupReport.js";
+import moderatorReport from "pages/CommunityModule/Reports/moderatorReport.js";
+
 import { PermissionHelper, UserHelper } from "_helpers";
 import { ImageOutlined } from "@material-ui/icons";
 
@@ -2469,7 +2473,24 @@ if(PermissionHelper.checkMainPermission(["view_community_manager"]))
       });
     }
   }
-    
+   
+  dashRoutes.push({
+    path: "/visitor-report",
+    component: visitorReport,
+    layout: "/admin",
+  });
+
+  dashRoutes.push({
+    path: "/discussion-group-report-with-summary",
+    component: discussionGroupReport,
+    layout: "/admin",
+  });
+
+  dashRoutes.push({
+    path: "/moderator-report",
+    component: moderatorReport,
+    layout: "/admin",
+  });
 }  
 
 export default dashRoutes;

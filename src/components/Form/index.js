@@ -55,6 +55,10 @@ class MyForm extends React.PureComponent {
     this.props.handleCancel();
   };
 
+  handleReset = () => {
+    this.props.handleReset();
+  };
+
   handleReject = (event) => {
     this.props.handleReject(event);
   };
@@ -215,6 +219,7 @@ class MyForm extends React.PureComponent {
       btnText,
       handleCancel,
       handleReject,
+      handleReset,
       dynamicForm,
       isExport,
       displayAddBtn = true,
@@ -638,6 +643,12 @@ class MyForm extends React.PureComponent {
         {handleCancel && (
           <Button color="danger" type="button" onClick={this.handleCancel}>
             Cancel
+          </Button>
+        )}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {handleReset && (
+          <Button color="danger" type="button" onClick={this.handleReset}>
+            Reset
           </Button>
         )}
       </form>

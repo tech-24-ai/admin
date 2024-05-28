@@ -1234,6 +1234,55 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
     });
   }
 
+  if(PermissionHelper.checkMainPermission(["community_reports_access"]))
+  {
+    let subViews = [];
+
+    if(PermissionHelper.checkMainPermission(["community_visitor_report"]))
+    {
+      subViews.push({
+        path: "/visitor-report",
+        name: "Community Visitor Report",
+        rtlName: "",
+        mini: "",
+        rtlMini: "",
+        layout: "/admin",
+      });
+    }
+
+    if(PermissionHelper.checkMainPermission(["discussion_group_report"]))
+    {
+      subViews.push({
+        path: "/discussion-group-report-with-summary",
+        name: "Discussion Group Report",
+        rtlName: "",
+        mini: "",
+        rtlMini: "",
+        layout: "/admin",
+      });
+    }
+    
+    if(PermissionHelper.checkMainPermission(["moderator_report"]))
+    {
+      subViews.push({
+        path: "/moderator-report",
+        name: "Moderator Report",
+        rtlName: "",
+        mini: "",
+        rtlMini: "",
+        layout: "/admin",
+      });
+    }
+
+    views.push({
+      collapse: true,
+      name: "Reports",
+      rtlName: "",
+      state: "ReportCollapse",
+      views: subViews,
+    });
+  }
+
   dashRoutes.push({
     collapse: true,
     name: "Community",
