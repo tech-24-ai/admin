@@ -1157,17 +1157,6 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
     });
   }
 
-  // if (PermissionHelper.checkMainPermission(["view_visitor_technology"])) {  
-  //   views.push({
-  //     path: "/technology",
-  //     name: "Technology",
-  //     rtlName: "",
-  //     mini: "",
-  //     rtlMini: "",
-  //     layout: "/admin",
-  //   });
-  // }
-
   if (PermissionHelper.checkMainPermission(["view_report_abuse_types"])) {
     views.push({
       path: "/report_abuse/type",
@@ -1319,14 +1308,6 @@ if (PermissionHelper.checkMainPermission(["view_setting_manager"])) {
         rtlMini: "",
         layout: "/admin",
       },
-      // {
-      //   path: "/google-drive",
-      //   name: "Connect Google Drive",
-      //   rtlName: "",
-      //   mini: "",
-      //   rtlMini: "",
-      //   layout: "/admin",
-      // },
       // temporary commented start
       // {
       //   path: "/market-product",

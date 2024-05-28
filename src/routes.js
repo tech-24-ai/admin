@@ -329,9 +329,6 @@ import CommunityList from "pages/CommunityModule/Community/List.js";
 import CommunityMembersList from "pages/CommunityModule/Community/MembersList.js";
 import CommunityForm from "pages/CommunityModule/Community/Form.js";
 
-import VisitorTechnologyList from "pages/CommunityModule/Technology/List.js";
-import VisitorTechnologyForm from "pages/CommunityModule/Technology/Form.js";
-
 import ReportAbuseTypesList from "pages/CommunityModule/ReportAbuseTypes/List.js";
 import ReportAbuseTypesForm from "pages/CommunityModule/ReportAbuseTypes/Form.js";
 
@@ -2310,22 +2307,6 @@ if(PermissionHelper.checkMainPermission(["view_community_manager"]))
     } 
   } 
 
-  if (PermissionHelper.checkMainPermission(["view_visitor_technology"])) {    
-    dashRoutes.push({
-      path: "/technology",
-      component: VisitorTechnologyList,
-      layout: "/admin",
-    });
-    
-    if (PermissionHelper.checkPermission("add_visitor_technology") || PermissionHelper.checkPermission("edit_visitor_technology")) {
-      dashRoutes.push({
-        path: "/technology-form/:id",
-        component: VisitorTechnologyForm,
-        layout: "/admin",
-      });
-    }  
-  }
-
   if (PermissionHelper.checkMainPermission(["view_report_abuse_types"])) { 
     dashRoutes.push({
       path: "/report_abuse/type",
@@ -2474,23 +2455,32 @@ if(PermissionHelper.checkMainPermission(["view_community_manager"]))
     }
   }
    
-  dashRoutes.push({
-    path: "/visitor-report",
-    component: visitorReport,
-    layout: "/admin",
-  });
+  if(PermissionHelper.checkMainPermission(["community_visitor_report"]))
+  {
+    dashRoutes.push({
+      path: "/visitor-report",
+      component: visitorReport,
+      layout: "/admin",
+    });
+  }
 
-  dashRoutes.push({
-    path: "/discussion-group-report-with-summary",
-    component: discussionGroupReport,
-    layout: "/admin",
-  });
-
-  dashRoutes.push({
-    path: "/moderator-report",
-    component: moderatorReport,
-    layout: "/admin",
-  });
+  if(PermissionHelper.checkMainPermission(["discussion_group_report"]))
+  {
+    dashRoutes.push({
+      path: "/discussion-group-report-with-summary",
+      component: discussionGroupReport,
+      layout: "/admin",
+    });
+  }
+  
+  if(PermissionHelper.checkMainPermission(["discussion_group_report"]))
+  { 
+    dashRoutes.push({
+      path: "/moderator-report",
+      component: moderatorReport,
+      layout: "/admin",
+    });
+  } 
 }  
 
 export default dashRoutes;

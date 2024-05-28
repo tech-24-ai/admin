@@ -2,10 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 import MaterialDataTable from "material-table/Table.js";
-import { crudActions, confirmActions } from "../../_actions";
-
-// react plugin for creating charts
-// react plugin for creating vector maps
+import { crudActions, confirmActions, modalActions } from "../../_actions";
 
 // @material-ui/core components
 import { withStyles } from "@material-ui/core/styles";
@@ -20,83 +17,105 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import styles from "assets/jss/material-dashboard-pro-react/views/dashboardStyle.js";
-
-import { AnalyticsDashboard } from "react-analytics-charts";
-// Over ten different commonly used charts are available
-import { SessionsByDateChart, SessionsGeoChart } from "react-analytics-charts";
+import Link from "@material-ui/core/Link";
 
 class Dashboard extends React.PureComponent {
+
     componentDidMount() {
         if (localStorage.getItem("user")) {
-            this.props.getAllCrud("dashboard", "dashboard_data/consultant");
+            this.props.getAllCrud("dashboard", "communityDashboard");
         }
     }
-    // componentDidMount() {
-    //     if (localStorage.getItem("user")) {
-    //         this.props.getAllCrud("dashboard", "communityDashboard");
-    //     }
-    // }
+
+    toggleModal(log) {
+        this.props.openModal({
+          open: true,
+          component: log,
+        });
+    }
+    
     render() {
         const productsColumns = [
             {
                 title: "Community Title",
-                field: "consultant.first_name",
-            },
-            {
-                title: "Total Views",
-                field: "duration",
+                field: "name",
             },
             {
                 title: "Total Questions",
-                field: "duration",
+                field: "total_questions",
             },
             {
                 title: "Total Answers",
-                field: "duration",
+                field: "__meta__.total_post_answers",
+            },
+            {
+                title: "Total Views",
+                field: "total_query_views",
             },
         ];
 
         const modulesColumns = [
             {
                 title: "Visitor Name",
-                field: "category",
+                field: "visitor.name",
+            },
+            {
+                title: "Visitor Email",
+                field: "visitor.email",
             },
             {
                 title: "Total Points",
-                field: "module"
+                field: "total_points"
             },
             {
                 title: "Current Badge",
-                field: "visitor"
+                field: "current_badge"
             }
         ]
 
         const queryColumns = [
             {
-                title: "Question Title",
-                field: "category",
+                title: "Title",
+                field: "title",
+                render: (item) =>
+                    item.description && (
+                        <div>
+                            {item.title?.substring(0, 30)}{" "}
+                            {item.title.length > 30 &&
+                                <span>
+                                    <Link
+                                    onClick={() => this.toggleModal(item.title)}
+                                    href="javascript:"
+                                    >
+                                    ... More
+                                    </Link>
+                                </span>
+                            }
+                        </div>
+                ),
             },
             {
                 title: "Discussion Group Name",
-                field: "module"
+                field: "community.name"
             },
             {
                 title: "Total Views",
-                field: "visitor"
+                field: "views_counter"
             },
             {
                 title: "Total Answers",
-                field: "visitor"
+                field: "__meta__.total_answers"
             },
             {
                 title: "Total Upvotes",
-                field: "visitor"
+                field: "__meta__.total_helpful"
             }
         ]
 
-        const { classes, dashboardData } = this.props;
+        const { classes, dashboardData, communityListing } = this.props;
 
         if (localStorage.getItem("user")) {
+            console.log("communityListing" , communityListing)
             return (
                 <div>
                     <GridContainer>
@@ -125,9 +144,9 @@ class Dashboard extends React.PureComponent {
                             <Card>
                                 <CardHeader color="primary" icon>
                                     <CardIcon color="primary">
-                                        <Icon>all_inbox</Icon>
+                                        <Icon>view_module</Icon>
                                     </CardIcon>
-                                    <h4 className={classes.cardIconTitle}>Community Details</h4>
+                                    <h4 className={classes.cardIconTitle}>Top Community</h4>
                                 </CardHeader>
                                 <CardBody>
                                     <GridContainer justify="space-between">
@@ -135,7 +154,7 @@ class Dashboard extends React.PureComponent {
                                             <MaterialDataTable
                                                 title=""
                                                 columns={productsColumns}
-                                                url={`consultants/booking?bookingType=upcoming`}
+                                                url={`communityDashboard/topCommunities`}
                                                 selection={false}
                                                 exportButton={false}
                                                 grouping={false}
@@ -156,7 +175,7 @@ class Dashboard extends React.PureComponent {
                             <Card>
                                 <CardHeader color="success" icon>
                                     <CardIcon color="success">
-                                        <Icon>view_module</Icon>
+                                        <Icon>groups</Icon>
                                     </CardIcon>
                                     <h4 className={classes.cardIconTitle}>
                                         Top Visitors
@@ -168,7 +187,7 @@ class Dashboard extends React.PureComponent {
                                             <MaterialDataTable
                                                 title=''
                                                 columns={modulesColumns}
-                                                url='search_reports?orderBy=search_reports.created_at&orderDirection=asc&groupBy=search_reports.module_id,DATE(search_reports.created_at)'
+                                                url={'communityDashboard/topVisitors'}
                                                 selection={false}
                                                 exportButton={false}
                                                 grouping={false}
@@ -191,7 +210,7 @@ class Dashboard extends React.PureComponent {
                             <Card>
                                 <CardHeader color="success" icon>
                                     <CardIcon color="success">
-                                        <Icon>view_module</Icon>
+                                        <Icon>quiz</Icon>
                                     </CardIcon>
                                     <h4 className={classes.cardIconTitle}>
                                     Top Queries
@@ -203,7 +222,7 @@ class Dashboard extends React.PureComponent {
                                             <MaterialDataTable
                                                 title=''
                                                 columns={queryColumns}
-                                                url='search_reports?orderBy=search_reports.created_at&orderDirection=asc&groupBy=search_reports.module_id,DATE(search_reports.created_at)'
+                                                url={'communityDashboard/topQueries'}
                                                 selection={false}
                                                 exportButton={false}
                                                 grouping={false}
@@ -239,6 +258,7 @@ const actionCreators = {
     deleteCrud: crudActions._delete,
     showConfirm: confirmActions.show,
     clearConfirm: confirmActions.clear,
+    openModal: modalActions.open,
 };
 
 export default withStyles(styles)(
