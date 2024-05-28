@@ -65,16 +65,6 @@ dashRoutes.push({
   ],
 });
 
-// dashRoutes.push(
-//     {
-//         path: "/dashboard",
-//         name: "Dashboard",
-//         rtlName: "",
-//         icon: DashboardIcon,
-//         layout: "/admin"
-//     }
-// )
-
 // Consultant
 if (PermissionHelper.checkMainPermission(["view_consultant_manager"])) {
   let views = [];
@@ -91,14 +81,6 @@ if (PermissionHelper.checkMainPermission(["view_consultant_manager"])) {
   if (PermissionHelper.checkMainPermission(["view_booking"])) {
     let subViews = [];
     subViews.push(
-      // {
-      //   path: "/booking",
-      //   name: "Booking",
-      //   rtlName: "",
-      //   mini: "",
-      //   rtlMini: "",
-      //   layout: "/admin",
-      // },
       {
         path: "/upcoming_booking",
         name: "Upcoming Booking",
@@ -812,71 +794,71 @@ if (PermissionHelper.checkMainPermission(["view_vendor_manager"])) {
     }
 
     // EU Subscription Manager
-    if (PermissionHelper.checkMainPermission(["view_subscription_manager"])) {
-      let subViews = [];
-      if (PermissionHelper.checkMainPermission(["view_eusubscription_plan"])) {
-        subViews.push({
-          path: "/eusubscription-plan",
-          name: "Plans",
-          rtlName: "",
-          mini: "",
-          rtlMini: "",
-          layout: "/admin",
-        });
-      }
+    // if (PermissionHelper.checkMainPermission(["view_subscription_manager"])) {
+    //   let subViews = [];
+    //   if (PermissionHelper.checkMainPermission(["view_eusubscription_plan"])) {
+    //     subViews.push({
+    //       path: "/eusubscription-plan",
+    //       name: "Plans",
+    //       rtlName: "",
+    //       mini: "",
+    //       rtlMini: "",
+    //       layout: "/admin",
+    //     });
+    //   }
 
-      if (PermissionHelper.checkMainPermission(["view_eusubscriptions"])) {
-        subViews.push({
-          path: "/eusubscriptions",
-          name: "Subscriptions",
-          rtlName: "",
-          mini: "",
-          rtlMini: "",
-          layout: "/admin",
-        });
-      }
+    //   if (PermissionHelper.checkMainPermission(["view_eusubscriptions"])) {
+    //     subViews.push({
+    //       path: "/eusubscriptions",
+    //       name: "Subscriptions",
+    //       rtlName: "",
+    //       mini: "",
+    //       rtlMini: "",
+    //       layout: "/admin",
+    //     });
+    //   }
 
-      if (PermissionHelper.checkMainPermission(["view_eusubscriptions"])) {
-        subViews.push({
-          path: "/eusubscription-pending",
-          name: "Subscriptions Pending",
-          rtlName: "",
-          mini: "",
-          rtlMini: "",
-          layout: "/admin",
-        });
-      }
+    //   if (PermissionHelper.checkMainPermission(["view_eusubscriptions"])) {
+    //     subViews.push({
+    //       path: "/eusubscription-pending",
+    //       name: "Subscriptions Pending",
+    //       rtlName: "",
+    //       mini: "",
+    //       rtlMini: "",
+    //       layout: "/admin",
+    //     });
+    //   }
 
-      if (PermissionHelper.checkMainPermission(["view_eutransactions"])) {
-        subViews.push({
-          path: "/eutransactions",
-          name: "Transaction History",
-          rtlName: "",
-          mini: "",
-          rtlMini: "",
-          layout: "/admin",
-        });
-      }
+    //   if (PermissionHelper.checkMainPermission(["view_eutransactions"])) {
+    //     subViews.push({
+    //       path: "/eutransactions",
+    //       name: "Transaction History",
+    //       rtlName: "",
+    //       mini: "",
+    //       rtlMini: "",
+    //       layout: "/admin",
+    //     });
+    //   }
 
-      if (PermissionHelper.checkMainPermission(["view_eudocpurchases"])) {
-        subViews.push({
-          path: "/eudocpurchases",
-          name: "Document Purchase History",
-          rtlName: "",
-          mini: "",
-          rtlMini: "",
-          layout: "/admin",
-        });
-      }
+    //   if (PermissionHelper.checkMainPermission(["view_eudocpurchases"])) {
+    //     subViews.push({
+    //       path: "/eudocpurchases",
+    //       name: "Document Purchase History",
+    //       rtlName: "",
+    //       mini: "",
+    //       rtlMini: "",
+    //       layout: "/admin",
+    //     });
+    //   }
 
-      views.push({
-        collapse: true,
-        name: "Subscription Manager",
-        rtlName: "",
-        state: "SubscriptionsCollapse",
-        views: subViews,
-      });
-    }
+    //   views.push({
+    //     collapse: true,
+    //     name: "Subscription Manager",
+    //     rtlName: "",
+    //     state: "SubscriptionsCollapse",
+    //     views: subViews,
+    //   });
+    // }
 
     // Report Manager
     if (PermissionHelper.checkMainPermission(["view_visitor_report_manager"])) {
@@ -1157,17 +1139,6 @@ if (PermissionHelper.checkMainPermission(["view_community_manager"])) {
     });
   }
 
-  // if (PermissionHelper.checkMainPermission(["view_visitor_technology"])) {  
-  //   views.push({
-  //     path: "/technology",
-  //     name: "Technology",
-  //     rtlName: "",
-  //     mini: "",
-  //     rtlMini: "",
-  //     layout: "/admin",
-  //   });
-  // }
-
   if (PermissionHelper.checkMainPermission(["view_report_abuse_types"])) {
     views.push({
       path: "/report_abuse/type",
@@ -1319,14 +1290,6 @@ if (PermissionHelper.checkMainPermission(["view_setting_manager"])) {
         rtlMini: "",
         layout: "/admin",
       },
-      // {
-      //   path: "/google-drive",
-      //   name: "Connect Google Drive",
-      //   rtlName: "",
-      //   mini: "",
-      //   rtlMini: "",
-      //   layout: "/admin",
-      // },
       // temporary commented start
       // {
       //   path: "/market-product",

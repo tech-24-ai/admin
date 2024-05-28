@@ -329,9 +329,6 @@ import CommunityList from "pages/CommunityModule/Community/List.js";
 import CommunityMembersList from "pages/CommunityModule/Community/MembersList.js";
 import CommunityForm from "pages/CommunityModule/Community/Form.js";
 
-import VisitorTechnologyList from "pages/CommunityModule/Technology/List.js";
-import VisitorTechnologyForm from "pages/CommunityModule/Technology/Form.js";
-
 import ReportAbuseTypesList from "pages/CommunityModule/ReportAbuseTypes/List.js";
 import ReportAbuseTypesForm from "pages/CommunityModule/ReportAbuseTypes/Form.js";
 
@@ -1875,94 +1872,94 @@ if (true) {
     }
   }
   // EU Subscription Manager
-  if (PermissionHelper.checkPermission("view_subscription_manager")) {
-    if (PermissionHelper.checkPermission("view_eusubscription_plan")) {
-      dashRoutes.push({
-        path: "/eusubscription-plan",
-        component: EuSubscriptionPlanList,
-        layout: "/admin",
-      });
+  // if (PermissionHelper.checkPermission("view_subscription_manager")) {
+  //   if (PermissionHelper.checkPermission("view_eusubscription_plan")) {
+  //     dashRoutes.push({
+  //       path: "/eusubscription-plan",
+  //       component: EuSubscriptionPlanList,
+  //       layout: "/admin",
+  //     });
 
-      if (
-        PermissionHelper.checkPermission("add_eusubscription_plan") ||
-        PermissionHelper.checkPermission("edit_eusubscription_plan")
-      ) {
-        dashRoutes.push({
-          path: "/eusubscription-plan-form/:id",
-          component: EuSubscriptionPlanForm,
-          layout: "/admin",
-        });
-      }
-    }
-    if (PermissionHelper.checkPermission("view_eusubscriptions")) {
-      dashRoutes.push(
-        {
-          path: "/eusubscriptions",
-          component: EuSubscriptionList,
-          layout: "/admin",
-        },
-        {
-          path: "/eusubscription-pending",
-          component: EuSubscriptionPendingList,
-          layout: "/admin",
-        }
-      );
+  //     if (
+  //       PermissionHelper.checkPermission("add_eusubscription_plan") ||
+  //       PermissionHelper.checkPermission("edit_eusubscription_plan")
+  //     ) {
+  //       dashRoutes.push({
+  //         path: "/eusubscription-plan-form/:id",
+  //         component: EuSubscriptionPlanForm,
+  //         layout: "/admin",
+  //       });
+  //     }
+  //   }
+  //   if (PermissionHelper.checkPermission("view_eusubscriptions")) {
+  //     dashRoutes.push(
+  //       {
+  //         path: "/eusubscriptions",
+  //         component: EuSubscriptionList,
+  //         layout: "/admin",
+  //       },
+  //       {
+  //         path: "/eusubscription-pending",
+  //         component: EuSubscriptionPendingList,
+  //         layout: "/admin",
+  //       }
+  //     );
 
-      if (
-        PermissionHelper.checkPermission("add_eusubscriptions") ||
-        PermissionHelper.checkPermission("edit_eusubscriptions")
-      ) {
-        dashRoutes.push(
-          {
-            path: "/eusubscriptions-form/:id",
-            component: EuSubscriptionsForm,
-            layout: "/admin",
-          },
-          {
-            path: "/eusubscription-pending-form/:id",
-            component: EuSubscriptionPendingForm,
-            layout: "/admin",
-          }
-        );
-      }
-    }
-    if (PermissionHelper.checkPermission("view_eutransactions")) {
-      dashRoutes.push({
-        path: "/eutransactions",
-        component: EuTransactionsList,
-        layout: "/admin",
-      });
+  //     if (
+  //       PermissionHelper.checkPermission("add_eusubscriptions") ||
+  //       PermissionHelper.checkPermission("edit_eusubscriptions")
+  //     ) {
+  //       dashRoutes.push(
+  //         {
+  //           path: "/eusubscriptions-form/:id",
+  //           component: EuSubscriptionsForm,
+  //           layout: "/admin",
+  //         },
+  //         {
+  //           path: "/eusubscription-pending-form/:id",
+  //           component: EuSubscriptionPendingForm,
+  //           layout: "/admin",
+  //         }
+  //       );
+  //     }
+  //   }
+  //   if (PermissionHelper.checkPermission("view_eutransactions")) {
+  //     dashRoutes.push({
+  //       path: "/eutransactions",
+  //       component: EuTransactionsList,
+  //       layout: "/admin",
+  //     });
 
-      if (
-        PermissionHelper.checkPermission("add_eutransactions") ||
-        PermissionHelper.checkPermission("edit_eutransactions")
-      ) {
-        dashRoutes.push({
-          path: "/eutransaction-view/:id",
-          component: EuTransactionsView,
-          layout: "/admin",
-        });
-      }
-    }
-    if (PermissionHelper.checkPermission("view_eudocpurchases")) {
-      dashRoutes.push({
-        path: "/eudocpurchases",
-        component: EuDocPurchaseList,
-        layout: "/admin",
-      });
+  //     if (
+  //       PermissionHelper.checkPermission("add_eutransactions") ||
+  //       PermissionHelper.checkPermission("edit_eutransactions")
+  //     ) {
+  //       dashRoutes.push({
+  //         path: "/eutransaction-view/:id",
+  //         component: EuTransactionsView,
+  //         layout: "/admin",
+  //       });
+  //     }
+  //   }
+  //   if (PermissionHelper.checkPermission("view_eudocpurchases")) {
+  //     dashRoutes.push({
+  //       path: "/eudocpurchases",
+  //       component: EuDocPurchaseList,
+  //       layout: "/admin",
+  //     });
 
-      if (
-        PermissionHelper.checkPermission("add_eudocpurchases") ||
-        PermissionHelper.checkPermission("edit_eudocpurchases")
-      ) {
-        dashRoutes.push({
-          path: "/eudocpurchases-view/:id",
-          component: EuDocPurchaseView,
-          layout: "/admin",
-        });
-      }
-    }
-  }
+  //     if (
+  //       PermissionHelper.checkPermission("add_eudocpurchases") ||
+  //       PermissionHelper.checkPermission("edit_eudocpurchases")
+  //     ) {
+  //       dashRoutes.push({
+  //         path: "/eudocpurchases-view/:id",
+  //         component: EuDocPurchaseView,
+  //         layout: "/admin",
+  //       });
+  //     }
+  //   }
+  // }
   // Report Manager
   if (PermissionHelper.checkPermission("view_visitor_report_manager")) {
     if (PermissionHelper.checkPermission("view_visitor_ip_logs")) {
@@ -2310,22 +2307,6 @@ if(PermissionHelper.checkMainPermission(["view_community_manager"]))
     } 
   } 
 
-  if (PermissionHelper.checkMainPermission(["view_visitor_technology"])) {    
-    dashRoutes.push({
-      path: "/technology",
-      component: VisitorTechnologyList,
-      layout: "/admin",
-    });
-    
-    if (PermissionHelper.checkPermission("add_visitor_technology") || PermissionHelper.checkPermission("edit_visitor_technology")) {
-      dashRoutes.push({
-        path: "/technology-form/:id",
-        component: VisitorTechnologyForm,
-        layout: "/admin",
-      });
-    }  
-  }
-
   if (PermissionHelper.checkMainPermission(["view_report_abuse_types"])) { 
     dashRoutes.push({
       path: "/report_abuse/type",
@@ -2474,23 +2455,32 @@ if(PermissionHelper.checkMainPermission(["view_community_manager"]))
     }
   }
    
-  dashRoutes.push({
-    path: "/visitor-report",
-    component: visitorReport,
-    layout: "/admin",
-  });
+  if(PermissionHelper.checkMainPermission(["community_visitor_report"]))
+  {
+    dashRoutes.push({
+      path: "/visitor-report",
+      component: visitorReport,
+      layout: "/admin",
+    });
+  }
 
-  dashRoutes.push({
-    path: "/discussion-group-report-with-summary",
-    component: discussionGroupReport,
-    layout: "/admin",
-  });
-
-  dashRoutes.push({
-    path: "/moderator-report",
-    component: moderatorReport,
-    layout: "/admin",
-  });
+  if(PermissionHelper.checkMainPermission(["discussion_group_report"]))
+  {
+    dashRoutes.push({
+      path: "/discussion-group-report-with-summary",
+      component: discussionGroupReport,
+      layout: "/admin",
+    });
+  }
+  
+  if(PermissionHelper.checkMainPermission(["discussion_group_report"]))
+  { 
+    dashRoutes.push({
+      path: "/moderator-report",
+      component: moderatorReport,
+      layout: "/admin",
+    });
+  } 
 }  
 
 export default dashRoutes;
