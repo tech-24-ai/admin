@@ -43,7 +43,7 @@ class Form extends React.Component {
         if (e.target.name) {
             let { value } = this.state
             if (value.includes(option.id)) {
-                var i = value.indexOf(option.id);
+                let i = value.indexOf(option.id);
                 if (i !== -1) value.splice(i, 1);
             } else {
                 value.push(option.id)

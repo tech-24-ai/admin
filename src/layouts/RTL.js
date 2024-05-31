@@ -19,7 +19,7 @@ import routes from "routes.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/layouts/rtlStyle.js";
 
-var ps;
+let ps;
 
 const useStyles = makeStyles(styles);
 

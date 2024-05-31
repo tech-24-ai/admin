@@ -15,17 +15,17 @@ const useStyles = makeStyles(styles);
 export default function Footer(props) {
   const classes = useStyles();
   const { fluid, white, rtlActive } = props;
-  var container = cx({
+  let container = cx({
     [classes.container]: !fluid,
     [classes.containerFluid]: fluid,
     [classes.whiteColor]: white,
   });
-  var anchor =
+  let anchor =
     classes.a +
     cx({
       [" " + classes.whiteColor]: white,
     });
-  var block = cx({
+  let block = cx({
     [classes.block]: true,
     [classes.whiteColor]: white,
   });

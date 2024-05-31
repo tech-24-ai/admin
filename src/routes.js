@@ -365,7 +365,7 @@ import moderatorReport from "pages/CommunityModule/Reports/moderatorReport.js";
 import { PermissionHelper, UserHelper } from "_helpers";
 import { ImageOutlined } from "@material-ui/icons";
 
-var dashRoutes = [];
+const dashRoutes = [];
 
 // Dashboard
 dashRoutes.push({

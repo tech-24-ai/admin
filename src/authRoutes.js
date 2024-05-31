@@ -3,7 +3,7 @@ import LoginPage from "pages/Auth/LoginPage.js";
 import ForgotPage from "pages/Auth/ForgotPage";
 import ConfirmPage from "pages/Auth/ConfirmPage";
 
-var dashRoutes = [
+const dashRoutes = [
   {
     path: "/login-page",
     name: "Login Page",

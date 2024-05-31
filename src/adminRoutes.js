@@ -18,7 +18,7 @@ import FlowIcon from "@material-ui/icons/PieChart";
 import CardMembershipIcon from "@material-ui/icons/CardMembership";
 import { PermissionHelper } from "_helpers";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
-var dashRoutes = [];
+const dashRoutes = [];
 
 // Dashboard
 dashRoutes.push({

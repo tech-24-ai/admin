@@ -60,8 +60,8 @@ export default function CustomTable(props) {
         ) : null}
         <TableBody>
           {tableData.map((prop, key) => {
-            var rowColor = "";
-            var rowColored = false;
+            let rowColor = "";
+            let rowColored = false;
             if (prop.color !== undefined) {
               rowColor = prop.color;
               rowColored = true;

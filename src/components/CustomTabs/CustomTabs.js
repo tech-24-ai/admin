@@ -41,7 +41,7 @@ export default function CustomTabs(props) {
           }}
         >
           {tabs.map((prop, key) => {
-            var icon = {};
+            let icon = {};
             if (prop.tabIcon) {
               icon = {
                 icon: <prop.tabIcon />

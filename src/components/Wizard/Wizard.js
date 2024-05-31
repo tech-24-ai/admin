@@ -13,7 +13,7 @@ import wizardStyle from "assets/jss/material-dashboard-pro-react/components/wiza
 class Wizard extends React.Component {
   constructor(props) {
     super(props);
-    var width;
+    let width;
     if (this.props.steps.length === 1) {
       width = "100%";
     } else {
@@ -63,9 +63,9 @@ class Wizard extends React.Component {
   }
   navigationStepChange(key) {
     if (this.props.steps) {
-      var validationState = true;
+      let validationState = true;
       if (key > this.state.currentStep) {
-        for (var i = this.state.currentStep; i < key; i++) {
+        for (let i = this.state.currentStep; i < key; i++) {
           if (this[this.props.steps[i].stepId].sendState !== undefined) {
             this.setState({
               allStates: {
@@ -121,7 +121,7 @@ class Wizard extends React.Component {
           }
         });
       }
-      var key = this.state.currentStep + 1;
+      let key = this.state.currentStep + 1;
       this.setState({
         currentStep: key,
         nextButton: this.props.steps.length > key + 1 ? true : false,
@@ -145,7 +145,7 @@ class Wizard extends React.Component {
         }
       });
     }
-    var key = this.state.currentStep - 1;
+    let key = this.state.currentStep - 1;
     if (key >= 0) {
       this.setState({
         currentStep: key,
@@ -186,15 +186,15 @@ class Wizard extends React.Component {
     }
   }
   refreshAnimation(index) {
-    var total = this.props.steps.length;
-    var li_width = 100 / total;
-    var total_steps = this.props.steps.length;
-    var move_distance =
+    let total = this.props.steps.length;
+    let li_width = 100 / total;
+    let total_steps = this.props.steps.length;
+    let move_distance =
       this.wizard.current.children[0].offsetWidth / total_steps;
-    var index_temp = index;
-    var vertical_level = 0;
+    let index_temp = index;
+    let vertical_level = 0;
 
-    var mobile_device = window.innerWidth < 600 && total > 3;
+    let mobile_device = window.innerWidth < 600 && total > 3;
 
     if (mobile_device) {
       move_distance = this.wizard.current.children[0].offsetWidth / 2;
@@ -204,10 +204,10 @@ class Wizard extends React.Component {
 
     this.setState({ width: li_width + "%" });
 
-    var step_width = move_distance;
+    let step_width = move_distance;
     move_distance = move_distance * index_temp;
 
-    var current = index + 1;
+    let current = index + 1;
 
     if (current === 1 || (mobile_device === true && index % 2 === 0)) {
       move_distance -= 8;
@@ -222,7 +222,7 @@ class Wizard extends React.Component {
       vertical_level = parseInt(index / 2, 10);
       vertical_level = vertical_level * 38;
     }
-    var movingTabStyle = {
+    let movingTabStyle = {
       width: step_width,
       transform:
         "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",

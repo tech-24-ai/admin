@@ -28,7 +28,7 @@ export default function CustomMultiSelect(props) {
 
   const [apiOptions, setApiOptions] = useState([]);
   const [list, setList] = useState(items);
-  var helpTextClasses = classNames({
+  let helpTextClasses = classNames({
     [classes.labelRootError]: error,
     [classes.labelRootSuccess]: success && !error,
   });

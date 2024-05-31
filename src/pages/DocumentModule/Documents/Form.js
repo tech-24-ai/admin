@@ -482,7 +482,7 @@ DocumentForm.propTypes = {
 };
 
 function checkValidUrl(val) {
-  var urlRegx = new RegExp("(docs.google.com)(://[A-Za-z]+-)?", "i");
+  let urlRegx = new RegExp("(docs.google.com)(://[A-Za-z]+-)?", "i");
   if (urlRegx.test(val)) {
     return true;
   } else {
@@ -491,7 +491,7 @@ function checkValidUrl(val) {
 }
 
 function checkDomainUrl(val) {
-  var urlRegx = new RegExp("(tech24)(://[A-Za-z]+-)?", "i");
+  let urlRegx = new RegExp("(tech24)(://[A-Za-z]+-)?", "i");
   if (urlRegx.test(val)) {
     return true;
   } else {

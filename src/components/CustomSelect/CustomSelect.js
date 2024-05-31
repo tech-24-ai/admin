@@ -20,7 +20,7 @@ export default function CustomSelect(props) {
 
   const { value, name, title, items, id, error, success, helperText } = props;
 
-  var helpTextClasses = classNames({
+  let helpTextClasses = classNames({
     [classes.labelRootError]: error,
     [classes.labelRootSuccess]: success && !error,
   });

@@ -20,7 +20,7 @@ import consultantRoutes from "consultantRoutes.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/layouts/adminStyle.js";
 
-var ps;
+let ps;
 
 const useStyles = makeStyles(styles);
 
