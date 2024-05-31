@@ -16,7 +16,7 @@ import { PermissionHelper, UserHelper } from "_helpers";
 import ChatIcon from "@material-ui/icons/Chat";
 import Review from "@material-ui/icons/Assessment";
 import Report from "@material-ui/icons/Assessment";
-var dashRoutes = [];
+const dashRoutes = [];
 
 dashRoutes.push({
   path: "/dashboard",

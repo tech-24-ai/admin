@@ -17,7 +17,7 @@ const useStyles = makeStyles(styles);
 export default function Snackbar(props) {
   const classes = useStyles();
   const { message, color, close, icon, place, open } = props;
-  var action = [];
+  let action = [];
   const messageClasses = cx({
     [classes.iconMessage]: icon !== undefined
   });

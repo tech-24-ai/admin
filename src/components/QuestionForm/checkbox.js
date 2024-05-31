@@ -19,7 +19,7 @@ class Form extends React.Component {
     e.persist();
     let { value } = this.state;
     if (value.includes(option.id)) {
-      var i = value.indexOf(option.id);
+      let i = value.indexOf(option.id);
       if (i !== -1) value.splice(i, 1);
     } else {
       value.push(option.id);
@@ -86,7 +86,7 @@ class Form extends React.Component {
     let { subValue, subOption } = this.state;
 
     if (subOption.includes(subOptionData.id)) {
-      var i = subOption.indexOf(subOptionData.id);
+      let i = subOption.indexOf(subOptionData.id);
       if (i !== -1) subOption.splice(i, 1);
     } else {
       subOption.push(subOptionData.id);

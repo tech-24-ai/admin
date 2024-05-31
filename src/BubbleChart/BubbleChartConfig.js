@@ -63,15 +63,15 @@ export default {
     plugins: {
       datalabels: {
         anchor: function(context) {
-          var value = context.dataset.data[context.dataIndex];
+          let value = context.dataset.data[context.dataIndex];
           return value.v < 50 ? "end" : "start";
         },
         align: function(context) {
-          var value = context.dataset.data[context.dataIndex];
+          let value = context.dataset.data[context.dataIndex];
           return value.v < 50 ? "end" : "start";
         },
         color: function(context) {
-          var value = context.dataset.data[context.dataIndex];
+          let value = context.dataset.data[context.dataIndex];
           return value.v < 50 ? context.dataset.backgroundColor : "black";
         },
         font: {

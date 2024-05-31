@@ -1,7 +1,7 @@
 // ##############################
 // // // javascript library for creating charts
 // #############################
-var Chartist = require("chartist");
+let Chartist = require("chartist");
 
 // ##############################
 // // // Charts used in Dahsboard view
@@ -11,9 +11,9 @@ var Chartist = require("chartist");
 // // // variables used to create animation on charts
 // #############################
 
-var delays = 80,
+let delays = 80,
   durations = 500;
-var delays2 = 80,
+let delays2 = 80,
   durations2 = 500;
 
 // ##############################

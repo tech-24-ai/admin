@@ -257,6 +257,7 @@
 }
 
 .fixed-plugin .dropdown-menu > li > a.img-holder {
+  padding: 0;
   font-size: 16px;
   text-align: center;
   border-radius: 10px;
@@ -268,7 +269,6 @@
   cursor: pointer;
   max-height: 100px;
   overflow: hidden;
-  padding: 0;
 }
 
 .fixed-plugin .dropdown-menu > li > a.switch-trigger:hover,

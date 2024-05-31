@@ -24,16 +24,9 @@ class ConfigList extends React.PureComponent {
     //this.deleteAll = this.deleteAll.bind(this);
   }
 
-  componentDidUpdate() {
-    
-  }
-
- 
-
   editCrud(data) {
     this.props.history.push(`/admin/config-form/${data.id}`);
   }
-
 
   render() {
     const columns = [

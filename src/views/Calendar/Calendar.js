@@ -47,7 +47,7 @@ export default function Calendar() {
     );
   };
   const addNewEvent = (e, slotInfo) => {
-    var newEvents = events;
+    let newEvents = events;
     newEvents.push({
       title: e,
       start: slotInfo.start,
@@ -60,7 +60,7 @@ export default function Calendar() {
     setAlert(null);
   };
   const eventColors = event => {
-    var backgroundColor = "event-";
+    let backgroundColor = "event-";
     event.color
       ? (backgroundColor = backgroundColor + event.color)
       : (backgroundColor = backgroundColor + "default");

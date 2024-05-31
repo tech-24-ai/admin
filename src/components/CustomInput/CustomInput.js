@@ -51,7 +51,7 @@ export default function CustomInput(props) {
     [classes.input]: true,
     [classes.whiteInput]: white,
   });
-  var formControlClasses;
+  let formControlClasses;
   if (formControlProps !== undefined) {
     formControlClasses = classNames(
       formControlProps.className,
@@ -60,7 +60,7 @@ export default function CustomInput(props) {
   } else {
     formControlClasses = classes.formControl;
   }
-  var helpTextClasses = classNames({
+  let helpTextClasses = classNames({
     [classes.labelRootError]: error,
     [classes.labelRootSuccess]: success && !error,
   });

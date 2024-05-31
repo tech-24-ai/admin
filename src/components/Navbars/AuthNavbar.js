@@ -42,7 +42,7 @@ export default function AuthNavbar(props) {
   const appBarClasses = cx({
     [" " + classes[color]]: color
   });
-  var list = (
+  let list = (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
         <NavLink to={"/admin/dashboard"} className={classes.navLink}>

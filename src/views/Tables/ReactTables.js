@@ -98,7 +98,7 @@ export default function ReactTables() {
               round
               simple
               onClick={() => {
-                var newData = data;
+                let newData = data;
                 newData.find((o, i) => {
                   if (o.id === key) {
                     // here you should add some custom code so you can delete the data

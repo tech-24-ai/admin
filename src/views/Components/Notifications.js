@@ -49,7 +49,7 @@ export default function Notifications() {
     // Specify how to clean up after this effect:
     return function cleanup() {
       // to stop the warning of calling setState of unmounted component
-      var id = window.setTimeout(null, 0);
+      let id = window.setTimeout(null, 0);
       while (id--) {
         window.clearTimeout(id);
       }

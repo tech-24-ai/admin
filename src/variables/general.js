@@ -265,10 +265,10 @@ const stories = [
 // // // data for populating the calendar in Calendar view
 // #############################
 
-var today = new Date();
-var y = today.getFullYear();
-var m = today.getMonth();
-var d = today.getDate();
+let today = new Date();
+let y = today.getFullYear();
+let m = today.getMonth();
+let d = today.getDate();
 
 const events = [
   {
@@ -324,17 +324,17 @@ const events = [
 // // // Tasks for TasksCard - see Widget view
 // #############################
 
-var bugs = [
+const bugs = [
   'Sign contract for "What are conference organizers afraid of?"',
   "Lines From Great Russian Literature? Or E-mails From My Boss?",
   "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
   "Create 4 Invisible User Experiences you Never Knew About"
 ];
-var website = [
+const website = [
   "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
   'Sign contract for "What are conference organizers afraid of?"'
 ];
-var server = [
+const server = [
   "Lines From Great Russian Literature? Or E-mails From My Boss?",
   "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
   'Sign contract for "What are conference organizers afraid of?"'
@@ -344,17 +344,17 @@ var server = [
 // // // Tasks for TasksCard - see RTLSupport view
 // #############################
 
-var rtlBugs = [
+const rtlBugs = [
   "فقد لمحاكم الاندونيسية, بلاده بالتوقيع تم يبق. جعل السبب وفرنسا الصينية أي.",
   "بحث. كل مما ٢٠٠٤ شاسعة العسكري جعل السبب وفرنسا الصينية أي.",
   "تسبب أفريقيا ضرب عن, عن إنطلاق جعل السبب وفرنسا الصينية أي.",
   "قدما مليون بين عن, مرجع منتصف الأمريكية جعل السبب وفرنسا الصينية أي."
 ];
-var rtlWebsite = [
+const rtlWebsite = [
   "قدما مليون بين عن, مرجع منتصف الأمريكية جعل السبب وفرنسا الصينية أي.",
   "قدما مليون بين عن, مرجع منتصف الأمريكية جعل السبب وفرنسا الصينية أي."
 ];
-var rtlServer = [
+const rtlServer = [
   "قدما مليون بين عن, مرجع منتصف الأمريكية جعل السبب وفرنسا الصينية أي.",
   "قدما مليون بين عن, مرجع منتصف الأمريكية جعل السبب وفرنسا الصينية أي.",
   "قدما مليون بين عن, مرجع منتصف الأمريكية جعل السبب وفرنسا الصينية أي."

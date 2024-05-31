@@ -19,9 +19,9 @@ import html2canvas from "html2canvas";
     const input = document.getElementById(id);
     html2canvas(input).then((canvas) => {
       const imgData = canvas.toDataURL("image/jpg");
-      var i = new Image();
+      let i = new Image();
       i.onload = function () {
-        var pdf = new jsPDF("p", "px", [i.width, i.height]);
+        let pdf = new jsPDF("p", "px", [i.width, i.height]);
         const imgProps = pdf.getImageProperties(imgData);
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;

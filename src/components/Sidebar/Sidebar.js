@@ -26,7 +26,7 @@ import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sid
 
 import avatar from "assets/img/faces/avatar.jpg";
 
-var ps;
+let ps;
 
 // We've created this component so we can have a ref to the wrapper of the links that appears in our sidebar.
 // This was necessary so that we could initialize PerfectScrollbar on the links.
@@ -117,7 +117,7 @@ class Sidebar extends React.Component {
     return window.location.href.indexOf(routeName) > -1 ? "active" : "";
   };
   openCollapse(collapse) {
-    var st = {};
+    let st = {};
     st[collapse] = !this.state[collapse];
     this.setState(st);
   }
@@ -129,7 +129,7 @@ class Sidebar extends React.Component {
         return null;
       }
       if (prop.collapse) {
-        var st = {};
+        let st = {};
         st[prop["state"]] = !this.state[prop.state];
         const navLinkClasses =
           classes.itemLink +
@@ -382,7 +382,7 @@ class Sidebar extends React.Component {
       cx({
         [classes.photoRTL]: rtlActive,
       });
-    var user = (
+    let user = (
       <div className={userWrapperClass}>
         {/* <div className={photo}>
           <img src={avatar} className={classes.avatarImg} alt="..." />
@@ -472,7 +472,7 @@ class Sidebar extends React.Component {
         </List> */}
       </div>
     );
-    var links = (
+    let links = (
       <List className={classes.list}>{this.createLinks(routes)}</List>
     );
 
@@ -498,7 +498,7 @@ class Sidebar extends React.Component {
       cx({
         [classes.whiteAfter]: bgColor === "white",
       });
-    var brand = (
+    let brand = (
       <div className={logoClasses}>
         {logo && (
           <a href="/" target="_blank" className={logoMini}>
