@@ -81,7 +81,7 @@ class PermissionGroupList extends React.PureComponent {
             addData={
               PermissionHelper.checkPermission("can_add_permission_group")
                 ? this.addCrud
-                : this.addCrud
+                : null
             }
             //deleteAll={PermissionHelper.checkPermission('can_delete_permission_group') ? this.deleteAll : false}
             url="permission_groups"

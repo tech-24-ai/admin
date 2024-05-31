@@ -26,11 +26,7 @@ function _upload(file, type) {
 
 function _download(url) {
   let serverUrl = "";
-  if (process.env.NODE_ENV === "production") {
-    serverUrl = process.env.REACT_APP_URL;
-  } else {
-    serverUrl = process.env.REACT_APP_URL;
-  }
+  serverUrl = process.env.REACT_APP_URL;
   const finalUrl = `${serverUrl}${url}`;
 
   window.open(finalUrl);

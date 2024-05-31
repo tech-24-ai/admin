@@ -399,16 +399,6 @@ class MyForm extends React.PureComponent {
                   handleInputChange={this.handleInputChange}
                 />
               );
-              {
-                /* case "booking_details":
-              return (
-                <BookingDetails
-                  key={index}
-                  formField={formField}
-                  handleInputChange={this.handleInputChange}
-                />
-              ); */
-              }
             case "colorPicker":
               return (
                 <RenderColorPicker

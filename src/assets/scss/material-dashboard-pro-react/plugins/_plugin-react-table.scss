@@ -89,7 +89,7 @@
     display: inline-block;
     bottom: 0px;
     right: -7px;
-    font-family: Font Awesome\ 5 Free;
+    font-family: Font Awesome\ 5 Free, sans-serif;
   }
 }
 .ReactTable .rt-thead .rt-th.-cursor-pointer.-sort-desc > div:first-of-type {
@@ -101,7 +101,7 @@
     display: inline-block;
     bottom: 0px;
     right: -7px;
-    font-family: Font Awesome\ 5 Free;
+    font-family: Font Awesome\ 5 Free, sans-serif;
     opacity: 0.8;
   }
 }
@@ -114,7 +114,7 @@
     display: inline-block;
     bottom: 0px;
     right: -7px;
-    font-family: Font Awesome\ 5 Free;
+    font-family: Font Awesome\ 5 Free, sans-serif;
     opacity: 0.8;
   }
 }
@@ -125,7 +125,6 @@
   font-weight: 300;
   line-height: 2.5em !important;
   padding: 5px 5px;
-  line-height: normal;
   position: relative;
   transition: box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: inset 0 0 0 0 transparent;
@@ -246,7 +245,6 @@
 .ReactTable .rt-expander {
   display: inline-block;
   position: relative;
-  margin: 0;
   color: transparent;
   margin: 0 10px;
 }
@@ -432,7 +430,6 @@
 }
 .ReactTable .rt-thead.-filters input,
 .ReactTable .-pagination .-pageJump input {
-  width: 70px;
   text-align: center;
   border: 0;
   background-image: linear-gradient(#9c27b0, #9c27b0),

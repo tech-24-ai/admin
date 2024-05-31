@@ -106,7 +106,6 @@ class IndustryForm extends React.PureComponent {
             let data = {
                 parent_id: this.state.form.parent_id,
                 name: this.state.form.name,
-                parent_id: this.state.form.parent_id,
             }
             const { id } = this.props.match.params
             if (id && id === 'new') {

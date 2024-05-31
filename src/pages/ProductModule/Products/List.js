@@ -172,10 +172,6 @@ export class ProductsList extends React.PureComponent {
     this.props.history.push(`/admin/product-form/new`);
   }
 
-  export() {
-    fileService._download("reports/productreport");
-  }
-
   handleInputChange(event) {
     const newState = Object.assign({}, this.state);
     newState.form[event.target.name] = event.target.value;

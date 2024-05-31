@@ -102,18 +102,6 @@ class KeyPeopleList extends React.PureComponent {
       });
   };
 
-  import = (event) => {
-    let file = event.target.files[0];
-    this.props.showLoader();
-    fileService
-      ._import(`/keypeople/import?id=${this.props.match.params.id}`, file)
-      .then((response) => {
-        if (response.status === 200) {
-          this.props.hideLoader();
-        }
-      });
-  };
-
   render() {
     const columns = [
       {

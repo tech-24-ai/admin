@@ -37,7 +37,6 @@ const initialState = {
     // booking_status: "",
     approved_amount: "",
     refund_amount: "",
-    reason: "",
     refund_by: "",
     admin_remarks: "",
   },

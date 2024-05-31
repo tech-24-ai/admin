@@ -48,7 +48,7 @@ class RenderTextBox extends React.PureComponent {
                         )
                     }}
                 />
-                {formField.extra_info && formField.extra_info}
+                {formField?.extra_info}
             </div>
         )
     }
