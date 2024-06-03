@@ -370,6 +370,8 @@ export class ProductsList extends React.PureComponent {
                     isFilterOpen: !isFilterOpen,
                   });
                 }}
+                tabIndex="0" 
+                role="button"
               >
                 <IconButton aria-label="edit">
                   <FilterList fontSize="medium" />

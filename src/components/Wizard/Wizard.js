@@ -67,14 +67,14 @@ class Wizard extends React.Component {
       if (key > this.state.currentStep) {
         for (let i = this.state.currentStep; i < key; i++) {
           if (this[this.props.steps[i].stepId].sendState !== undefined) {
-            this.setState({
+            this.setState((prevState) => ({
               allStates: {
-                ...this.state.allStates,
+                ...prevState.allStates,
                 [this.props.steps[i].stepId]: this[
                   this.props.steps[i].stepId
                 ].sendState()
               }
-            });
+            }));
           }
           if (
             this[this.props.steps[i].stepId].isValidated !== undefined &&
@@ -112,23 +112,25 @@ class Wizard extends React.Component {
         this[this.props.steps[this.state.currentStep].stepId].sendState !==
         undefined
       ) {
-        this.setState({
+        this.setState((prevState) => ({
           allStates: {
-            ...this.state.allStates,
-            [this.props.steps[this.state.currentStep].stepId]: this[
-              this.props.steps[this.state.currentStep].stepId
+            ...prevState.allStates,
+            [this.props.steps[prevState.currentStep].stepId]: this[
+              this.props.steps[prevState.currentStep].stepId
             ].sendState()
           }
-        });
+        }));
       }
-      let key = this.state.currentStep + 1;
-      this.setState({
-        currentStep: key,
-        nextButton: this.props.steps.length > key + 1 ? true : false,
-        previousButton: key > 0 ? true : false,
-        finishButton: this.props.steps.length === key + 1 ? true : false
-      });
-      this.refreshAnimation(key);
+      let key;
+      this.setState((prevState, props) => {
+        key = prevState.currentStep + 1;
+        return {
+          currentStep: key,
+          nextButton: props.steps.length > key + 1,
+          previousButton: key > 0,
+          finishButton: props.steps.length === key + 1
+        };
+      }, () => this.refreshAnimation(key));
     }
   }
   previousButtonClick() {
@@ -136,14 +138,14 @@ class Wizard extends React.Component {
       this[this.props.steps[this.state.currentStep].stepId].sendState !==
       undefined
     ) {
-      this.setState({
+      this.setState((prevState) => ({
         allStates: {
-          ...this.state.allStates,
-          [this.props.steps[this.state.currentStep].stepId]: this[
-            this.props.steps[this.state.currentStep].stepId
+          ...prevState.allStates,
+          [this.props.steps[prevState.currentStep].stepId]: this[
+            this.props.steps[prevState.currentStep].stepId
           ].sendState()
         }
-      });
+      }));
     }
     let key = this.state.currentStep - 1;
     if (key >= 0) {
@@ -170,15 +172,15 @@ class Wizard extends React.Component {
             undefined) &&
         this.props.finishButtonClick !== undefined)
     ) {
-      this.setState(
+      this.setState((prevState) => (
         {
           allStates: {
-            ...this.state.allStates,
-            [this.props.steps[this.state.currentStep].stepId]: this[
-              this.props.steps[this.state.currentStep].stepId
+            ...prevState.allStates,
+            [this.props.steps[prevState.currentStep].stepId]: this[
+              this.props.steps[prevState.currentStep].stepId
             ].sendState()
           }
-        },
+        }),
         () => {
           this.props.finishButtonClick(this.state.allStates);
         }

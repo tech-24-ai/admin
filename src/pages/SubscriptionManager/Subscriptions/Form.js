@@ -375,12 +375,12 @@ class PricingModelForm extends React.PureComponent {
             ).format("YYYY-MM-DD"),
             segment_id: response.data[0].plans.segment_id,
           };
-          this.setState({
+          this.setState((prevState) => ({
             form:
               response.data && response.data.length > 0
                 ? formData
-                : this.state.form,
-          });
+                : prevState,
+          }));
         }
       });
     }

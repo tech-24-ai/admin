@@ -160,7 +160,7 @@ class MaterialDataTable extends React.PureComponent {
         columns[index].filterComponent = DateFilterComponent;
       }
     }
-    this.setState({ ...this.state, columns });
+    this.setState((prevState) => ({ ...prevState, columns }));
   }
   render() {
     const { columns, resultData } = this.state;

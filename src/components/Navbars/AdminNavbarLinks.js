@@ -110,7 +110,7 @@ function HeaderLinks(props) {
             }
           />
           <Hidden mdUp implementation="css">
-            <span onClick={handleClickProfile} className={classes.linkText}>
+            <span onClick={handleClickProfile} className={classes.linkText} tabIndex="0" role="button">
               {rtlActive ? "الملف الشخصي" : "Profile"}
             </span>
           </Hidden>

@@ -96,7 +96,7 @@ class Form extends React.Component {
                     {options && options.map(option => {
 
                         let subValueData
-                        if (subValue && subValue) {
+                        if (subValue) {
                             subValue.forEach(priority => {
                                 if (priority.id === option.id) {
                                     subValueData = priority.value

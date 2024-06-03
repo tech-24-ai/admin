@@ -224,7 +224,6 @@ class VendorForm extends React.PureComponent {
         options: YEAR(1900, new Date().getFullYear()),
         value: form.founded || "",
         icon: "assignment",
-        error: this.validator.message("founded", form.founded, ""),
       },
       {
         name: "company_type",
@@ -248,7 +247,6 @@ class VendorForm extends React.PureComponent {
         getOptionValue: "id",
         value: form.main_country,
         option: { label: form.country, value: form.main_country },
-        error: this.validator.message("main_country", form.main_country, ""),
       },
       {
         name: "industries",
@@ -353,7 +351,6 @@ class VendorForm extends React.PureComponent {
   fetchLogo(riteKite = false) {
     const { id } = this.props.match.params;
     if (
-      this.validator.fieldValid("website") &&
       this.state.form.website !== ""
     ) {
       let url = riteKite
@@ -366,13 +363,13 @@ class VendorForm extends React.PureComponent {
         })
         .then((response) => {
           if (response.status === 200) {
-            this.setState(
+            this.setState((prevState) => (
               {
                 form: {
-                  ...this.state.form,
+                  ...prevState.form,
                   image: response.data.url,
                 },
-              },
+              }),
               () => this.props.hideLoader()
             );
           }
