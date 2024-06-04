@@ -77,6 +77,10 @@ class VendorForm extends React.PureComponent {
     this.handleError();
   }
 
+  checkValue(val) {
+    return val || "";
+  }
+
   getFormFields = () => {
     const { form } = this.state;
     const formFields = [
@@ -84,7 +88,7 @@ class VendorForm extends React.PureComponent {
         name: "name",
         label: "Name",
         type: "textbox",
-        value: form.name || "",
+        value: this.checkValue(form.name),
         icon: "assignment",
         error: this.validator.message("name", form.name, "required|min:3"),
       },
@@ -92,7 +96,7 @@ class VendorForm extends React.PureComponent {
         name: "email",
         label: "Email",
         type: "textbox",
-        value: form.email || "",
+        value: this.checkValue(form.email),
         icon: "email",
         // error: this.validator.message("email", form.email, "email"),
       },
@@ -105,7 +109,7 @@ class VendorForm extends React.PureComponent {
         getOptionValue: "id",
         value: form.vendor_category_id,
         option: {
-          label: (form.vendor_category && form.vendor_category.name) || "",
+          label: form?.vendor_category?.name || "",
           value: form.vendor_category_id,
         },
         error: this.validator.message(
@@ -119,7 +123,7 @@ class VendorForm extends React.PureComponent {
         label: "Upload Image",
         type: "imageUpload",
         uploadUrl: "upload/image",
-        value: form.image || "",
+        value: this.checkValue(form.image),
         icon: "image",
         // error: this.validator.message("image", form.image, "required"),
       },
@@ -127,7 +131,7 @@ class VendorForm extends React.PureComponent {
         name: "mobile",
         label: "Mobile",
         type: "textbox",
-        value: form.mobile || "",
+        value: this.checkValue(form.mobile),
         icon: "call",
         // error: this.validator.message("mobile", form.mobile, "min:10|max:15"),
       },
@@ -135,14 +139,14 @@ class VendorForm extends React.PureComponent {
         name: "website",
         label: "Website",
         type: "textbox",
-        value: form.website || "",
+        value: this.checkValue(form.website),
         // error: this.validator.message("website", form.website, "url"),
       },
       {
         name: "linkedin_url",
         label: "Linkedin URL",
         type: "textbox",
-        value: form.linkedin_url || "",
+        value: this.checkValue(form.linkedin_url),
         error: this.validator.message(
           "Linkedin URL",
           form.linkedin_url,
@@ -153,13 +157,13 @@ class VendorForm extends React.PureComponent {
         name: "company_size_on_linkedin",
         label: "Company Size On Linkedin",
         type: "textbox",
-        value: form.company_size_on_linkedin || "",
+        value: this.checkValue(form.company_size_on_linkedin),
       },
       {
         name: "linkedin_salesurl",
         label: "Linkedin SalesURL",
         type: "textbox",
-        value: form.linkedin_salesurl || "",
+        value: this.checkValue(form.linkedin_salesurl),
         // error: this.validator.message(
         //   "Linkedin SalesURL",
         //   form.linkedin_salesurl,
@@ -171,7 +175,7 @@ class VendorForm extends React.PureComponent {
         name: "company",
         label: "Company",
         type: "textbox",
-        value: form.company || "",
+        value: this.checkValue(form.company),
         icon: "assignment",
         error: this.validator.message("company", form.company, "min:1"),
         extra_info: (
@@ -187,7 +191,7 @@ class VendorForm extends React.PureComponent {
         name: "notes",
         label: "Notes",
         type: "textarea",
-        value: form.notes || "",
+        value: this.checkValue(form.notes),
         icon: "assignment",
         error: this.validator.message("notes", form.notes, "min:1"),
       },
@@ -195,7 +199,7 @@ class VendorForm extends React.PureComponent {
         name: "ticker",
         label: "Ticker",
         type: "textbox",
-        value: form.ticker || "",
+        value: this.checkValue(form.ticker),
         icon: "assignment",
         error: this.validator.message("ticker", form.ticker, "min:3"),
       },
@@ -203,7 +207,7 @@ class VendorForm extends React.PureComponent {
         name: "twitter_handle",
         label: "Twitter Handle",
         type: "textbox",
-        value: form.twitter_handle || "",
+        value: this.checkValue(form.twitter_handle),
         icon: "assignment",
         error: this.validator.message(
           "twitter_handle",
@@ -222,7 +226,7 @@ class VendorForm extends React.PureComponent {
         label: "Founded",
         type: "select",
         options: YEAR(1900, new Date().getFullYear()),
-        value: form.founded || "",
+        value: this.checkValue(form.founded),
         icon: "assignment",
       },
       {
@@ -230,7 +234,7 @@ class VendorForm extends React.PureComponent {
         label: "Company Type",
         type: "select",
         options: COMPANY_TYPE,
-        value: form.company_type || "",
+        value: this.checkValue(form.company_type),
         icon: "assignment",
         error: this.validator.message(
           "company_type",

@@ -171,34 +171,43 @@ class ConsultantPayoutHistoryForm extends React.PureComponent {
   handleFormInputChange = (dynamicForm) => {
     this.setState({ dynamicForm: dynamicForm });
   };
+
+  handleCheckboxChange(newState, event) {
+    if (isNaN(Number(event.target.name))) {
+        newState.form[event.target.name] = event.target.checked;
+    } else {
+        const bookingId = Number(event.target.name);
+        if (event.target.checked) {
+            newState.bookingIds.push(bookingId);
+            newState.form.total_payment += Number(event.target.value);
+        } else {
+            const index = newState.bookingIds.indexOf(bookingId);
+            if (index > -1) {
+                newState.bookingIds.splice(index, 1);
+                newState.form.total_payment -= Number(event.target.value);
+            }
+        }
+    }
+  }
+
+  handleInputChangeEvent(newState, event) {
+    const value = isNaN(Number(event.target.value)) ? event.target.value : Number(event.target.value);
+    newState.form[event.target.name] = value;
+    if (event.target.name === "consultant_id") {
+        newState.form.total_payment = 0;
+        newState.bookingIds = [];
+    }
+  }
+
   handleInputChange(event) {
     const newState = Object.assign({}, this.state);
-    if (event.target.type == "checkbox") {
-      if (isNaN(Number(event.target.name))) {
-        newState.form[event.target.name] = event.target.checked;
-      } else {
-        if (event.target.checked) {
-          newState.bookingIds.push(Number(event.target.name));
-          newState.form.total_payment += Number(event.target.value);
-        } else {
-          const index = newState.bookingIds.indexOf(Number(event.target.name));
-          if (index > -1) {
-            newState.bookingIds.splice(index, 1);
-            newState.form.total_payment -= Number(event.target.value);
-          }
-        }
-      }
+    
+    if (event.target.type === "checkbox") {
+      this.handleCheckboxChange(newState, event);
     } else {
-      if (isNaN(Number(event.target.value))) {
-        newState.form[event.target.name] = event.target.value;
-      } else {
-        newState.form[event.target.name] = Number(event.target.value);
-      }
-      if (event.target.name === "consultant_id") {
-        newState.form["total_payment"] = 0;
-        newState.bookingIds = [];
-      }
+      this.handleInputChangeEvent(newState, event);
     }
+
     this.setState(newState);
     this.handleError();
   }
@@ -234,20 +243,18 @@ class ConsultantPayoutHistoryForm extends React.PureComponent {
       if (UserHelper.isConsultant()) {
         if (id && id === "new") {
           this.props.create("formData", "consultants/payment", data);
-          this.goBack();
         } else {
           this.props.update("formData", "consultants/payment", id, data);
         }
       } else {
         if (childId && childId === "new") {
           this.props.create("formData", "consultants/payment", data);
-          this.goBack();
         } else {
           this.props.update("formData", "consultants/payment", childId, data);
         }
       }
       this.resetForm();
-      // this.goBack();
+      this.goBack();
     } else {
       this.handleError();
     }

@@ -62,40 +62,44 @@ class Wizard extends React.Component {
     this.refreshAnimation(this.state.currentStep);
   }
   navigationStepChange(key) {
-    if (this.props.steps) {
-      let validationState = true;
-      if (key > this.state.currentStep) {
-        for (let i = this.state.currentStep; i < key; i++) {
-          if (this[this.props.steps[i].stepId].sendState !== undefined) {
-            this.setState((prevState) => ({
-              allStates: {
-                ...prevState.allStates,
-                [this.props.steps[i].stepId]: this[
-                  this.props.steps[i].stepId
-                ].sendState()
-              }
-            }));
-          }
-          if (
-            this[this.props.steps[i].stepId].isValidated !== undefined &&
-            this[this.props.steps[i].stepId].isValidated() === false
-          ) {
-            validationState = false;
-            break;
-          }
+    if (!this.props.steps) {
+        return;
+    }
+    
+    let validationState = true;
+    const { currentStep } = this.state;
+    const { steps } = this.props;
+    const stepsLength = steps.length;
+    
+    if (key <= currentStep) {
+        for (let i = currentStep; i < key; i++) {
+            const stepId = steps[i].stepId;
+            if (this[stepId].sendState !== undefined) {
+                this.setState((prevState) => ({
+                    allStates: {
+                        ...prevState.allStates,
+                        [stepId]: this[stepId].sendState()
+                    }
+                }));
+            }
+            if (this[stepId].isValidated !== undefined && !this[stepId].isValidated()) {
+                validationState = false;
+                break;
+            }
         }
-      }
-      if (validationState) {
+    }
+    
+    if (validationState) {
         this.setState({
-          currentStep: key,
-          nextButton: this.props.steps.length > key + 1 ? true : false,
-          previousButton: key > 0 ? true : false,
-          finishButton: this.props.steps.length === key + 1 ? true : false
+            currentStep: key,
+            nextButton: stepsLength > key + 1,
+            previousButton: key > 0,
+            finishButton: stepsLength === key + 1
         });
         this.refreshAnimation(key);
-      }
     }
   }
+  
   nextButtonClick() {
     if (
       (this.props.validate &&

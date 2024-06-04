@@ -63,6 +63,10 @@ class FinancialsForm extends React.PureComponent {
     this.handleError();
   }
 
+  checkValue(val) {
+    return val || "";
+  }
+
   getFormFields = () => {
     const { form } = this.state;
     const formFields = [
@@ -70,7 +74,7 @@ class FinancialsForm extends React.PureComponent {
         name: "net_income",
         label: "Net Income",
         type: "textbox",
-        value: form.net_income || "",
+        value: this.checkValue(form.net_income),
         icon: "assignment",
         error: this.validator.message("net_income", form.net_income, "numeric"),
       },
@@ -78,7 +82,7 @@ class FinancialsForm extends React.PureComponent {
         name: "total_assets",
         label: "Total Assets",
         type: "textbox",
-        value: form.total_assets || "",
+        value: this.checkValue(form.total_assets),
         icon: "assignment",
         error: this.validator.message(
           "total_assets",
@@ -90,7 +94,7 @@ class FinancialsForm extends React.PureComponent {
         name: "total_liabilities",
         label: "Total Liabilities",
         type: "textbox",
-        value: form.total_liabilities || "",
+        value: this.checkValue(form.total_liabilities),
         icon: "assignment",
         error: this.validator.message("total_liabilities", form.total_liabilities, "numeric"),
       },
@@ -98,7 +102,7 @@ class FinancialsForm extends React.PureComponent {
         name: "total_equity",
         label: "Total Equity",
         type: "textbox",
-        value: form.total_equity || "",
+        value: this.checkValue(form.total_equity),
         icon: "assignment",
         error: this.validator.message("total_equity", form.total_equity, "numeric"),
       },
@@ -106,7 +110,7 @@ class FinancialsForm extends React.PureComponent {
         name: "reported_eps",
         label: "Reported EPS",
         type: "textbox",
-        value: form.reported_eps || "",
+        value: this.checkValue(form.reported_eps),
         icon: "assignment",
         error: this.validator.message("reported_eps", form.reported_eps, "numeric"),
       },
@@ -114,7 +118,7 @@ class FinancialsForm extends React.PureComponent {
         name: "gross_profit",
         label: "Gross Profit",
         type: "textbox",
-        value: form.gross_profit || "",
+        value: this.checkValue(form.gross_profit),
         icon: "assignment",
         error: this.validator.message("gross_profit", form.gross_profit, "numeric"),
       },
@@ -122,7 +126,7 @@ class FinancialsForm extends React.PureComponent {
         name: "rd_investment",
         label: "RD Investment",
         type: "textbox",
-        value: form.rd_investment || "",
+        value: this.checkValue(form.rd_investment),
         icon: "assignment",
         error: this.validator.message("rd_investment", form.rd_investment, "numeric"),
       },
@@ -130,7 +134,7 @@ class FinancialsForm extends React.PureComponent {
         name: "current_debt",
         label: "Current Debt",
         type: "textbox",
-        value: form.current_debt || "",
+        value: this.checkValue(form.current_debt),
         icon: "assignment",
         error: this.validator.message("current_debt", form.current_debt, "numeric"),
       },
@@ -138,7 +142,7 @@ class FinancialsForm extends React.PureComponent {
         name: "total_shares",
         label: "Total Shares",
         type: "textbox",
-        value: form.total_shares || "",
+        value: this.checkValue(form.total_shares),
         icon: "assignment",
         error: this.validator.message("total_shares", form.total_shares, "numeric"),
       },
@@ -146,7 +150,7 @@ class FinancialsForm extends React.PureComponent {
         name: "financial_leverage",
         label: "Financial Leverage",
         type: "textbox",
-        value: form.financial_leverage || "",
+        value: this.checkValue(form.financial_leverage),
         icon: "assignment",
         error: this.validator.message(
           "financial_leverage",
@@ -158,7 +162,7 @@ class FinancialsForm extends React.PureComponent {
         name: "debt_equity_ratio",
         label: "Debt Equity Ratio",
         type: "textbox",
-        value: form.debt_equity_ratio || "",
+        value: this.checkValue(form.debt_equity_ratio),
         icon: "assignment",
         error: this.validator.message(
           "debt_equity_ratio",
@@ -170,7 +174,7 @@ class FinancialsForm extends React.PureComponent {
         name: "revenue",
         label: "Revenue",
         type: "textbox",
-        value: form.revenue || "",
+        value: this.checkValue(form.revenue),
         icon: "assignment",
         error: this.validator.message(
           "revenue",
@@ -182,7 +186,7 @@ class FinancialsForm extends React.PureComponent {
         name: "p_e_ratio",
         label: "P E Ratio",
         type: "textbox",
-        value: form.p_e_ratio || "",
+        value: this.checkValue(form.p_e_ratio),
         icon: "assignment",
         error: this.validator.message(
           "p_e_ratio",
@@ -194,7 +198,7 @@ class FinancialsForm extends React.PureComponent {
         name: "revenue_range",
         label: "Revenue Range",
         type: "textbox",
-        value: form.revenue_range || "",
+        value: this.checkValue(form.revenue_range),
         icon: "assignment",
         error: this.validator.message(
           "revenue_range",
@@ -232,7 +236,7 @@ class FinancialsForm extends React.PureComponent {
         name: "source",
         label: "Source",
         type: "textbox",
-        value: form.source || "",
+        value: this.checkValue(form.source),
         icon: "assignment",
         error: this.validator.message(
           "source",
