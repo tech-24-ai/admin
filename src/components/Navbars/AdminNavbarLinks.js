@@ -110,9 +110,9 @@ function HeaderLinks(props) {
             }
           />
           <Hidden mdUp implementation="css">
-            <span onClick={handleClickProfile} className={classes.linkText} tabIndex="0" role="button">
+            <Button onClick={handleClickProfile} color="transparent" style={{paddingLeft: 0}} className={classes.linkText}>
               {rtlActive ? "الملف الشخصي" : "Profile"}
-            </span>
+            </Button>
           </Hidden>
         </Button>
         <Popper

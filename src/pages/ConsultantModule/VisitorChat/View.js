@@ -31,37 +31,35 @@ import { crudActions } from '../../../_actions';
 import { crudService } from "../../../_services";
 import { ChatHistory } from "components/ChatHistory/Chats";
 
+import PropTypes from 'prop-types';
+
 const useStyles = makeStyles((theme) => (styles));
 
-const viewForm = (props) => {
+const ViewForm = (props) => {
     const classes = useStyles();
     const [state, setState] = useState({
         message: '',
     
     });
-    const [id] = useState(props && props.match.params && props.match.params.id);
+    
     useEffect(() => {
-        console.log(id);
         async function fetchData(id) {
-            await crudService._get('consultants/chat-log', id).then((response) => {
-                if (response.status === 200) {
-
-                    if (response.data && response.data[0]) {
-                        setState(response.data[0])
-                    }
-                }
-            })
+          try {
+            const response = await crudService._get('consultants/chat-log', id);
+            if (response.status === 200) {
+              setState(response.data);
+            }
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
         }
-        fetchData(id)
-    }, [])
-
+        fetchData(props?.match?.params?.id);
+    }, [props.match.params.id]);
 
     const goBack = () => {
         props.history.goBack();
     }
-
-
-
+    
     return (
         <GridContainer justify="center">
             <GridItem xs={12} sm={8}>
@@ -104,6 +102,11 @@ const viewForm = (props) => {
     )
 }
 
+ViewForm.propTypes = {
+    match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+};
+
 const mapStateToProps = (state) => {
     const { form, confirm } = state;
     return {
@@ -118,4 +121,4 @@ const actionCreators = {
     updateData: crudActions._update,
 };
 
-export default (connect(mapStateToProps, actionCreators)(viewForm));
+export default (connect(mapStateToProps, actionCreators)(ViewForm));

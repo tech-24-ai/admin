@@ -21,6 +21,7 @@ import MuiCardActions from '@material-ui/core/CardActions';
 
 import Autocomplete from './autocomplete'
 import AutocompleteOption from './autocompleteOption'
+import PropTypes from 'prop-types';
 
 class DynamicForm extends React.PureComponent {
 
@@ -70,128 +71,147 @@ class DynamicForm extends React.PureComponent {
     }
 
     render() {
-        const { dynamicFormOptions, dynamicForm, classes } = this.props
+        const { dynamicFormOptions, dynamicForm, classes } = this.props;
+    
+        const renderFormOptions = (inputField, index) => {
+            return dynamicFormOptions.map(dynamicFormOption => {
+                switch (dynamicFormOption.type) {
+                    case 'autocomplete':
+                        dynamicFormOption.value = inputField[dynamicFormOption.name];
+                        return (
+                            <Autocomplete 
+                                formField={dynamicFormOption} 
+                                handleInputChange={event => this.handleFormAutoChange(event, index)} 
+                            />
+                        );
+                    case 'select':
+                        return (
+                            <CustomSelect
+                                title={dynamicFormOption.label}
+                                name={dynamicFormOption.name}
+                                value={inputField[dynamicFormOption.name]}
+                                items={dynamicFormOption.options}
+                                onChange={event => this.handleFormInputChange(event, index)}
+                            />
+                        );
+                    case 'autocomplete_option':
+                        return (
+                            <div 
+                                style={{ zIndex: 1000, marginBottom: 50 }}
+                            >
+                                <AutocompleteOption
+                                    title={dynamicFormOption.label}
+                                    name={dynamicFormOption.name}
+                                    value={inputField[dynamicFormOption.name]}
+                                    options={dynamicFormOption.options}
+                                    getOptionLabel={dynamicFormOption.getOptionLabel}
+                                    getOptionValue={dynamicFormOption.getOptionValue}
+                                    onChange={event => this.handleFormInputChange(event, index)}
+                                />
+                            </div>
+                        );
+                    case 'textbox':
+                        return (
+                            <CustomInput
+                                labelText={dynamicFormOption.label}
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    value: inputField[dynamicFormOption.name],
+                                    name: dynamicFormOption.name,
+                                    onChange: event => this.handleFormInputChange(event, index)
+                                }}
+                            />
+                        );
+                    case 'checkbox':
+                        return (
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        name={dynamicFormOption.name}
+                                        tabIndex={-1}
+                                        checked={inputField[dynamicFormOption.name] ? true : false}
+                                        onClick={(event) => this.handleFormInputChange(event, index)}
+                                        checkedIcon={<Check className={classes.checkedIcon} />}
+                                        icon={<Check className={classes.uncheckedIcon} />}
+                                        classes={{
+                                            checked: classes.checked,
+                                            root: classes.checkRoot
+                                        }}
+                                    />
+                                }
+                                classes={{
+                                    label: classes.label,
+                                    root: classes.labelRoot
+                                }}
+                                label={dynamicFormOption.label}
+                            />
+                        );
+                    default:
+                        return null;
+                }
+            });
+        };
 
+        const renderDynamicForm = (inputField, index) => {        
+            return (
+                <Draggable 
+                    key={index} 
+                    draggableId={`draggableId${index}`} 
+                    index={index}
+                >
+                    {(provided) => (
+                        <MuiCard 
+                            className={classes.dragCard}
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                        >
+                            <MuiCardContent>
+                                <div style={{ textAlign: 'center' }}>
+                                    <Icon>drag_handle</Icon>
+                                </div>
+                                {renderFormOptions(inputField, index)}
+                            </MuiCardContent>
+                            <MuiCardActions disableSpacing>
+                                <Button 
+                                    color="danger" 
+                                    type="button" 
+                                    onClick={() => this.removeDynamicForm(index)}
+                                >
+                                    <Icon>delete</Icon>
+                                </Button>
+                            </MuiCardActions>
+                            {provided.placeholder}
+                        </MuiCard>
+                    )}
+                </Draggable>
+            );
+        };
+    
         return (
             <div style={{ marginTop: 10, marginBottom: 10 }}>
                 <DragDropContext onDragEnd={(event) => this.onDragEnd(event, dynamicForm)}>
                     <Droppable droppableId="dynamicFormDroppable">
                         {(provided) => (
-                            <div {...provided.droppableProps}
-                                ref={provided.innerRef}>
-                                {dynamicForm.map((inputField, index) => {
-                                    return (
-                                        <Draggable key={index} draggableId={`draggableId${index}`} index={index}>
-                                            {(provided) => (
-                                                <MuiCard className={classes.dragCard}
-                                                    ref={provided.innerRef}
-                                                    {...provided.draggableProps}
-                                                    {...provided.dragHandleProps}>
-
-                                                    <MuiCardContent>
-
-                                                        <div style={{ textAlign: 'center' }}>
-                                                            <Icon>drag_handle</Icon>
-                                                        </div>
-
-                                                        {dynamicFormOptions.map(dynamicFormOption => {
-                                                            if (dynamicFormOption.type === 'autocomplete') {
-                                                                dynamicFormOption.value = inputField[dynamicFormOption.name]
-                                                                return (<Autocomplete formField={dynamicFormOption} handleInputChange={event => this.handleFormAutoChange(event, index)} />)
-                                                            }
-
-                                                            if (dynamicFormOption.type === 'select') {
-                                                                return (
-                                                                    <CustomSelect
-                                                                        title={dynamicFormOption.label}
-                                                                        name={dynamicFormOption.name}
-                                                                        value={inputField[dynamicFormOption.name]}
-                                                                        items={dynamicFormOption.options}
-                                                                        onChange={event => this.handleFormInputChange(event, index)}
-                                                                    />
-                                                                )
-                                                            }
-                                                            if (dynamicFormOption.type === 'autocomplete_option') {
-                                                                return (
-                                                                    <div style={{ zIndex: 1000, marginBottom: 50 }}>
-                                                                        <AutocompleteOption
-                                                                            title={dynamicFormOption.label}
-                                                                            name={dynamicFormOption.name}
-                                                                            value={inputField[dynamicFormOption.name]}
-                                                                            options={dynamicFormOption.options}
-                                                                            getOptionLabel={dynamicFormOption.getOptionLabel}
-                                                                            getOptionValue={dynamicFormOption.getOptionValue}
-                                                                            onChange={event => this.handleFormInputChange(event, index)}
-                                                                        />
-                                                                    </div>
-                                                                )
-                                                            }
-                                                            if (dynamicFormOption.type === 'textbox') {
-                                                                return (
-                                                                    <CustomInput
-                                                                        labelText={dynamicFormOption.label}
-                                                                        formControlProps={{
-                                                                            fullWidth: true
-                                                                        }}
-                                                                        inputProps={{
-                                                                            value: inputField[dynamicFormOption.name],
-                                                                            name: dynamicFormOption.name,
-                                                                            onChange: event => {
-                                                                                this.handleFormInputChange(event, index)
-                                                                            },
-                                                                        }}
-                                                                    />
-                                                                )
-                                                            }
-                                                            if (dynamicFormOption.type === 'checkbox') {
-                                                                return (
-                                                                    <FormControlLabel
-                                                                        control={
-                                                                            <Checkbox
-                                                                                name={dynamicFormOption.name}
-                                                                                tabIndex={-1}
-                                                                                checked={inputField[dynamicFormOption.name] ? true : false}
-                                                                                onClick={(event) => this.handleFormInputChange(event, index)}
-                                                                                checkedIcon={<Check className={classes.checkedIcon} />}
-                                                                                icon={<Check className={classes.uncheckedIcon} />}
-                                                                                classes={{
-                                                                                    checked: classes.checked,
-                                                                                    root: classes.checkRoot
-                                                                                }}
-                                                                            />
-                                                                        }
-                                                                        classes={{
-                                                                            label: classes.label,
-                                                                            root: classes.labelRoot
-                                                                        }}
-                                                                        label={dynamicFormOption.label}
-                                                                    />
-                                                                )
-                                                            }
-                                                            return null
-                                                        })}
-
-
-                                                    </MuiCardContent>
-                                                    <MuiCardActions disableSpacing>
-
-                                                        <Button color="danger" type="button" onClick={() => this.removeDynamicForm(index)}>
-                                                            <Icon>delete</Icon>
-                                                        </Button>
-                                                    </MuiCardActions>
-                                                    {provided.placeholder}
-                                                </MuiCard>
-                                            )
-                                            }
-                                        </Draggable>
-                                    )
-                                })}
+                            <div {...provided.droppableProps} ref={provided.innerRef}>
+                                {dynamicForm.map((inputField, index) => (
+                                    renderDynamicForm(inputField, index)
+                                ))}
                             </div>
                         )}
                     </Droppable>
                 </DragDropContext>
-            </div >
-        )
-    }
+            </div>
+        );
+    }    
 }
+
+DynamicForm.propTypes = {
+    dynamicFormOptions: PropTypes.array.isRequired,
+    dynamicForm: PropTypes.array.isRequired,
+    classes: PropTypes.array.isRequired,
+    // Add other prop types as needed
+};
 export default withStyles(styles)(DynamicForm)

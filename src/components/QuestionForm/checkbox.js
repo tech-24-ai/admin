@@ -41,31 +41,34 @@ class Form extends React.Component {
     const optionPriorityIndex = newPriority.findIndex(p => p.id === option.id);
 
     if (optionPriorityIndex !== -1) {
-        let { value, id } = newPriority[optionPriorityIndex];
-        const selectionIndex = value.indexOf(currentSelection);
-
-        if (e.target.checked) {
-            if (selectionIndex === -1) {
-                value.push(currentSelection);
-            }
-            if (value.length === 4) {
-                value = ["0"];
-            }
-        } else {
-            if (selectionIndex !== -1) {
-                value.splice(selectionIndex, 1);
-            }
-            if (selectionIndex === -1 && value.length === 1 && value[0] === "0") {
-                value = ["1", "2", "3", "4"].filter(e => e !== currentSelection);
-            }
-        }
-
-        newPriority[optionPriorityIndex] = { id, value };
+        newPriority = this.updateExistingPriority(optionPriorityIndex, currentSelection, newPriority);
     } else {
         newPriority.push({ id: option.id.toString(), value: [currentSelection] });
     }
 
     this.handlePriorityChange(name, newPriority);
+  };
+
+  updateExistingPriority = (index, currentSelection, priorityArray) => {
+    let newPriority = [...priorityArray];
+    let { value } = newPriority[index];
+    const selectionIndex = value.indexOf(currentSelection);
+
+    if (selectionIndex !== -1) {
+        value.splice(selectionIndex, 1);
+    } else {
+        value.push(currentSelection);
+        if (value.length === 4) {
+            value = ["0"];
+        }
+    }
+
+    if (value.length === 1 && value[0] === "0") {
+        value = ["1", "2", "3", "4"].filter(e => e !== currentSelection);
+    }
+
+    newPriority[index] = { ...newPriority[index], value };
+    return newPriority;
   };
 
   handleSubChange = (e, name, option, subOptionData) => {
