@@ -17,6 +17,7 @@ import { Visibility, ThumbUp, Edit, Delete, Check, AccessTime} from '@material-u
 import TablePagination from '@material-ui/core/TablePagination';
 import moment from "moment";
 import Badge from "components/Badge/Badge.js";
+import Button from '@material-ui/core/Button';
 
 const title = 'Answers'
 
@@ -154,12 +155,6 @@ class CommunityPostReplyList extends React.PureComponent {
         }
 
         this.props.showConfirm('Confirm', `Are you sure you want to Mark as Correct Answer?`, data)
-
-        // crudService._create('community/reply_mark_correct_answer', data).then((response) => {
-        //     if (response.status === 200) {
-        //         this.getPostReplyData()
-        //     }
-        // })
     }
 
     updateCorrectAnswerStatus = (id) => {
@@ -188,59 +183,6 @@ class CommunityPostReplyList extends React.PureComponent {
         const { form, page, rowsPerPage, totalRecords, postrReplyDataArray } = this.state
         let url = `community/posts_reply?community_post_id=${id}`;
         
-        // const columns = [            
-        //     {
-        //         title: "Description",
-        //         field: "description",
-        //         render: (item) =>
-        //         item.description && (
-        //             <div>
-        //                 {item.description?.substring(0, 30)}{" "}
-        //                 {item.description.length > 30 &&
-        //                     <span>
-        //                         <Link
-        //                         onClick={() => this.toggleModal(item.description)}
-        //                         href="javascript:"
-        //                         >
-        //                         ... More
-        //                         </Link>
-        //                     </span>
-        //                 }
-        //             </div>
-        //         ),
-        //     },
-        //     {
-        //         title: "Community",
-        //         field: "communityPost.community.name",
-        //         sorting: false
-        //     },
-        //     {
-        //         title: "Visitor Name",
-        //         field: "visitor.name",
-        //         sorting: false
-        //     },
-        //     {
-        //         title: "Total Helpful",
-        //         field: "__meta__.total_helpful",
-        //         sorting: false
-        //     },
-        //     {
-        //         title: "Status",
-        //         field: "status",
-        //         lookupConstant: COMMUNITY_POST_STATUS,
-        //     },
-        //     {
-        //         title: "Correct Answer",
-        //         field: "is_correct_answer",
-        //         lookupConstant: COMMUNITY_POST_DISCUSSION_STATUS,
-        //     },
-        //     {
-        //         title: "Date",
-        //         field: "updated_at"
-        //     },
-        //     TableAction(PermissionHelper.checkPermission('delete_community_query_answer') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_community_query_answer') ? this.editCrud : null, null, null, this.communityPostReplyDetails)
-        // ]
-
         const replyDataItems = postrReplyDataArray.map((item, i) => 
             <GridContainer style={{ marginBottom: 10 }} key={i} > 
                 <GridItem xs={12}>
@@ -348,17 +290,16 @@ class CommunityPostReplyList extends React.PureComponent {
                                 <GridItem xs={12} style={{ marginBottom: 10 }}>
                                     <div style={{ display: "flex" }}>
                                         {form.attachments.map((item) => (
-                                            <div
-                                            style={{ marginRight: 10, marginBottom: 10, color: "blue", textDecoration: "underline", cursor: "pointer"  }}
-                                            role="button"
-                                            tabIndex="0"
+                                            <Button
+                                            key={item.id}
+                                            style={{ marginRight: 10, marginBottom: 10, color: "blue", textDecoration: "underline", cursor: "pointer", backgroundColor: "transparent"  }}
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 this.handleDocumentDownload(item);
                                             }}
                                             >
                                             {item?.name || "Attachment"}
-                                            </div>
+                                            </Button>
                                         ))}
                                     </div>    
                                 </GridItem>   
@@ -437,22 +378,6 @@ class CommunityPostReplyList extends React.PureComponent {
                         )}
                     </Paper>
                 </GridItem>
-
-                {/* <GridItem xs={12}>
-                    <MaterialDataTable
-                        title={title}
-                        columns={columns}
-                        addData={false}
-                        deleteAll={PermissionHelper.checkPermission('delete_community_query_answer') ? this.deleteAll : false}
-                        url={url}
-                        selection={true}
-                        refresh={true}
-                        serverSide={true}
-                        search={true}
-                        sorting={true}
-                        filtering={true}
-                    />
-                </GridItem> */}
             </GridContainer>
         );
     }
