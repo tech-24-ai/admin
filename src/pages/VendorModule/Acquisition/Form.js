@@ -206,13 +206,13 @@ class AcquisitionForm extends React.PureComponent {
         })
         .then((response) => {
           if (response.status === 200) {
-            this.setState(
+            this.setState((prevState) => (
               {
                 form: {
-                  ...this.state.form,
+                  ...prevState.form,
                   logo_acquried_company: response.data.url,
                 },
-              },
+              }),
               () => this.props.hideLoader()
             );
           }

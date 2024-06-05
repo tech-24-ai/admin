@@ -290,6 +290,23 @@ class PricingModelForm extends React.PureComponent {
         this.setState({ dynamicForm: dynamicForm });
     }
 
+    processConfig = (conf) => {
+        conf['price'] = this.calculatePrice(conf);
+        conf['name'] = this.determineName(conf);
+        if (conf['name'] == 'All') {
+            conf['country_groups_id'] = 99999;
+        }
+        delete conf['prices'];
+    }
+
+    calculatePrice = (conf) => {
+        return conf.prices?.length ? conf.prices[0].avgprice : '';
+    }
+    
+    determineName = (conf) => {
+        return conf.countryGroups?.name ?? 'All';
+    }
+
     bindData = () => {
         const { id } = this.props.match.params
         if (id && id !== 'new') {                        
@@ -297,14 +314,10 @@ class PricingModelForm extends React.PureComponent {
                 if (response.status === 200) {
 
                     let configs = (response.data && response.data.configs) ? response.data.configs : null;
-                    if(configs) {
-                        for(let conf of configs) {
-                            conf['price'] = conf.prices.length ? conf.prices[0].avgprice : '';
-                            conf['name'] = conf.countryGroups ? conf.countryGroups.name : 'All';
-                            if(conf['name'] == 'All') {
-                                conf['country_groups_id'] = 99999
-                            }
-                            delete conf['prices']
+                    if(configs) 
+                    {
+                        for (let conf of configs) {
+                            this.processConfig(conf);
                         }
                     }
 

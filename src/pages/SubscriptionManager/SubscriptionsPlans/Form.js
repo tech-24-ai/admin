@@ -67,6 +67,10 @@ class PricingModelForm extends React.PureComponent {
         this.handleError();
     }
 
+    checkValue(val) {
+        return val || "";
+    }
+    
     getFormFields = () => {
         const { form } = this.state
         const formFields = [
@@ -74,7 +78,7 @@ class PricingModelForm extends React.PureComponent {
                 name: 'plan_name',
                 label: 'Plan Name',
                 type: 'textbox',
-                value: form.plan_name || '',
+                value: this.checkValue(form.plan_name),
                 icon: 'assignment',
                 error: this.validator.message('name', form.plan_name, 'required')
             },
@@ -83,7 +87,7 @@ class PricingModelForm extends React.PureComponent {
                 label: "Plan Duration",
                 type: "select",
                 options: PLAN_DURATION,
-                value: form.plan_duration || "",
+                value: this.checkValue(form.plan_duration),
                 icon: "assignment",
                 error: this.validator.message(
                   "plan_duration",
@@ -95,7 +99,7 @@ class PricingModelForm extends React.PureComponent {
                 name: 'plan_price',
                 label: 'Plan Price',
                 type: 'textbox',
-                value: form.plan_price || '',
+                value: this.checkValue(form.plan_price),
                 icon: 'assignment',
                 error: this.validator.message('plan price', form.plan_price, 'required|numeric')
             },
@@ -103,7 +107,7 @@ class PricingModelForm extends React.PureComponent {
                 name: 'current_price_or_special_price',
                 label: 'Special Price',
                 type: 'textbox',
-                value: form.current_price_or_special_price || '',
+                value: this.checkValue(form.current_price_or_special_price),
                 icon: 'assignment',
                 error: this.validator.message('special price', form.current_price_or_special_price, 'required|numeric')
             },
@@ -139,7 +143,7 @@ class PricingModelForm extends React.PureComponent {
                 name: 'max_market',
                 label: 'Maximum Markets Allowed',
                 type: 'textbox',
-                value: form.max_market || '',
+                value: this.checkValue(form.max_market),
                 icon: 'assignment',
                 error: this.validator.message('maximum markets', form.max_market, 'required|numeric')
             },
@@ -147,7 +151,7 @@ class PricingModelForm extends React.PureComponent {
                 name: 'max_region',
                 label: 'Maximum Regions Allowed',
                 type: 'textbox',
-                value: form.max_region || '',
+                value: this.checkValue(form.max_region),
                 icon: 'assignment',
                 error: this.validator.message('maximum regions', form.max_region, 'required|numeric')
             },
@@ -155,7 +159,7 @@ class PricingModelForm extends React.PureComponent {
                 name: 'max_country',
                 label: 'Maximum Countries Allowed',
                 type: 'textbox',
-                value: form.max_country || '',
+                value: this.checkValue(form.max_country),
                 icon: 'assignment',
                 error: this.validator.message('maximum countries', form.max_country, 'required|numeric')
             },
@@ -176,7 +180,7 @@ class PricingModelForm extends React.PureComponent {
                 name: 'paypal_plan_id',
                 label: 'Paypal Plan Id',
                 type: 'textbox',
-                value: form.paypal_plan_id || '',
+                value: this.checkValue(form.paypal_plan_id),
                 icon: 'assignment',
             },
             {

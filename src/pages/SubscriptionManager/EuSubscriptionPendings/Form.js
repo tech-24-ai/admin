@@ -419,12 +419,12 @@ class EuSubscriptionForm extends React.PureComponent {
               "DD-MM-YYYY"
             ).format("YYYY-MM-DD"),
           };
-          this.setState({
+          this.setState((prevState) => ({
             form:
               response.data && response.data.length > 0
                 ? formData
-                : this.state.form,
-          });
+                : prevState.form,
+          }));
           //this.setState({form.transaction_amount : form.transactions.transaction_amount})
         }
       });

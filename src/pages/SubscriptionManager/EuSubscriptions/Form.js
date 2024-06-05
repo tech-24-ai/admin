@@ -75,6 +75,10 @@ class EuSubscriptionForm extends React.PureComponent {
     this.handleError();
   }
 
+  isBlocked(val) {
+    return val !== "new";
+  }
+
   getFormFields = () => {
     const { form } = this.state;
     const { id } = this.state;
@@ -88,8 +92,8 @@ class EuSubscriptionForm extends React.PureComponent {
         getOptionValue: "id",
         value: form.user_id,
         option: { label: form.user_name, value: form.user_id },
-        readonly: id === "new" ? false : true,
-        disabled: id === "new" ? false : true,
+        readonly: this.isBlocked(id),
+        disabled: this.isBlocked(id),
         error: this.validator.message("user_id", form.user_id, "required"),
       },
 
@@ -101,8 +105,8 @@ class EuSubscriptionForm extends React.PureComponent {
         getOptionLabel: "plan_name",
         getOptionValue: "id",
         value: form.plan_id,
-        readonly: id === "new" ? false : true,
-        disabled: id === "new" ? false : true,
+        readonly: this.isBlocked(id),
+        disabled: this.isBlocked(id),
         option: { label: form.plan_name, value: form.plan_id },
         error: this.validator.message("plan_id", form.plan_id, "required"),
       },
@@ -290,12 +294,12 @@ class EuSubscriptionForm extends React.PureComponent {
               "DD-MM-YYYY"
             ).format("YYYY-MM-DD"),
           };
-          this.setState({
+          this.setState((prevState) => ({
             form:
               response.data && response.data.length > 0
                 ? formData
-                : this.state.form,
-          });
+                : prevState.form,
+          }));
           //this.setState({form.transaction_amount : form.transactions.transaction_amount})
         }
       });

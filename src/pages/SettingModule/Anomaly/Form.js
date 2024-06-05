@@ -209,12 +209,12 @@ class AnomalyForm extends React.PureComponent {
     if (id && id !== "new") {
       crudService._get(`anomaly`, id).then((response) => {
         if (response.status === 200) {
-          this.setState({
+          this.setState((prevState) => ({
             form:
               response.data && response.data.length > 0
                 ? response.data[0]
-                : this.state.form,
-          });
+                : prevState.form,
+          }));
         }
       });
     }

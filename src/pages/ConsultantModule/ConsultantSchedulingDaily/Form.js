@@ -66,6 +66,10 @@ class ConsultantSchedulingForm extends React.PureComponent {
     this.handleError();
   }
 
+  checkValue(val) {
+    return val || "";
+  }
+
   getFormFields = () => {
     const { form, dynamicForm } = this.state;
     const { childId, id } = this.props.match.params;
@@ -87,7 +91,7 @@ class ConsultantSchedulingForm extends React.PureComponent {
         name: "type",
         label: "Type",
         type: "textbox",
-        value: form.type || "",
+        value: this.checkValue(form.type),
         icon: "assignment",
         readOnly: true,
         disabled: true,
@@ -157,7 +161,7 @@ class ConsultantSchedulingForm extends React.PureComponent {
         name: "date",
         label: "Schedule Date",
         type: "date",
-        value: form.date || "",
+        value: this.checkValue(form.date),
         icon: "assignment",
         error: this.validator.message("date", form.date, "required"),
       },
@@ -166,7 +170,7 @@ class ConsultantSchedulingForm extends React.PureComponent {
         name: "start_time",
         label: "Start time",
         type: "time",
-        value: form.start_time || "",
+        value: this.checkValue(form.start_time ),
         icon: "assignment",
         error: this.validator.message(
           "start_time",
@@ -178,7 +182,7 @@ class ConsultantSchedulingForm extends React.PureComponent {
         name: "end_time",
         label: "End Time",
         type: "time",
-        value: form.end_time || "",
+        value: this.checkValue(form.end_time),
         icon: "assignment",
         error: this.validator.message("end_time", form.end_time, "required"),
       },
@@ -186,7 +190,7 @@ class ConsultantSchedulingForm extends React.PureComponent {
         name: "is_available",
         label: "Is Available",
         type: "checkbox",
-        value: form.is_available || "",
+        value: this.checkValue(form.is_available),
       },
     ];
     if ((childId && childId === "new") || (id && id === "new")) {

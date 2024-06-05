@@ -49,7 +49,7 @@ export default function FixedPlugin(props) {
       className={"fixed-plugin" + (props.rtlActive ? " fixed-plugin-rtl" : "")}
     >
       <div id="fixedPluginClasses" className={props.fixedClasses}>
-        <div onClick={handleClick}>
+        <div onClick={handleClick} tabIndex="0" role="button">
           <i className="fa fa-cog fa-2x" />
         </div>
         <ul className="dropdown-menu">
@@ -64,6 +64,8 @@ export default function FixedPlugin(props) {
                       : "badge filter badge-purple"
                   }
                   data-color="purple"
+                  tabIndex="0" 
+                  role="button"
                   onClick={() => {
                     props.handleColorClick("purple");
                   }}
@@ -75,6 +77,8 @@ export default function FixedPlugin(props) {
                       : "badge filter badge-blue"
                   }
                   data-color="blue"
+                  tabIndex="0" 
+                  role="button"
                   onClick={() => {
                     props.handleColorClick("blue");
                   }}
@@ -86,6 +90,8 @@ export default function FixedPlugin(props) {
                       : "badge filter badge-green"
                   }
                   data-color="green"
+                  tabIndex="0" 
+                  role="button"
                   onClick={() => {
                     props.handleColorClick("green");
                   }}
@@ -97,6 +103,8 @@ export default function FixedPlugin(props) {
                       : "badge filter badge-red"
                   }
                   data-color="red"
+                  tabIndex="0" 
+                  role="button"
                   onClick={() => {
                     props.handleColorClick("red");
                   }}
@@ -108,6 +116,8 @@ export default function FixedPlugin(props) {
                       : "badge filter badge-orange"
                   }
                   data-color="orange"
+                  tabIndex="0" 
+                  role="button"
                   onClick={() => {
                     props.handleColorClick("orange");
                   }}
@@ -119,6 +129,8 @@ export default function FixedPlugin(props) {
                       : "badge filter badge-white"
                   }
                   data-color="orange"
+                  tabIndex="0" 
+                  role="button"
                   onClick={() => {
                     props.handleColorClick("white");
                   }}
@@ -130,6 +142,8 @@ export default function FixedPlugin(props) {
                       : "badge filter badge-rose"
                   }
                   data-color="orange"
+                  tabIndex="0" 
+                  role="button"
                   onClick={() => {
                     props.handleColorClick("rose");
                   }}
@@ -149,6 +163,8 @@ export default function FixedPlugin(props) {
                       : "badge filter badge-blue"
                   }
                   data-color="orange"
+                  tabIndex="0" 
+                  role="button"
                   onClick={() => {
                     props.handleBgColorClick("blue");
                   }}
@@ -160,6 +176,8 @@ export default function FixedPlugin(props) {
                       : "badge filter badge-white"
                   }
                   data-color="orange"
+                  tabIndex="0" 
+                  role="button"
                   onClick={() => {
                     props.handleBgColorClick("white");
                   }}
@@ -171,6 +189,8 @@ export default function FixedPlugin(props) {
                       : "badge filter badge-black"
                   }
                   data-color="orange"
+                  tabIndex="0" 
+                  role="button"
                   onClick={() => {
                     props.handleBgColorClick("black");
                   }}
@@ -222,6 +242,8 @@ export default function FixedPlugin(props) {
                 setBgImage(imagine1);
                 props.handleImageClick(imagine1);
               }}
+              href="#"
+              role="button"
             >
               <img src={imagine1} alt="..." />
             </a>
@@ -234,6 +256,8 @@ export default function FixedPlugin(props) {
                 setBgImage(imagine2);
                 props.handleImageClick(imagine2);
               }}
+              href="#"
+              role="button"
             >
               <img src={imagine2} alt="..." />
             </a>
@@ -246,6 +270,8 @@ export default function FixedPlugin(props) {
                 setBgImage(imagine3);
                 props.handleImageClick(imagine3);
               }}
+              href="#"
+              role="button"
             >
               <img src={imagine3} alt="..." />
             </a>
@@ -258,6 +284,8 @@ export default function FixedPlugin(props) {
                 setBgImage(imagine4);
                 props.handleImageClick(imagine4);
               }}
+              href="#"
+              role="button"
             >
               <img src={imagine4} alt="..." />
             </a>

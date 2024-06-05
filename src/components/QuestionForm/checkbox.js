@@ -34,52 +34,38 @@ class Form extends React.Component {
 
   handlePriorityChange = (e, name, option) => {
     e.persist();
-    let { priority } = this.props;
-    let tempData;
+    const { priority } = this.props;
     const currentSelection = e.target.value;
-    let optionPriority =
-      priority != undefined && priority.filter((p) => p.id == option.id);
-    if (optionPriority && optionPriority.length) {
-      let { value, id } = optionPriority[0];
-      const i = value.indexOf(currentSelection);
-      if (e.target.checked) {
-        if (i == -1) {
-          value.push(currentSelection);
+
+    let newPriority = priority ? [...priority] : [];
+    const optionPriorityIndex = newPriority.findIndex(p => p.id === option.id);
+
+    if (optionPriorityIndex !== -1) {
+        let { value, id } = newPriority[optionPriorityIndex];
+        const selectionIndex = value.indexOf(currentSelection);
+
+        if (e.target.checked) {
+            if (selectionIndex === -1) {
+                value.push(currentSelection);
+            }
+            if (value.length === 4) {
+                value = ["0"];
+            }
+        } else {
+            if (selectionIndex !== -1) {
+                value.splice(selectionIndex, 1);
+            }
+            if (selectionIndex === -1 && value.length === 1 && value[0] === "0") {
+                value = ["1", "2", "3", "4"].filter(e => e !== currentSelection);
+            }
         }
-        if (value.length === 4) {
-          value = ["0"];
-        }
-      } else {
-        if (i !== -1) {
-          value.splice(i, 1);
-        }
-        if (i == -1) {
-          if (value.length == 1 && value[0] == "0") {
-            let v = ["1", "2", "3", "4"].filter((e) => e != currentSelection);
-            value = v;
-          }
-        }
-      }
-      let pIndex = priority.findIndex((el) => el.id == option.id);
-      priority.splice(pIndex, 1);
-      if (value && value.length) {
-        priority.push({
-          id,
-          value,
-        });
-      }
+
+        newPriority[optionPriorityIndex] = { id, value };
     } else {
-      tempData = {
-        id: option.id.toString(),
-        value: [currentSelection],
-      };
-      priority != undefined && priority.push(tempData);
+        newPriority.push({ id: option.id.toString(), value: [currentSelection] });
     }
-    if (priority == undefined) {
-      this.props.handlePriorityChange(name, [tempData]);
-    } else {
-      this.props.handlePriorityChange(name, priority);
-    }
+
+    this.handlePriorityChange(name, newPriority);
   };
 
   handleSubChange = (e, name, option, subOptionData) => {
@@ -162,7 +148,7 @@ class Form extends React.Component {
           {options &&
             options.map((option) => {
               let subValueData;
-              if (subValue && subValue) {
+              if (subValue) {
                 subValue.forEach((element) => {
                   if (element.id == option.id) {
                     subValueData = element.value;

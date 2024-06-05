@@ -338,11 +338,8 @@ class DocumentForm extends React.PureComponent {
 
       let description = "";
 
-      if (this.state.form.document_content_type == 4) {
-        description = this.state.form.description;
-        if (typeof this.state.form.description === "object") {
-          description = JSON.stringify(this.state.form.description);
-        }
+      if (this.state.form.document_content_type == 4 && typeof this.state.form.description === "object") {
+        description = JSON.stringify(this.state.form.description);
       } else {
         description = this.state.form.description;
       }
@@ -375,22 +372,6 @@ class DocumentForm extends React.PureComponent {
       };
 
       if (
-        data.url &&
-        data.document_content_type == 1 &&
-        drive_document_id == ""
-      ) {
-        this.props.showError(
-          "Please choose the file to upload over Google Drive."
-        );
-        return false;
-      } else if (
-        data.url &&
-        data.document_content_type == 2 &&
-        !checkValidUrl(data.google_doc_url)
-      ) {
-        this.props.showError("Only Google docs URL is allowed.");
-        return false;
-      } else if (
         data.url &&
         data.document_content_type == 3 &&
         !checkDomainUrl(data.url)

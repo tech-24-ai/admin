@@ -81,6 +81,10 @@ class PricingModelForm extends React.PureComponent {
     this.handleError();
   }
 
+  isDisabled(val) {
+    return val !== "new";
+  }
+
   getFormFields = () => {
     const { form } = this.state;
     const { id } = this.props.match.params;
@@ -93,7 +97,7 @@ class PricingModelForm extends React.PureComponent {
         url: "investors",
         getOptionLabel: "name",
         getOptionValue: "id",
-        disabled: id && id !== "new" ? true : false,
+        disabled: this.isDisabled(id),
         value: form.user_id,
         option: { label: form.country, value: form.user_id },
         error: this.validator.message("user_id", form.user_id, "required"),
@@ -105,7 +109,7 @@ class PricingModelForm extends React.PureComponent {
         url: "mi-segment",
         getOptionLabel: "name",
         getOptionValue: "id",
-        disabled: id && id !== "new" ? true : false,
+        disabled: this.isDisabled(id),
         value: form.segment_id,
         option: { label: form.country, value: form.segment_id },
         error: this.validator.message(
@@ -121,7 +125,7 @@ class PricingModelForm extends React.PureComponent {
         url: "subscription/market_plans?segment_id=" + form.segment_id,
         getOptionLabel: "plan_name",
         getOptionValue: "id",
-        disabled: id && id !== "new" ? true : false,
+        disabled: this.isDisabled(id),
         value: form.plan_id,
         option: { label: form.country, value: form.plan_id },
         error: this.validator.message("plan_id", form.plan_id, "required"),
@@ -135,7 +139,7 @@ class PricingModelForm extends React.PureComponent {
         url: "app/module/categories?not_categories=[5]",
         getOptionLabel: "name",
         getOptionValue: "id",
-        disabled: id && id !== "new" ? true : false,
+        disabled: this.isDisabled(id),
         value: form.modules,
         error: "",
       },
@@ -150,7 +154,7 @@ class PricingModelForm extends React.PureComponent {
         getOptionValue: "id",
         option: form.countries,
         value: form.countries || [],
-        disabled: id && id !== "new" ? true : false,
+        disabled: this.isDisabled(id),
         icon: "assignment",
         error: this.validator.message(
           "countries",
@@ -169,7 +173,7 @@ class PricingModelForm extends React.PureComponent {
         getOptionValue: "id",
         option: form.country_groups,
         value: form.country_groups || [],
-        disabled: id && id !== "new" ? true : false,
+        disabled: this.isDisabled(id),
         icon: "assignment",
         error: this.validator.message(
           "country_groups",
@@ -182,7 +186,7 @@ class PricingModelForm extends React.PureComponent {
         label: "Select Start Date",
         type: "date",
         value: form.subscription_start_date,
-        disabled: id && id !== "new" ? true : false,
+        disabled: this.isDisabled(id),
         error: this.validator.message(
           "subscription_start_date",
           form.subscription_start_date,
@@ -194,7 +198,7 @@ class PricingModelForm extends React.PureComponent {
         label: "Select End Date",
         type: "date",
         value: form.subscription_end_date,
-        disabled: id && id !== "new" ? true : false,
+        disabled: this.isDisabled(id),
         error: this.validator.message(
           "subscription_end_date",
           form.subscription_end_date,
@@ -206,7 +210,7 @@ class PricingModelForm extends React.PureComponent {
         label: "Payment Transaction Id",
         type: "textbox",
         icon: "assignment",
-        disabled: id && id !== "new" ? true : false,
+        disabled: this.isDisabled(id),
         value: form.transactions.payment_transaction_id || "",
         error: this.validator.message(
           "payment_transaction_id",
@@ -219,7 +223,7 @@ class PricingModelForm extends React.PureComponent {
         label: "Payment Transaction Date",
         type: "date",
         value: form.transactions.transaction_date,
-        disabled: id && id !== "new" ? true : false,
+        disabled: this.isDisabled(id),
         error: this.validator.message(
           "payment_transaction_date",
           form.transactions.transaction_date,
@@ -230,7 +234,7 @@ class PricingModelForm extends React.PureComponent {
         name: "transaction_amount",
         label: "Amount",
         type: "textbox",
-        disabled: id && id !== "new" ? true : false,
+        disabled: this.isDisabled(id),
         value: form.transactions.transaction_amount || "",
         error: this.validator.message(
           "transaction_amount",
@@ -242,7 +246,7 @@ class PricingModelForm extends React.PureComponent {
         name: "transaction_details",
         label: "Transaction Details",
         type: "textbox",
-        disabled: id && id !== "new" ? true : false,
+        disabled: this.isDisabled(id),
         value: form.transactions.transaction_details || "",
         error: this.validator.message(
           "Transaction Details",
@@ -375,12 +379,12 @@ class PricingModelForm extends React.PureComponent {
             ).format("YYYY-MM-DD"),
             segment_id: response.data[0].plans.segment_id,
           };
-          this.setState({
+          this.setState((prevState) => ({
             form:
               response.data && response.data.length > 0
                 ? formData
-                : this.state.form,
-          });
+                : prevState,
+          }));
         }
       });
     }

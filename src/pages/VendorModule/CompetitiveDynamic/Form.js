@@ -244,16 +244,16 @@ class CompetitiveDynamicForm extends React.PureComponent {
           }
         });
     } else {
-      this.setState({
+      this.setState((prevState) => ({
         form: {
-          ...this.state.form,
+          ...prevState.form,
           bubble_x: Math.round(this.props.x),
           bubble_y: Math.round(this.props.y),
           market: this.props.selectedMarket,
           year: this.props.selectedYear,
           category_id: this.props.selectCategory,
         },
-      });
+      }));
     }
   };
 

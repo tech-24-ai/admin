@@ -75,6 +75,10 @@ class UpcomingBookingForm extends React.PureComponent {
     this.validator = new SimpleReactValidator({ autoForceUpdate: this });
   }
 
+  checkValue(val) {
+    return val || "";
+  }
+
   getFormFields = () => {
     const { form } = this.state;
     const formFields = [];
@@ -84,7 +88,7 @@ class UpcomingBookingForm extends React.PureComponent {
       formFields.push({
         name: "consultant_id",
         label: "Consultant Name",
-        value: form.consultant_id || "",
+        value: this.checkValue(form.consultant_id),
         type: "autocomplete",
         url: "consultants",
         icon: "assignment",
@@ -104,7 +108,7 @@ class UpcomingBookingForm extends React.PureComponent {
         label: "Visitor Name",
         type: "autocomplete",
         url: "visitors",
-        value: form.visitor_id || "",
+        value: this.checkValue(form.visitor_id),
         icon: "assignment",
         getOptionLabel: "name",
         getOptionValue: "id",
@@ -121,7 +125,7 @@ class UpcomingBookingForm extends React.PureComponent {
         url: "time-zone",
         getOptionLabel: ["offset", "name"],
         getOptionValue: "id",
-        value: form.visitor_time_zone_id || "",
+        value: this.checkValue(form.visitor_time_zone_id),
         icon: "assignment",
         error: this.validator.message(
           "visitor_time_zone_id",
@@ -148,21 +152,21 @@ class UpcomingBookingForm extends React.PureComponent {
           name: "skill",
           label: "Skill",
           type: "textbox",
-          value: form.skill || "",
+          value: this.checkValue(form.skill),
           icon: "assignment",
         },
         {
           name: "duration",
           label: "Duration",
           type: "textbox",
-          value: form.duration || "",
+          value: this.checkValue(form.duration),
           icon: "assignment",
         },
         {
           name: "booking_time",
           label: "Start Time",
           type: "textbox",
-          value: form.booking_time || "",
+          value: this.checkValue(form.booking_time),
           icon: "assignment",
         }
       );
@@ -176,7 +180,7 @@ class UpcomingBookingForm extends React.PureComponent {
           getOptionLabel: "skill",
           getOptionValue: "skill",
           getOptionAmount: "amount_per_min",
-          value: form.skill || "",
+          value: this.checkValue(form.skill),
           icon: "assignment",
           options: [
             {
@@ -244,7 +248,7 @@ class UpcomingBookingForm extends React.PureComponent {
       {
         name: "amount_per_min",
         label: "Amount Per Min",
-        value: form.amount_per_min || "",
+        value: this.checkValue(form.amount_per_min),
         icon: "assignment",
         type: "textbox",
         readOnly: true,
@@ -254,7 +258,7 @@ class UpcomingBookingForm extends React.PureComponent {
         name: "sub_amount",
         label: "Sub Amount",
         type: "textbox",
-        value: form.transaction.sub_amount || "",
+        value: this.checkValue(form.transaction.sub_amount),
         icon: "assignment",
         readOnly: true,
         disabled: true,
@@ -269,7 +273,7 @@ class UpcomingBookingForm extends React.PureComponent {
         name: "taxes",
         label: "Taxes",
         type: "textbox",
-        value: form.transaction.taxes || "",
+        value: this.checkValue(form.transaction.taxes),
         icon: "assignment",
         // error: this.validator.message("mobile", form.mobile, "min:10|max:15"),
       },
@@ -277,7 +281,7 @@ class UpcomingBookingForm extends React.PureComponent {
         name: "total_amount",
         label: "Total Amount",
         type: "textbox",
-        value: form.transaction.total_amount || "",
+        value: this.checkValue(form.transaction.total_amount),
         icon: "assignment",
         readOnly: true,
         disabled: true,
@@ -291,7 +295,7 @@ class UpcomingBookingForm extends React.PureComponent {
         name: "paypal_transaction_id",
         label: "Paypal Transaction Id",
         type: "textbox",
-        value: form.transaction.paypal_transaction_id || "",
+        value: this.checkValue(form.transaction.paypal_transaction_id),
         icon: "assignment",
         // error: this.validator.message("mobile", form.mobile, "min:10|max:15"),
       },
@@ -299,7 +303,7 @@ class UpcomingBookingForm extends React.PureComponent {
         name: "transaction_details",
         label: "Transaction Details",
         type: "textbox",
-        value: form.transaction.transaction_details || "",
+        value: this.checkValue(form.transaction.transaction_details),
         icon: "assignment",
         readonly: true,
         // error: this.validator.message("mobile", form.mobile, "min:10|max:15"),
@@ -308,7 +312,7 @@ class UpcomingBookingForm extends React.PureComponent {
         name: "transaction_date",
         label: "Transaction Date",
         type: "date",
-        value: form.transaction.transaction_date || "",
+        value: this.checkValue(form.transaction.transaction_date),
         icon: "assignment",
         // error: this.validator.message("mobile", form.mobile, "min:10|max:15"),
       },
@@ -336,7 +340,7 @@ class UpcomingBookingForm extends React.PureComponent {
         name: "remarks",
         label: "Remarks",
         type: "textbox",
-        value: form.remarks || "",
+        value: this.checkValue(form.remarks),
         icon: "assignment",
         // error: this.validator.message("mobile", form.mobile, "min:10|max:15"),
       }
@@ -357,54 +361,45 @@ class UpcomingBookingForm extends React.PureComponent {
       }
     }
   }
-  handleInputChange(event) {
-    const newState = Object.assign({}, this.state);
-    if (event.target.type == "checkbox") {
-      newState.form[event.target.name] = event.target.checked;
-    } else {
-      if (
-        event.target.name == "taxes" ||
-        event.target.name == "type" ||
-        event.target.name == "paypal_transaction_id" ||
-        event.target.name == "transaction_details" ||
-        event.target.name == "transaction_date"
-      ) {
-        if (isNaN(Number(event.target.value))) {
-          newState.form.transaction[event.target.name] = event.target.value;
-        } else {
-          newState.form.transaction[event.target.name] = Number(
-            event.target.value
-          );
-        }
-      } else {
-        if (isNaN(Number(event.target.value))) {
-          newState.form[event.target.name] = event.target.value;
-        } else {
-          newState.form[event.target.name] = Number(event.target.value);
-        }
-      }
 
-      if (event.target.name == "skill" && event.target.amount) {
-        newState.form["amount_per_min"] = event.target.amount;
-        const subAmt =
-          Number(this.state.form.duration) * Number(event.target.amount);
-        newState.form.transaction["sub_amount"] = subAmt;
-        newState.form.transaction["total_amount"] =
-          subAmt + Number(this.state.form.transaction.taxes);
-      }
-      if (event.target.name == "duration") {
-        const subAmt =
-          Number(this.state.form.amount_per_min) * Number(event.target.value);
-        newState.form.transaction["sub_amount"] = subAmt;
-        newState.form.transaction["total_amount"] =
-          subAmt + Number(this.state.form.transaction.taxes);
-      }
-      if (event.target.name == "taxes") {
-        newState.form.transaction["total_amount"] =
-          Number(this.state.form.transaction["sub_amount"]) +
-          Number(event.target.value);
+  handleCheckboxChange(newState, event) {
+    newState.form[event.target.name] = event.target.checked;
+  }
+
+  handleInputChangeEvent(newState, event) {
+    const isNumeric = value => !isNaN(Number(value));
+    const name = event.target.name;
+    const value = isNumeric(event.target.value) ? Number(event.target.value) : event.target.value;
+
+    if (name === "taxes") {
+      newState.form.transaction["total_amount"] =
+      Number(newState.form.transaction["sub_amount"]) + Number(value);
+    } else if (name === "type" || name === "paypal_transaction_id" || name === "transaction_details" || name === "transaction_date") {
+        newState.form.transaction[name] = value;
+    } else {
+      newState.form[name] = value;
+      if (name === "skill" && event.target.amount) {
+          newState.form["amount_per_min"] = event.target.amount;
+          const subAmt = Number(this.state.form.duration) * Number(event.target.amount);
+          newState.form.transaction["sub_amount"] = subAmt;
+          newState.form.transaction["total_amount"] = subAmt + Number(this.state.form.transaction.taxes);
+      } else if (name === "duration") {
+          const subAmt = Number(this.state.form.amount_per_min) * Number(value);
+          newState.form.transaction["sub_amount"] = subAmt;
+          newState.form.transaction["total_amount"] = subAmt + Number(this.state.form.transaction.taxes);
       }
     }
+  }
+
+  handleInputChange(event) {
+    const newState = Object.assign({}, this.state);
+
+    if (event.target.type === "checkbox") {
+      this.handleCheckboxChange(newState, event);
+    } else {
+      this.handleInputChangeEvent(newState, event);
+    }
+  
     this.setState(newState);
     this.handleError();
   }

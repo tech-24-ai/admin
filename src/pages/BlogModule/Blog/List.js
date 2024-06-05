@@ -125,10 +125,10 @@ export class BlogLists extends React.PureComponent {
       TableAction(
         PermissionHelper.checkPermission("delete_blog_manager")
           ? this.deleteCrud
-          : this.deleteCrud,
+          : null,
         PermissionHelper.checkPermission("edit_blog_manager")
           ? this.editCrud
-          : this.editCrud
+          : null
       ),
     ];
 

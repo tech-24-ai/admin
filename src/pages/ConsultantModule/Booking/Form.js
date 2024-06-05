@@ -273,21 +273,14 @@ class BookingForm extends React.PureComponent {
                 transaction_date: this.state.form.transaction_date,
             };
             
-            if (UserHelper.isConsultant()) {
-                if (id && id === "new") {
-                    this.props.create("formData", "consultants/booking", data);
-                    this.goBack();
-                } else {
-                    this.props.update("formData", "consultants/booking", id, data);
-                }
+            if ((UserHelper.isConsultant() && id && id === "new") || (!UserHelper.isConsultant() && childId && childId === "new")) {
+                this.props.create("formData", "consultants/booking", data);
+                this.goBack();
             } else {
-                if (childId && childId === "new") {
-                    this.props.create("formData", "consultants/booking", data);
-                    this.goBack();
-                } else {
-                    this.props.update("formData", "consultants/booking", childId, data);
-                }
+                const bookingId = UserHelper.isConsultant() ? id : childId;
+                this.props.update("formData", "consultants/booking", bookingId, data);
             }
+
             this.resetForm();
             this.goBack();
         } else {

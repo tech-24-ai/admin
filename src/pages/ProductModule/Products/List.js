@@ -172,10 +172,6 @@ export class ProductsList extends React.PureComponent {
     this.props.history.push(`/admin/product-form/new`);
   }
 
-  export() {
-    fileService._download("reports/productreport");
-  }
-
   handleInputChange(event) {
     const newState = Object.assign({}, this.state);
     newState.form[event.target.name] = event.target.value;
@@ -374,6 +370,8 @@ export class ProductsList extends React.PureComponent {
                     isFilterOpen: !isFilterOpen,
                   });
                 }}
+                tabIndex="0" 
+                role="button"
               >
                 <IconButton aria-label="edit">
                   <FilterList fontSize="medium" />

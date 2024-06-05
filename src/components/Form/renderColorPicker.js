@@ -10,7 +10,7 @@ class RenderColorPicker extends React.Component {
     color: this.props.formField.value ? this.props.formField.value : "red",
   };
   handleClick = () => {
-    this.setState({ displayColorPicker: !this.state.displayColorPicker });
+    this.setState(prevState => ({ displayColorPicker: !prevState.displayColorPicker }));
   };
 
   handleClose = () => {
@@ -69,14 +69,14 @@ class RenderColorPicker extends React.Component {
             </InputLabel>
           </GridItem>
           <GridItem xs={3}>
-            <div style={styles.swatch} onClick={this.handleClick}>
+            <div style={styles.swatch} onClick={this.handleClick} tabIndex="0" role="button">
               <div style={styles.color} />
             </div>
           </GridItem>
           <GridItem xs={4}></GridItem>
           {this.state.displayColorPicker ? (
             <div style={styles.popover}>
-              <div style={styles.cover} onClick={this.handleClose} />
+              <div style={styles.cover} onClick={this.handleClose} tabIndex="0" role="button" />
               <SketchPicker
                 color={this.state.color}
                 onChange={this.handleChange}

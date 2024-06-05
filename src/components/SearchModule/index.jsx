@@ -105,7 +105,7 @@ class SearchBox extends React.PureComponent {
                             placeholder="Enter technology"
                             treeNodeFilterProp="title"
                             showArrow={false}
-                            treeData={modules && modules.length && this.renderChildren(modules)}
+                            treeData={modules && modules.length > 0 && this.renderChildren(modules)}
                             onSelect={this.onChange}
                         />
                     </FormGroup>
@@ -120,7 +120,7 @@ class SearchBox extends React.PureComponent {
                                     placeholder="Select Market for creating chart"
                                     showArrow={false}
                                     treeNodeFilterProp="title"
-                                    treeData={modules && modules.length && this.renderChildren(modules)}
+                                    treeData={modules && modules.length > 0 && this.renderChildren(modules)}
                                     onSelect={this.onChange}
                                 />
                             </FormGroup>

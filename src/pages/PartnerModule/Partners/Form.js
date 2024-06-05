@@ -263,13 +263,13 @@ class PartnerForm extends React.PureComponent {
         })
         .then((response) => {
           if (response.status === 200) {
-            this.setState(
+            this.setState((prevState) => (
               {
                 form: {
-                  ...this.state.form,
+                  ...prevState.form,
                   image: response.data.url,
                 },
-              },
+              }),
               () => this.props.hideLoader()
             );
           }

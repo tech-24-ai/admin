@@ -37,46 +37,29 @@ class MuiAutocompleteBox extends React.Component {
     }
 
     bindOptions = () => {
-        const { options } = this.state
-        let selectOptions = []
-        selectOptions.push(selectAllOption)
+        const { options } = this.state;
+        const selectOptions = [];
+    
+        const processElement = (element, prefix = '') => {
+            const label = `${prefix}${this.getLabel(element)}`;
+            const value = this.getValue(element);
+            
+            selectOptions.push({ label, value });
+    
+            if (element.children && element.children.length) {
+                element.children.forEach(child => {
+                    processElement(child, `${label} > `);
+                });
+            }
+        };
+    
         if (options) {
             options.forEach(element => {
-                if (element.children && element.children.length) {
-                    element.children.forEach(element2 => {
-                        if (element2.children && element2.children.length) {
-                            element2.children.forEach(element3 => {
-                                if (element3.children && element3.children.length) {
-                                    element3.children.forEach(element4 => {
-                                        selectOptions.push({
-                                            label: `${this.getLabel(element)} > ${this.getLabel(element2)} > ${this.getLabel(element3)} > ${this.getLabel(element4)}`,
-                                            value: this.getValue(element4),
-                                        })
-                                    });
-                                } else {
-                                    selectOptions.push({
-                                        label: `${this.getLabel(element)} > ${this.getLabel(element2)} > ${this.getLabel(element3)}`,
-                                        value: this.getValue(element3),
-                                    })
-                                }
-                            });
-                        } else {
-                            selectOptions.push({
-                                label: `${this.getLabel(element)} > ${this.getLabel(element2)}`,
-                                value: this.getValue(element2),
-                            })
-                        }
-                    });
-                } else {
-                    selectOptions.push({
-                        label: this.getLabel(element),
-                        value: this.getValue(element),
-                    })
-                }
+                processElement(element);
             });
         }
-
-        this.setState({ selectOptions: selectOptions })
+    
+        this.setState({ selectOptions });
     }
 
     handleChange = (e, values) => {
