@@ -119,8 +119,7 @@ export default class App extends PureComponent {
   }
 
   doneEditing() {
-    this.handleRemove();
-    this.setState({ ...this.state, open: false });
+    this.setState(prevState => ({ ...prevState, open: false }));
     this.props.onChange(this.state.croppedImageBlob);
   }
 
