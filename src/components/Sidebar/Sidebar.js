@@ -124,6 +124,38 @@ class Sidebar extends React.Component {
   // this function creates the links and collapses that appear in the sidebar (left menu)
   createLinks = (routes) => {
     const { classes, color, rtlActive } = this.props;
+
+    const renderIcon = (prop, itemIcon, collapseItemMini) => {
+      if (prop.icon !== undefined) {
+        if (typeof prop.icon === "string") {
+          return <Icon className={itemIcon}>{prop.icon}</Icon>;
+        } else {
+          const IconComponent = prop.icon;
+          return <IconComponent className={itemIcon} />;
+        }
+      } else {
+        return (
+          <span className={collapseItemMini}>
+            {rtlActive ? prop.rtlMini : prop.mini}
+          </span>
+        );
+      }
+    };
+
+    const renderItemIcon = (prop, itemIcon, collapseItemMini) => {
+      if (prop.icon !== undefined) {
+        if (typeof prop.icon === "string") {
+          return <Icon className={itemIcon}>{prop.icon}</Icon>;
+        } else {
+          return <prop.icon className={itemIcon} />;
+        }
+      } else {
+        return (<span className={collapseItemMini}>
+          {rtlActive ? prop.rtlMini : prop.mini}
+        </span>);
+      }
+    };
+
     return routes.map((prop, key) => {
       if (prop.redirect) {
         return null;
@@ -193,17 +225,7 @@ class Sidebar extends React.Component {
                 this.setState(st);
               }}
             >
-              {prop.icon !== undefined ? (
-                typeof prop.icon === "string" ? (
-                  <Icon className={itemIcon}>{prop.icon}</Icon>
-                ) : (
-                  <prop.icon className={itemIcon} />
-                )
-              ) : (
-                <span className={collapseItemMini}>
-                  {rtlActive ? prop.rtlMini : prop.mini}
-                </span>
-              )}
+              {renderIcon(prop, itemIcon, collapseItemMini)}
               <ListItemText
                 primary={rtlActive ? prop.rtlName : prop.name}
                 secondary={
@@ -295,17 +317,7 @@ class Sidebar extends React.Component {
             )}
           >
             <div>
-              {prop.icon !== undefined ? (
-                typeof prop.icon === "string" ? (
-                  <Icon className={itemIcon}>{prop.icon}</Icon>
-                ) : (
-                  <prop.icon className={itemIcon} />
-                )
-              ) : (
-                <span className={collapseItemMini}>
-                  {rtlActive ? prop.rtlMini : prop.mini}
-                </span>
-              )}
+              {renderItemIcon(prop, itemIcon, collapseItemMini)}
               <ListItemText
                 primary={rtlActive ? prop.rtlName : prop.name}
                 disableTypography={true}
