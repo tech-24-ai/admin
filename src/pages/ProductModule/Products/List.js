@@ -25,6 +25,7 @@ import { TableAction } from "../../../material-table/TableAction";
 import MyForm from "components/Form";
 import { PermissionHelper } from "_helpers";
 import SearchModule from "components/SearchModule";
+import Button from '@material-ui/core/Button';
 
 export const AntSwitch = withStyles((theme) => ({
   root: {
@@ -352,7 +353,7 @@ export class ProductsList extends React.PureComponent {
                 </Select>
               </GridItem>
 
-              <div
+              <Button
                 style={{
                   fontSize: "1rem",
                   padding: "2px 14px",
@@ -370,13 +371,11 @@ export class ProductsList extends React.PureComponent {
                     isFilterOpen: !isFilterOpen,
                   });
                 }}
-                tabIndex="0" 
-                role="button"
               >
                 <IconButton aria-label="edit">
                   <FilterList fontSize="medium" />
                 </IconButton>
-              </div>
+              </Button>
 
               {switchButton && (
                 <GridItem xs={3}>

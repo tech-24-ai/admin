@@ -141,15 +141,12 @@ class CommunityPostReplyList extends React.PureComponent {
             
             params_array.pop()
             let ids = params_array.join("/")
-            console.log("ids = ", ids)
             backRedirectUrl = `/admin/community-posts-reply-comments/${ids}`;
         } else {
             let community_post_id = form.community_post_id;
             backRedirectUrl = `/admin/community-posts-reply/${community_post_id}`;
         }
 
-        console.log("backRedirectUrl ", backRedirectUrl);
-        
         const replyDataItems = postrReplyDataArray.map((item, i) => 
             <GridContainer style={{ marginBottom: 10 }} key={i} > 
                 <GridItem xs={12}>

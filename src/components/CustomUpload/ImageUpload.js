@@ -43,7 +43,9 @@ export default class App extends PureComponent {
         this.setState({ src: reader.result })
       );
       reader.readAsDataURL(e.target.files[0]);
-      this.setState({ ...this.state, open: true });
+      this.setState(prevState => {
+        return { ...prevState, open: true };
+      });
     }
   };
 
@@ -123,11 +125,11 @@ export default class App extends PureComponent {
   }
 
   handleRemove() {
-    this.setState({
-      ...this.state,
+    this.setState(prevState => ({
+      ...prevState,
       croppedImageUrl: null,
       src: this.props.avatar ? defaultAvatar : defaultImage,
-    });
+    }));
     this.props.onChange(null);
     this.fileInput.current.value = null;
   }

@@ -30,10 +30,11 @@ import { connect } from 'react-redux';
 import { crudActions } from '../../../_actions';
 
 import { crudService } from "../../../_services";
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => (styles));
 
-const viewForm = (props) => {
+const ViewForm = (props) => {
 
     const classes = useStyles();
     const [state, setState] = useState({
@@ -42,18 +43,19 @@ const viewForm = (props) => {
         mobile: '',
         message: ''
     });
-    const [id] = useState(props && props.match.params && props.match.params.id);
     useEffect(() => {
         async function fetchData(id) {
-            await crudService._get('mi_contacts', id).then((response) => {
-                if (response.status === 200) {
-                    setState(response.data)
-                }
-            })
+          try {
+            const response = await crudService._get('mi_contacts', id);
+            if (response.status === 200) {
+              setState(response.data);
+            }
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
         }
-        fetchData(id)
-    }, [])
-
+        fetchData(props?.match?.params?.id);
+    }, [props.match.params.id]);
 
     const goBack = () => {
         props.history.goBack();
@@ -101,6 +103,11 @@ const viewForm = (props) => {
     )
 }
 
+ViewForm.propTypes = {
+    match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+};
+
 const mapStateToProps = (state) => {
     const { form, confirm } = state;
     return {
@@ -115,4 +122,4 @@ const actionCreators = {
     updateData: crudActions._update,
 };
 
-export default (connect(mapStateToProps, actionCreators)(viewForm));
+export default (connect(mapStateToProps, actionCreators)(ViewForm));

@@ -4,6 +4,8 @@ import { SketchPicker } from "react-color";
 import InputLabel from "@material-ui/core/InputLabel";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
+import { Button } from "antd";
+import { unset } from "lodash";
 class RenderColorPicker extends React.Component {
   state = {
     displayColorPicker: false,
@@ -56,6 +58,9 @@ class RenderColorPicker extends React.Component {
           right: "0px",
           bottom: "0px",
           left: "0px",
+          width: "auto",
+          height: "auto",
+          visibility: unset,
         },
       },
     });
@@ -69,14 +74,14 @@ class RenderColorPicker extends React.Component {
             </InputLabel>
           </GridItem>
           <GridItem xs={3}>
-            <div style={styles.swatch} onClick={this.handleClick} tabIndex="0" role="button">
+            <Button style={styles.swatch} onClick={this.handleClick}>
               <div style={styles.color} />
-            </div>
+            </Button>
           </GridItem>
           <GridItem xs={4}></GridItem>
           {this.state.displayColorPicker ? (
             <div style={styles.popover}>
-              <div style={styles.cover} onClick={this.handleClose} tabIndex="0" role="button" />
+              <Button style={{position: "fixed", visibility: "unset", top: "0px", right: "0px", bottom: "0px", left: "0px", width: "auto", height: "auto", backgroundColor: "transparent"}} onClick={this.handleClose} />
               <SketchPicker
                 color={this.state.color}
                 onChange={this.handleChange}

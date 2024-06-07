@@ -78,7 +78,7 @@ class MISegmentList extends React.PureComponent {
                 field: "updated_at",
                 defaultSort: "desc"
             },
-            TableAction(PermissionHelper.checkPermission('delete_mi_segment') ? this.deleteCrud : null, PermissionHelper.checkPermission('edit_mi_segment') ? this.editCrud : null)
+            TableAction(PermissionHelper.checkPermission('delete_mi_segment') ? this.deleteCrud : null, this.editCrud)
         ]
 
 

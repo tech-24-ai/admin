@@ -49,101 +49,87 @@ export default function FixedPlugin(props) {
       className={"fixed-plugin" + (props.rtlActive ? " fixed-plugin-rtl" : "")}
     >
       <div id="fixedPluginClasses" className={props.fixedClasses}>
-        <div onClick={handleClick} tabIndex="0" role="button">
+        <Button onClick={handleClick}>
           <i className="fa fa-cog fa-2x" />
-        </div>
+        </Button>
         <ul className="dropdown-menu">
           <li className="header-title">SIDEBAR FILTERS</li>
           <li className="adjustments-line">
             <a className="switch-trigger active-color">
               <div className="badge-colors text-center">
-                <span
+                <Button
                   className={
                     props.color === "purple"
                       ? "badge filter badge-purple active"
                       : "badge filter badge-purple"
                   }
                   data-color="purple"
-                  tabIndex="0" 
-                  role="button"
                   onClick={() => {
                     props.handleColorClick("purple");
                   }}
                 />
-                <span
+                <Button
                   className={
                     props.color === "blue"
                       ? "badge filter badge-blue active"
                       : "badge filter badge-blue"
                   }
                   data-color="blue"
-                  tabIndex="0" 
-                  role="button"
                   onClick={() => {
                     props.handleColorClick("blue");
                   }}
                 />
-                <span
+                <Button
                   className={
                     props.color === "green"
                       ? "badge filter badge-green active"
                       : "badge filter badge-green"
                   }
                   data-color="green"
-                  tabIndex="0" 
-                  role="button"
                   onClick={() => {
                     props.handleColorClick("green");
                   }}
                 />
-                <span
+                <Button
                   className={
                     props.color === "red"
                       ? "badge filter badge-red active"
                       : "badge filter badge-red"
                   }
                   data-color="red"
-                  tabIndex="0" 
-                  role="button"
                   onClick={() => {
                     props.handleColorClick("red");
                   }}
                 />
-                <span
+                <Button
                   className={
                     props.color === "orange"
                       ? "badge filter badge-orange active"
                       : "badge filter badge-orange"
                   }
                   data-color="orange"
-                  tabIndex="0" 
-                  role="button"
                   onClick={() => {
                     props.handleColorClick("orange");
                   }}
                 />
-                <span
+                <Button
                   className={
                     props.color === "white"
                       ? "badge filter badge-white active"
                       : "badge filter badge-white"
                   }
                   data-color="orange"
-                  tabIndex="0" 
-                  role="button"
                   onClick={() => {
                     props.handleColorClick("white");
                   }}
                 />
-                <span
+                <Button
                   className={
                     props.color === "rose"
                       ? "badge filter badge-rose active"
                       : "badge filter badge-rose"
                   }
                   data-color="orange"
-                  tabIndex="0" 
-                  role="button"
                   onClick={() => {
                     props.handleColorClick("rose");
                   }}
@@ -156,41 +142,35 @@ export default function FixedPlugin(props) {
           <li className="adjustments-line">
             <a className="switch-trigger active-color">
               <div className="badge-colors text-center">
-                <span
+                <Button
                   className={
                     props.bgColor === "blue"
                       ? "badge filter badge-blue active"
                       : "badge filter badge-blue"
                   }
                   data-color="orange"
-                  tabIndex="0" 
-                  role="button"
                   onClick={() => {
                     props.handleBgColorClick("blue");
                   }}
                 />
-                <span
+                <Button
                   className={
                     props.bgColor === "white"
                       ? "badge filter badge-white active"
                       : "badge filter badge-white"
                   }
                   data-color="orange"
-                  tabIndex="0" 
-                  role="button"
                   onClick={() => {
                     props.handleBgColorClick("white");
                   }}
                 />
-                <span
+                <Button
                   className={
                     props.bgColor === "black"
                       ? "badge filter badge-black active"
                       : "badge filter badge-black"
                   }
                   data-color="orange"
-                  tabIndex="0" 
-                  role="button"
                   onClick={() => {
                     props.handleBgColorClick("black");
                   }}
@@ -243,7 +223,6 @@ export default function FixedPlugin(props) {
                 props.handleImageClick(imagine1);
               }}
               href="#"
-              role="button"
             >
               <img src={imagine1} alt="..." />
             </a>
@@ -257,7 +236,6 @@ export default function FixedPlugin(props) {
                 props.handleImageClick(imagine2);
               }}
               href="#"
-              role="button"
             >
               <img src={imagine2} alt="..." />
             </a>
@@ -271,7 +249,6 @@ export default function FixedPlugin(props) {
                 props.handleImageClick(imagine3);
               }}
               href="#"
-              role="button"
             >
               <img src={imagine3} alt="..." />
             </a>
@@ -285,7 +262,6 @@ export default function FixedPlugin(props) {
                 props.handleImageClick(imagine4);
               }}
               href="#"
-              role="button"
             >
               <img src={imagine4} alt="..." />
             </a>
